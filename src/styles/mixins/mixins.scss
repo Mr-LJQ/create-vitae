@@ -1,1 +1,62 @@
-@use "../../../node_modules/element-plus/theme-chalk/src/mixins/mixins"as *;
+/* 
+  用于创建 BEM 格式的混合,通过混合嵌套实现：b、be、bm、bem 四种命名方式，
+  其与 setBEMClass 函数返回的 b、be、bm、bem 函数生成的类名是一一对应的。
+*/
+
+$element-separator: "__";
+$modifier-separator: "--";
+
+$-block-var: null;
+$-element-var: null;
+
+@mixin b($block) {
+  $-block-var: $block !global;
+  .#{$-block-var} {
+    @content;
+  }
+  $-block-var: null !global;
+}
+
+@mixin e($element) {
+  @if $-block-var == null {
+    @error "@include e 不能够单独使用，必须嵌套在@include b 中使用";
+  }
+  $-element-var: $element !global;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: $currentSelector +
+      "." +
+      $-block-var +
+      $element-separator +
+      $unit +
+      ",";
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+  $-element-var: null !global;
+}
+
+@mixin m($modifier) {
+  @if $-block-var == null {
+    @error "@include m 不能够单独使用,必须嵌套在@include b 或者@include e 中使用.";
+  }
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: $currentSelector +
+      $selector +
+      $modifier-separator +
+      $unit +
+      ",";
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}

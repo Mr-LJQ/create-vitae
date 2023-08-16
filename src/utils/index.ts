@@ -1,0 +1,1 @@
+export { setBEMClass } from "./setBEMClass";
