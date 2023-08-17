@@ -7,7 +7,7 @@ const element_separator = "__";
 const modifier_separator = "--";
 
 function _bem(block: string, element?: string, modifier?: string) {
-  let result = ".";
+  let result = "";
   if (block) {
     result += block;
   }
