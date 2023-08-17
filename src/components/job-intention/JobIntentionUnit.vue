@@ -31,10 +31,6 @@ import { provinceAndCityData } from "element-china-area-data";
 //import EditItem from '@/components/edit-item/index.vue'
 import { ElSelect, ElOption, ElCascaderPanel } from "element-plus";
 
-import "element-plus/es/components/select/style/css";
-import "element-plus/es/components/option/style/css";
-import "element-plus/es/components/cascader-panel/style/css";
-
 const hiredates = [
   "不填",
   "随时到岗",

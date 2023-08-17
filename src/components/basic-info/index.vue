@@ -132,12 +132,8 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { ElSelect, ElDatePicker, ElOption, ElCheckbox } from "element-plus";
-import "element-plus/es/components/date-picker/style/css";
-import "element-plus/es/components/select/style/css";
-import "element-plus/es/components/option/style/css";
-import "element-plus/es/components/checkbox/style/css";
 import { useBasicInfoStore } from "@/stores/basic-info";
+import { ElSelect, ElDatePicker, ElOption, ElCheckbox } from "element-plus";
 const input = ref("");
 const store = useBasicInfoStore();
 const politicsStatusOptions = [

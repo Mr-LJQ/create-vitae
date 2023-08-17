@@ -25,8 +25,6 @@ import { ref } from "vue";
 import Item from "@/components/edit-tab-label/index.vue";
 import BasicInfo from '@/components/basic-info/index.vue'
 import JobIntention from '@/components/job-intention/index.vue'
-import "element-plus/es/components/tabs/style/css";
-import "element-plus/es/components/switch/style/css";
 import { ElTabs, ElTabPane,ElSwitch } from "element-plus";
 import type { TabsPaneContext } from "element-plus";
 
