@@ -9,12 +9,23 @@ interface State {
 }
 
 export const useJobIntentionStore = defineStore("job-intention", () => {
-  const jobIntentions: State[] = reactive([]);
+  const jobIntentions: State[] = reactive([
+    {
+      city: "",
+      post: "",
+      hiredate: "",
+      pay: "",
+    },
+  ]);
   const appendJobIntention = (options: State) => {
     jobIntentions.push(options);
+  };
+  const deleteJobIntention = (index: number) => {
+    jobIntentions.splice(index, 1);
   };
   return {
     jobIntentions,
     appendJobIntention,
+    deleteJobIntention,
   };
 });

@@ -1,4 +1,3 @@
-
 export const editItemProps = {
   labelText: {
     type: String,

@@ -1,0 +1,12 @@
+@use "mixins/mixins.scss" as *;
+@use "var/var.scss" as *;
+
+@include b(override) {
+  @include m("el-input") {
+    & .el-input {
+      --el-input-bg-color: #{$input-item-bg-color};
+      --el-input-width: 180px;
+      --el-input-border-color: transparent;
+    }
+  }
+}

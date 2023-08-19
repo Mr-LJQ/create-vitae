@@ -26,15 +26,14 @@ import Item from "@/components/edit-tab-label/index.vue";
 import BasicInfo from '@/components/basic-info/index.vue'
 import JobIntention from '@/components/job-intention/index.vue'
 import { ElTabs, ElTabPane,ElSwitch } from "element-plus";
-import type { TabsPaneContext } from "element-plus";
 
 const activeName = ref("");
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event);
-};
+function handleClick() {
+
+}
 const titles = ref([
   "求职意向",
-  "教育背景",
+  /* "教育背景",
   "工作经验",
   "项目经验",
   "实习经历",
@@ -42,7 +41,7 @@ const titles = ref([
   "技能特长",
   "荣誉证书",
   "自我评价",
-  "兴趣爱好",
+  "兴趣爱好", */
 ]);
 </script>
 <style lang="scss">

@@ -1,0 +1,9 @@
+@use "mixins/mixins.scss" as *;
+
+@include b(auto) {
+  @include m(wrap) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+}

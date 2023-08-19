@@ -1,51 +1,53 @@
 <template>
   <ul>
-    <li>
-      <div>
-        <label>求职意向</label>
-        <input type="text" placeholder="请输入意向职业" />
-      </div>
-      <div>
-        <label>意向城市</label>
-        <input type="text" />
-        <el-cascader-panel :options="provinceAndCityData" />
-      </div>
-      <div>
-        <label>期望薪资</label>
-        <input type="text" />
-      </div>
-      <div>
-        <label for="">入职时间</label>
-        <el-select>
-          <el-option
-            v-for="value of hiredates"
-            :key="value"
-            :label="value"
-            :value="value"
-          />
-        </el-select>
-      </div>
+    <li :class="$style.a" v-for="(item, index) of jobIntentions" :key="Object.values(item).join()">
+      <JobIntentionUnit
+        v-model:pay="item.pay"
+        v-model:city="item.city"
+        v-model:post="item.post"
+        v-model:hiredate="item.hiredate"
+      />
+      <el-button
+        circle
+        type="danger"
+        :icon="Delete"
+        :class="$style.b"
+        v-if="index !== 0"
+        @click="deleteJobIntention(index)"
+      />
     </li>
   </ul>
+  <AddButton @click="addItem">求职意向</AddButton>
 </template>
 <script lang="ts" setup>
+import { ElButton } from "element-plus";
+import { Delete } from "@element-plus/icons-vue";
+import AddButton from "@/components/add-button/index.vue";
 import { useJobIntentionStore } from "@/stores/job-intention";
-import { provinceAndCityData } from "element-china-area-data";
-//import EditItem from '@/components/edit-item/index.vue'
-import { ElSelect, ElOption, ElCascaderPanel } from "element-plus";
-
-import "element-plus/es/components/select/style/css";
-import "element-plus/es/components/option/style/css";
-import "element-plus/es/components/cascader-panel/style/css";
-
-const hiredates = [
-  "不填",
-  "随时到岗",
-  "一周内到岗",
-  "一月内到岗",
-  "到岗时间另行商议",
-];
-
-const jobIntentions = useJobIntentionStore()
+import JobIntentionUnit from "./job-intention-unit/index.vue";
+defineOptions({
+  name: "JobIntention",
+});
+const { jobIntentions, appendJobIntention, deleteJobIntention } =
+  useJobIntentionStore();
+function addItem() {
+  appendJobIntention({
+    pay: "",
+    city: "",
+    post: "",
+    hiredate: "",
+  });
+}
 </script>
-<style></style>
+<style module>
+.a {
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+.b {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+</style>

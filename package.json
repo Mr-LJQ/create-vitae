@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
-    "element-china-area-data": "^6.0.2",
+    "@vueuse/core": "^10.3.0",
     "element-plus": "^2.3.9",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.6",
