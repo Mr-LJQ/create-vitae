@@ -1,15 +1,13 @@
 <template>
-  <div class="box">
-    <b><slot>未定义</slot></b>
+  <div :class="$style.a">
+    <b :class="$style.b"><slot>未定义</slot></b>
     <slot name="switch"></slot>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup></script>
 
-</script>
-
-<style scoped>
-.box {
+<style module>
+.a {
   box-sizing: border-box;
   float: left;
   padding: 23px 11px 0 9px;
@@ -19,7 +17,7 @@
   cursor: pointer;
   position: relative;
 }
-b {
+.b {
   display: block;
   max-width: 80px;
   color: #222;
@@ -30,5 +28,4 @@ b {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 </style>

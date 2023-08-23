@@ -30,5 +30,11 @@ $item_height: 32px;
     &:focus {
       box-shadow: 0 0 0 1px var(--el-color-primary) inset;
     }
+    &.w60 {
+      width: 60px;
+    }
+    &.ml20 {
+      margin-left: 20px;
+    } 
   }
 }

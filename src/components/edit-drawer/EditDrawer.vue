@@ -1,16 +1,16 @@
 <template>
-  <div :class="$style.a" :style="isSpread ? 'transform:translateY(0)' : ''">
+  <div :class="[$style.a, isSpread ? $style.c : '']">
     <SpreadButton
       :class="$style.b"
       @click="handleClick"
       :is-spread="isSpread"
     />
-    <Tabs></Tabs>
+    <EditTabs />
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import Tabs from "@/components/edit-tabs/index.vue";
+import EditTabs from "@/components/edit-tabs/EditTabs.vue";
 import SpreadButton from "./SpreadButton.vue";
 
 const isSpread = ref(false);
@@ -38,5 +38,9 @@ function handleClick() {
 }
 .b:hover {
   top: -40px;
+}
+
+.a.c {
+  transform: translateY(0);
 }
 </style>

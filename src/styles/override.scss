@@ -7,6 +7,13 @@
       --el-input-bg-color: #{$input-item-bg-color};
       --el-input-width: 180px;
       --el-input-border-color: transparent;
+      --el-date-editor-width: 100px;
     }
+    
   }
+}
+
+.el-checkbox {
+  margin-left: 8px;
+  vertical-align: middle;
 }

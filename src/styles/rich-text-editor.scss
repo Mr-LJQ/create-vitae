@@ -1,0 +1,59 @@
+@use "var/var.scss" as *;
+@use "mixins/mixins.scss" as *;
+
+@include b("rich-text-editor") {
+  overflow: hidden;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background-color: $input-item-bg-color;
+  overflow: hidden;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background-color: $input-item-bg-color;
+
+  .ql-editor {
+    min-height: 130px;
+    max-height: 188px;
+    border: none;
+    border-top: 1px solid #ddd;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+    &.ql-blank::before {
+      font-style: normal;
+    }
+  }
+
+  .ql-snow {
+    &.ql-toolbar {
+      border: none;
+      background-color: #f8f8f8;
+      padding: 4px 8px;
+      &:after {
+        color: #999;
+        padding: 0 9px;
+        display: inline-block;
+        vertical-align: middle;
+        content: "功能提示：使用工具栏之前，需要先选中输入框文字";
+      }
+    }
+    .ql-picker.ql-size {
+      .ql-picker-label::before {
+        content: "字体大小";
+      }
+      .ql-picker-item[data-value="small"]::before {
+        content: "小号";
+      }
+      .ql-picker-item::before {
+        content: "默认";
+      }
+      .ql-picker-item[data-value="large"]::before {
+        content: "大号";
+      }
+      .ql-picker-item[data-value="huge"]::before {
+        content: "超大号";
+      }
+    }
+  }
+}

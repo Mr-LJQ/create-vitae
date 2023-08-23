@@ -134,6 +134,7 @@
 import { ref } from "vue";
 import { useBasicInfoStore } from "@/stores/basic-info";
 import { ElSelect, ElDatePicker, ElOption, ElCheckbox } from "element-plus";
+
 const input = ref("");
 const store = useBasicInfoStore();
 const politicsStatusOptions = [
@@ -236,7 +237,7 @@ $item_height: 32px;
     width: 60px;
   }
   &.ml20 {
-    margin-left:20px;
+    margin-left: 20px;
   }
 }
 </style>

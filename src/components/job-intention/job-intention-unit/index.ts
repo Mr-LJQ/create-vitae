@@ -1,3 +1,5 @@
+import { isString } from "@/utils";
+
 export const POST_EVENT = "update:post";
 export const CITY_EVENT = "update:city";
 export const HIREDATE_EVENT = "update:hiredate";
@@ -21,10 +23,6 @@ export const unitProps = {
     required: true,
   },
 } as const;
-
-function isString(value: unknown): value is string {
-  return typeof value === "string";
-}
 
 export const unitEmits = {
   [PAY_EVENT]: (payload: string) => isString(payload),

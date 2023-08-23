@@ -53,7 +53,7 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
-import EditInputItem from "@/components/edit-input-item/index.vue";
+import EditInputItem from "@/components/edit-input-item/EditInputItem.vue";
 import {
   OVERRIDE_EL_INPUT_CLASS,
   EDIT_INPUT_ITEM_INPUT,

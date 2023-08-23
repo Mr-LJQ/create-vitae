@@ -3,7 +3,4 @@ export const editItemProps = {
     type: String,
     required: true,
   },
-  forId: {
-    type: String,
-  },
 } as const;
