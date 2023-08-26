@@ -9,14 +9,14 @@
       <template #label><EditTabLabel> 基本信息 </EditTabLabel> </template>
       <BasicInfo />
     </el-tab-pane>
-    <el-tab-pane :name="name" :key="name" v-for="name of store.tabNames">
+    <el-tab-pane :name="name" :key="name" v-for="name of store.tabNames" lazy>
       <template #label
         ><EditTabLabel
           >{{ name }}
           <el-switch class="absolute" />
         </EditTabLabel>
       </template>
-      <component :is="componentMap[name]" />
+      <component :is="componentMap[name]" :module-name="name" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -26,6 +26,15 @@ import BasicInfo from "@/components/basic-info/index";
 import EditTabLabel from "./edit-tab-label/EditTabLabel.vue";
 import JobIntention from "@/components/job-intention/index.vue";
 import EducationalBackground from "@/components/educational-background/index.vue";
+import CustomModule from "@/components/custom-module/index.vue";
+import SelfEvaluation from "@/components/self-evaluation/index.vue";
+import Interests from "@/components/interests/index.vue";
+import Certificate from "@/components/certificate/index.vue";
+import Specialty from "@/components/specialty/index.vue";
+import WorkExperience from "@/components/work-experience/index.vue";
+import ProjectExperience from "@/components/project-experience/index.vue";
+import CampusExperience from "@/components/campus-experience/index.vue";
+import InternshipExperience from "@/components/internship-experience/index.vue";
 import { ElTabs, ElTabPane, ElSwitch } from "element-plus";
 import { useEditTabsStore } from "@/stores/edit-tabs";
 
@@ -33,6 +42,15 @@ const store = useEditTabsStore();
 const componentMap: Record<(typeof store.tabNames)[number], Component> = {
   求职意向: JobIntention,
   教育背景: EducationalBackground,
+  工作经验: WorkExperience,
+  项目经验: ProjectExperience,
+  实习经历: InternshipExperience,
+  校园经历: CampusExperience,
+  技能特长: Specialty,
+  荣誉证书: Certificate,
+  兴趣爱好: Interests,
+  自我评价: SelfEvaluation,
+  自定义模块: CustomModule,
 };
 
 function handleClick() {}

@@ -1,27 +1,29 @@
-@use "var/var.scss" as *;
-@use "mixins/mixins.scss" as *;
+@use "../var/var.scss" as *;
+@use "../mixins/mixins.scss" as *;
 
 @include b("rich-text-editor") {
-  overflow: hidden;
-  border-radius: 10px;
   box-sizing: border-box;
+  overflow: hidden;//用于避免内部元素覆盖圆角边框
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 10px;
   border: 1px solid #ddd;
   background-color: $input-item-bg-color;
-  overflow: hidden;
-  border-radius: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  background-color: $input-item-bg-color;
-
+  &:hover,&:focus-within {
+    border-color: #409eff;
+  }
+  &.h-280 {
+    .ql-container {
+      height: 280px;
+    }
+  }
+  .ql-container.ql-snow{//.ql-snow用于提升优先级
+    border: none;//覆盖默认边框，避免双重边框
+  }
   .ql-editor {
-    min-height: 130px;
-    max-height: 188px;
-    border: none;
-    border-top: 1px solid #ddd;
-    white-space: pre-wrap;
-    overflow-y: scroll;
+    border-top: 1px solid #ddd; //为toolbar 与 editor 之间添加上边界，以更好的对它们进行区分
     &.ql-blank::before {
-      font-style: normal;
+      font-style: normal; //默认样式的 placeholder 部分是倾斜的，覆盖它，使其不再倾斜
     }
   }
 

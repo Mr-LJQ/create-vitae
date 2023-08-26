@@ -1,0 +1,29 @@
+@use "../mixins/mixins.scss" as *;
+@use "../var/var.scss" as *;
+
+@include b(override) {
+  @include m("el-input") {
+    & .el-input {
+      --el-input-bg-color: #{$input-item-bg-color};
+      --el-input-width: 180px;
+      --el-input-border-color: transparent;
+      --el-date-editor-width: 100px;
+    }
+  }
+  .el-tabs__header {
+    max-width: 1200px;
+    margin: 0 auto 15px;
+  }
+  .el-tabs__content {
+    padding: 0 20px;
+    height: 330px;
+  }
+  .el-tab-pane {
+    overflow-y: auto;
+    height: 100%;
+  }
+  .el-checkbox {
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+}

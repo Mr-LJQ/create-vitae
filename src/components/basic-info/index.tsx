@@ -7,7 +7,7 @@ import {
   OVERRIDE_EL_INPUT_CLASS,
 } from "@/styles";
 import { useBasicInfoStore } from "@/stores/basic-info";
-import EditInputItem from "@/components/edit-input-item/EditInputItem.vue";
+import EditInputItem from "@/components/edit-input-item/index.vue";
 import FileButton from "./FileButton.vue";
 import type { SetupContext, InputHTMLAttributes, ReservedProps } from "vue";
 
