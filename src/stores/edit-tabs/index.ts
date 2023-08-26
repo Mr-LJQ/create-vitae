@@ -10,8 +10,8 @@ export const useEditTabsStore = defineStore("edit-tabs", () => {
     "校园经历",
     "技能特长",
     "荣誉证书",
-    "自我评价",
     "兴趣爱好",
+    "自我评价",
     "自定义模块",
   ] as const);
   const activeTabName = ref<(typeof tabNames)[number] | "基本信息">("基本信息");

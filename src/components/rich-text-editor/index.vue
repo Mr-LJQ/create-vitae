@@ -31,7 +31,6 @@ const content = computed({
     return props.modelValue;
   },
   set(value) {
-    console.log(value);
     emit(UPDATE_MODEL_VALUE, value);
   },
 });
