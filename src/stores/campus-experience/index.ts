@@ -7,7 +7,6 @@ let uniqueId = 0;
 function createItem() {
   return {
     id: uniqueId++,
-    degree: "",
     first: "",
     second: "",
     startTime: "",
@@ -17,8 +16,8 @@ function createItem() {
   };
 }
 
-export const useEducationalBackgroundStore = defineStore(
-  "educational-background",
+export const useCampusExperienceStore = defineStore(
+  "campus-experience",
   () => {
     const experiences = reactive([createItem()]);
 

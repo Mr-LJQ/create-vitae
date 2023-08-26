@@ -18,46 +18,22 @@
         @handle_delete="deleteItem(index)"
         @handle_move_up="moveUpItem(index)"
         @handle_move_down="moveDownItem(index)"
-      >
-        <EditInputItem
-          :class="OVERRIDE_EL_INPUT_CLASS"
-          label-text="学历"
-          v-slot="{ id }"
-        >
-          <el-select :id="id" v-model="item.degree">
-            <el-option
-              v-for="item of degrees"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select> </EditInputItem
-      ></MoveModule>
+      />
     </li>
   </ul>
   <AddButton @click="addNewItem">{{ moduleName }}</AddButton>
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
-import { ElSelect, ElOption } from "element-plus";
 import MoveModule from "@/components/share-modules/move-module/index.vue";
-import { useEducationalBackgroundStore } from "@/stores/educational-background";
+import { useProjectExperienceStore } from "@/stores/project-experience";
 import AddButton from "@/components/buttons/AddButton.vue";
-import EditInputItem from "@/components/edit-input-item/index.vue";
-import { OVERRIDE_EL_INPUT_CLASS } from "@/styles";
-import {
-  firstItem,
-  secondItem,
-  thirdItem,
-  placeholder,
-  propsType,
-  degrees,
-} from ".";
+import { firstItem, secondItem, thirdItem, placeholder, propsType } from ".";
 defineProps(propsType);
 defineOptions({
   name: "ProjectExperience",
 });
-const store = useEducationalBackgroundStore();
+const store = useProjectExperienceStore();
 const { deleteItem, addNewItem, moveUpItem, moveDownItem } = store;
 
 const isMultiple = computed(() => {

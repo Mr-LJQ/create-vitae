@@ -11,6 +11,7 @@ const props = defineProps({
     required: true,
   },
 });
+defineOptions({ name: "EditInput" });
 const emit = defineEmits({
   "update:modelValue": (payload: string) => isString(payload),
 });
@@ -23,4 +24,3 @@ const value = computed({
   },
 });
 </script>
-

@@ -5,10 +5,13 @@
   </li>
 </template>
 <script lang="ts" setup>
-import { editItemProps } from "./EditInputItem";
+import { editItemProps } from ".";
 import { EDIT_INPUT_ITEM_LI, EDIT_INPUT_ITEM_LABEL } from "@/styles";
 import { useId } from "@/hooks/use-id";
 defineProps(editItemProps);
+defineOptions({
+  name: "EditInputItem",
+});
 const id = useId();
 </script>
 <style></style>
