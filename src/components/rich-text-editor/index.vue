@@ -1,20 +1,23 @@
 <template>
-  <div :class="OVERRIDE_QUILL_SNOW" ref="editorRef">
+  <div :id="id" :class="OVERRIDE_QUILL_SNOW" ref="editorRef">
     <QuillEditor
       theme="snow"
       :toolbar="toolbar"
       :placeholder="placeholder"
       v-model:content="content"
       @ready="(quill) => $emit(READY, quill)"
+      :options="{
+        bounds: '#' + id,
+      }"
     />
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
-
+import { ref, computed, onMounted, unref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { OVERRIDE_QUILL_SNOW } from "@/styles";
+import { useId } from "@/hooks/use-id";
 import {
   toolbar,
   propsType,
@@ -59,4 +62,14 @@ onMounted(() => {
     }
   });
 });
+
+/*
+ * 问题：quill 的 tooltip 没有在点击 link 按钮后出现在恰当的位置，而是出现了巨大的偏移
+    该问题通过设置 options 的 bounds 选项得到解决，需要注意的是，options 选项是命令式的，
+    只有第一次设置的值才会生效。这意味着向 bounds 属性传递一个 模版引用（ref）是没用的，
+    因为ref一开始是null。这里的解决方法是向 bounds 传递一个css ID选择器字符串，
+    因为 useId 的返回值是响应式的，而 options 只采用第一次定义时的值，因此需要用 unref对Id进行处理，
+    避免意外的BUG产生。  
+ */
+const id = unref(useId());
 </script>

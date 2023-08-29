@@ -13,7 +13,7 @@ export const propsType = {
 
 export const emitsType = {
   [READY]: (payload: Quill) => payload instanceof Quill,
-  [UPDATE_MODEL_VALUE]: (payload: Delta) => payload instanceof Delta,
+  [UPDATE_MODEL_VALUE]: null,
 };
 
 export const toolbar = [
