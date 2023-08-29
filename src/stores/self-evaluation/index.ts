@@ -1,9 +1,9 @@
+import { shallowRef } from "vue";
 import { defineStore } from "pinia";
-import { ref } from "vue";
-
+import { Delta } from "@vueup/vue-quill";
 export const useSelfEvaluationStore = defineStore("self-evaluation", () => {
-  const selfEvaluation = ref("");
+  const editorContent = shallowRef(new Delta());
   return {
-    selfEvaluation,
+    editorContent,
   };
 });

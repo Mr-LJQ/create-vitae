@@ -1,4 +1,5 @@
 import type { PropType } from "vue";
+import { Delta } from "@vueup/vue-quill";
 import { isString, isBoolean } from "@/utils";
 
 export const UPDATE_CONTENT = "update:content";
@@ -33,7 +34,7 @@ export const propsType = {
     required: true,
   },
   content: {
-    type: String,
+    type: Object as PropType<Delta>,
     required: true,
   },
   showDeleteButton: {
@@ -71,7 +72,7 @@ export const propsType = {
 } as const;
 
 export const emitsType = {
-  [UPDATE_CONTENT]: (payload: string) => isString(payload),
+  [UPDATE_CONTENT]: (payload: Delta) => payload instanceof Delta,
   [UPDATE_FIRST_INPUT]: (payload: string) => isString(payload),
   [UPDATE_SECOND_INPUT]: (payload: string) => isString(payload),
   [UPDATE_START_TIME]: (payload: string) => isString(payload),

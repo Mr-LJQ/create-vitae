@@ -19,7 +19,7 @@
 import { ref } from "vue";
 import { ElIcon } from "element-plus";
 import { Minus } from "@element-plus/icons-vue";
-import TagModule from "@/components/share-modules/TagModule.vue";
+import TagModule from "@/components/share-modules/tag-module/index.vue";
 import { useInterestsStore } from "@/stores/interests";
 import {
   useHandleAddCustom,

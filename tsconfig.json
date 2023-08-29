@@ -17,6 +17,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
+    "allowSyntheticDefaultImports": true,
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

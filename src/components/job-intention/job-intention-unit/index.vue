@@ -35,7 +35,6 @@
     </EditInputItem>
     <EditInputItem for-id="hiredate" label-text="入职时间">
       <el-select
-        :class="OVERRIDE_EL_INPUT_CLASS"
         id="hiredate"
         v-model="hiredate"
         fit-input-width
@@ -55,7 +54,6 @@ import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
 import EditInputItem from "@/components/edit-input-item/index.vue";
 import {
-  OVERRIDE_EL_INPUT_CLASS,
   EDIT_INPUT_ITEM_INPUT,
   AUTO_WRAP,
 } from "@/styles";

@@ -33,7 +33,6 @@
           <el-checkbox label="至今" v-model="isHitherto" />
         </EditInputItem>
         <EditInputItem
-          :class="OVERRIDE_EL_INPUT_CLASS"
           label-text="学历"
           v-slot="{ id }"
         >
@@ -87,7 +86,6 @@ import {
   AUTO_WRAP,
   BUTTON_MOVE_CLASS,
   BUTTON_DELETE_CLASS,
-  OVERRIDE_EL_INPUT_CLASS,
 } from "@/styles";
 import {
   degrees,

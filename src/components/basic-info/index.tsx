@@ -4,7 +4,6 @@ import { isString } from "@/utils";
 import {
   AUTO_WRAP,
   EDIT_INPUT_ITEM_INPUT,
-  OVERRIDE_EL_INPUT_CLASS,
 } from "@/styles";
 import { useBasicInfoStore } from "@/stores/basic-info";
 import EditInputItem from "@/components/edit-input-item/index.vue";
@@ -192,7 +191,6 @@ export default defineComponent(
           {items.map(({ label, component }) => (
             <EditInputItem
               key={label}
-              class={OVERRIDE_EL_INPUT_CLASS}
               labelText={label}
             >
               {() => component}

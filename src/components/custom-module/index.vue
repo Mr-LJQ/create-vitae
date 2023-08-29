@@ -1,6 +1,6 @@
 <template>
   <RichTextEditor
-    class="h-280"
+    class="h-80"
     :placeholder="placeholder"
     v-model="store.editorContent"
   />
@@ -14,4 +14,3 @@ defineOptions({
 });
 const store = useCustomModuleStore();
 </script>
-<style></style>

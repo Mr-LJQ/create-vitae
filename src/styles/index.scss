@@ -1,6 +1,5 @@
 @use "global.scss";
 @use "common.scss";
-@use "./override/index.scss" as override;
 @use "edit-input-item.scss";
-@use "./rich-text-editor/index.scss" as richTextEditor;
 @use "./button/index.scss" as button;
+@use "./override/index.scss" as override;

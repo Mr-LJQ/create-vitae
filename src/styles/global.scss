@@ -8,15 +8,12 @@
 }
 
 ul,
-li {
+ol {
+  padding: 0;
+  margin: 0;
   list-style: none;
 }
 
-ul {
-  padding:0;
-  margin: 0;
-}
-
 ::placeholder {
-  color: #a8abb2;
+  color: #a8abb2; //使原生 input 的 placeholder字体颜色与element-plus 的一样
 }

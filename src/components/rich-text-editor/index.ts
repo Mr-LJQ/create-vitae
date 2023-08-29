@@ -1,12 +1,20 @@
+import type { PropType } from "vue";
+import { Delta, Quill } from "@vueup/vue-quill";
+
 export const UPDATE_MODEL_VALUE = "update:modelValue";
+export const READY = "ready";
 export const propsType = {
   modelValue: {
+    type: Object as PropType<Delta>,
     required: true,
   },
   placeholder: String,
 } as const;
 
-export const emitsType = [UPDATE_MODEL_VALUE];
+export const emitsType = {
+  [READY]: (payload: Quill) => payload instanceof Quill,
+  [UPDATE_MODEL_VALUE]: (payload: Delta) => payload instanceof Delta,
+};
 
 export const toolbar = [
   [{ size: ["small", false, "large", "huge"] }],
@@ -16,12 +24,12 @@ export const toolbar = [
   ["clean"],
 ];
 
+//为 quill的 toolbar 上的按钮设置 title（quill原生没有提供相应的方法去设置）
 export const titleConfig = {
   "ql-bold": "加粗",
   "ql-color": "字体颜色",
   "ql-italic": "斜体",
   "ql-link": "添加链接",
-  "ql-size": "字体大小",
   "ql-underline": "下划线",
   "ql-list[value=ordered]": "有序列表",
   "ql-list[value=bullet]": "无序列表",

@@ -20,7 +20,6 @@
         @handle_move_down="moveDownItem(index)"
       >
         <EditInputItem
-          :class="OVERRIDE_EL_INPUT_CLASS"
           label-text="学历"
           v-slot="{ id }"
         >
@@ -44,7 +43,6 @@ import MoveModule from "@/components/share-modules/move-module/index.vue";
 import { useEducationalBackgroundStore } from "@/stores/educational-background";
 import AddButton from "@/components/buttons/AddButton.vue";
 import EditInputItem from "@/components/edit-input-item/index.vue";
-import { OVERRIDE_EL_INPUT_CLASS } from "@/styles";
 import {
   firstItem,
   secondItem,

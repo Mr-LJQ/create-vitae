@@ -1,7 +1,7 @@
 import { setBEMClass } from "@/utils";
 
-const { bm, b } = setBEMClass("override");
+const { bem } = setBEMClass("override");
 
-export const OVERRIDE_EL_INPUT_CLASS = bm("el-input");
+export const OVERRIDE_ELEMENT_PLUS = bem("element", "plus");
 
-export const OVERRIDE = b();
+export const OVERRIDE_QUILL_SNOW = bem("quill", "snow");

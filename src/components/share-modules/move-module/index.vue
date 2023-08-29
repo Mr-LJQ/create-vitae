@@ -1,7 +1,7 @@
 <template>
-  <section :class="$style.a">
-    <div :class="$style.b">
-      <ul :class="AUTO_WRAP">
+  <section class="flex flex-row">
+    <div class="flex-1">
+      <ul class="flex flex-wrap justify-around">
         <EditInputItem :label-text="firstItem.label" v-slot="{ id }">
           <EditInput
             :id="id"
@@ -16,11 +16,7 @@
             :placeholder="secondItem.placeholder"
           />
         </EditInputItem>
-        <EditInputItem
-          :class="OVERRIDE_EL_INPUT_CLASS"
-          :label-text="thirdItem.label"
-          v-slot="{ id }"
-        >
+        <EditInputItem :label-text="thirdItem.label" v-slot="{ id }">
           <el-date-picker
             :id="id"
             type="month"
@@ -66,12 +62,7 @@ import EditInputItem from "@/components/edit-input-item/index.vue";
 import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
 import RichTextEditor from "@/components/rich-text-editor/index.vue";
 import OperateButton from "@/components/buttons/OperateButton.vue";
-import {
-  AUTO_WRAP,
-  BUTTON_MOVE_CLASS,
-  BUTTON_DELETE_CLASS,
-  OVERRIDE_EL_INPUT_CLASS,
-} from "@/styles";
+import { BUTTON_MOVE_CLASS, BUTTON_DELETE_CLASS } from "@/styles";
 import {
   propsType,
   emitsType,
@@ -85,6 +76,7 @@ import {
   HANDLE_MOVE_UP,
   HANDLE_MOVE_DOWN,
 } from ".";
+import type { Delta } from "@vueup/vue-quill";
 
 const props = defineProps(propsType);
 const emit = defineEmits(emitsType);
@@ -92,15 +84,17 @@ defineOptions({
   name: "EducationalBackgroundUnit",
 });
 
+/**
+ * 处理 v-model 语法糖
+ */
 const content = computed({
   get() {
     return props.content;
   },
-  set(value: string) {
+  set(value: Delta) {
     emit(UPDATE_CONTENT, value);
   },
 });
-
 const firstValue = computed({
   get() {
     return props.firstInput;
@@ -142,22 +136,18 @@ const finish = computed({
   },
 });
 
+/**
+ * 删除按钮相关逻辑
+ */
 function handleDelete() {
   ElMessageBox.confirm("删除后无法恢复，确定删除该教育背景吗?", "温馨提醒", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning",
-  }).then(() => {
-    emit(HANDLE_DELETE);
-  });
+  })
+    .then(() => {
+      emit(HANDLE_DELETE);
+    })
+    .catch(() => {}); //避免用户按下取消按钮时，报未捕获的错误信息
 }
 </script>
-<style module>
-.a {
-  display: flex;
-  flex-direction: row;
-}
-.b {
-  flex: 1;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <RichTextEditor :placeholder="placeholder" v-model="content" />
+  <RichTextEditor class="h-130-188" :placeholder="placeholder" v-model="content" />
   <div>
     <span
       v-for="tag of presetTags"
@@ -32,7 +32,7 @@ import {
   UPDATE_CONTENT,
   HANDLE_TOGGLE_TAG,
   HANDLE_ADD_CUSTOM,
-} from "./TagModule";
+} from ".";
 const props = defineProps(propsType);
 const emit = defineEmits(emitsType);
 defineOptions({

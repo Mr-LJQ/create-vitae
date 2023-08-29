@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { Minus } from "@element-plus/icons-vue";
-import TagModule from "@/components/share-modules/TagModule.vue";
+import TagModule from "@/components/share-modules/tag-module/index.vue";
 import { useCertificateStore } from "@/stores/certificate";
 import {
   useHandleAddCustom,
