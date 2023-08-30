@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
+import { shallowRef, reactive } from "vue";
+import { Delta } from "@vueup/vue-quill";
 
 export const useCertificateStore = defineStore("certificate", () => {
-  const content = ref("");
+  const content = shallowRef(new Delta());
   const tags: Set<string> = reactive(new Set());
-  function addNewTag(tag: string) {
+  function addTag(tag: string) {
     return tags.add(tag);
   }
   function hasTag(tag: string) {
@@ -17,7 +18,7 @@ export const useCertificateStore = defineStore("certificate", () => {
     tags,
     content,
     hasTag,
-    addNewTag,
+    addTag,
     deleteTag,
   };
 });
