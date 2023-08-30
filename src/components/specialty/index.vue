@@ -1,48 +1,58 @@
 <template>
   <TagModule
-    v-model:custom="custom"
     v-model:content="store.content"
     :placeholder="placeholder"
     :module-name="moduleName"
     :presetTags="presetTags"
-    @handle_add_custom="handleAddCustom"
-    @handle_toggle_tag="handleToggleTag"
-  />
-  <ul>
-    <li :key="tag" v-for="tag of store.tags">
-      <p></p>
-      <div>
-        <el-select>
-          <el-option
-            v-for="item of proficiency"
-            :key="item"
-            :value="item"
-            :label="item"
+    :add-tag="addTag"
+    :has-tag="hasTag"
+    :delete-tag="deleteTag"
+  >
+    <ul class="flex flex-wrap my-3">
+      <li :key="tag" v-for="[tag, options] of store.tags">
+        <span class="text-xs">{{ tag }}</span>
+        <div class="mr-2">
+          <el-select
+            class="proficiency mr-2"
+            v-model="options.proficiency"
+            fit-input-width
+          >
+            <el-option
+              v-for="item of proficiency"
+              :key="item"
+              :value="item"
+              :label="item"
+            />
+          </el-select>
+          <el-select
+            class="presentation mr-2"
+            v-model="options.presentation"
+            fit-input-width
+          >
+            <el-option
+              v-for="item of presentation"
+              :key="item"
+              :value="item"
+              :label="item"
+            />
+          </el-select>
+          <el-button
+            circle
+            size="small"
+            type="danger"
+            :icon="Delete"
+            @click="deleteTag(tag)"
           />
-        </el-select>
-        <el-select>
-          <el-option
-            v-for="item of presentation"
-            :key="item"
-            :value="item"
-            :label="item"
-          />
-        </el-select>
-        <el-icon @click="deleteTag(tag)"><Minus /></el-icon>
-      </div>
-    </li>
-  </ul>
+        </div>
+      </li>
+    </ul>
+  </TagModule>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
-import { ElSelect, ElOption, ElIcon } from "element-plus";
-import { Minus } from "@element-plus/icons-vue";
+import { ElSelect, ElOption, ElButton } from "element-plus";
+import { Delete } from "@element-plus/icons-vue";
 import TagModule from "@/components/share-modules/tag-module/index.vue";
 import { useSpecialtyStore } from "@/stores/specialty";
-import {
-  useHandleAddCustom,
-  useHandleToggleTag,
-} from "@/hooks/use-tag-handler";
 import {
   placeholder,
   propsType,
@@ -56,11 +66,17 @@ defineOptions({
 });
 
 const store = useSpecialtyStore();
-const { addNewTag, deleteTag, hasTag } = store;
-const custom = ref("");
-const handleAddCustom = useHandleAddCustom(custom, {
-  hasTag,
-  addNewTag,
-});
-const handleToggleTag = useHandleToggleTag({ addNewTag, deleteTag, hasTag });
+const { addTag, deleteTag, hasTag } = store;
 </script>
+<style scoped>
+.proficiency :deep(.el-input) {
+  --el-input-bg-color: #fff;
+  --el-input-border-color: #eee;
+  --el-input-width: 80px;
+}
+.presentation :deep(.el-input) {
+  --el-input-bg-color: #fff;
+  --el-input-border-color: #eee;
+  --el-input-width: 100px;
+}
+</style>

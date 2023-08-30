@@ -1,11 +1,21 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
-
+import { shallowRef, reactive } from "vue";
+import { Delta } from "@vueup/vue-quill";
+import type { proficiency, presentation } from "@/components/specialty";
 export const useSpecialtyStore = defineStore("specialty", () => {
-  const content = ref("");
-  const tags: Set<string> = reactive(new Set());
-  function addNewTag(tag: string) {
-    return tags.add(tag);
+  const content = shallowRef(new Delta());
+  const tags: Map<
+    string,
+    {
+      proficiency: (typeof proficiency)[number];
+      presentation: (typeof presentation)[number];
+    }
+  > = reactive(new Map());
+  function addTag(tag: string) {
+    return tags.set(tag, {
+      proficiency: "一般",
+      presentation: "文字",
+    });
   }
   function hasTag(tag: string) {
     return tags.has(tag);
@@ -17,7 +27,7 @@ export const useSpecialtyStore = defineStore("specialty", () => {
     tags,
     content,
     hasTag,
-    addNewTag,
+    addTag,
     deleteTag,
   };
 });

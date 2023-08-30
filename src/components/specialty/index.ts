@@ -20,6 +20,6 @@ export const presetTags = [
   "Office软件",
 ];
 
-export const proficiency = ["一般", "良好", "熟练", "擅长", "精通"];
+export const proficiency = ["一般", "良好", "熟练", "擅长", "精通"] as const;
 
-export const presentation = ["文字", "百分比"];
+export const presentation = ["文字", "百分比"] as const;
