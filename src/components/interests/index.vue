@@ -1,30 +1,32 @@
 <template>
   <TagModule
-    v-model:custom="custom"
     v-model:content="store.content"
     :placeholder="placeholder"
     :module-name="moduleName"
     :presetTags="presetTags"
-    @handle_add_custom="handleAddCustom"
-    @handle_toggle_tag="handleToggleTag"
-  />
-  <ul>
-    <li :key="tag" v-for="tag of store.tags">
-      <span>{{ tag }}</span>
-      <el-icon @click="deleteTag(tag)"><Minus /></el-icon>
-    </li>
-  </ul>
+    :has-tag="hasTag"
+    :add-tag="addTag"
+    :delete-tag="deleteTag"
+  >
+    <ul class="flex flex-wrap mt-3">
+      <li class="mr-3 mb-2" :key="tag" v-for="tag of store.tags">
+        <el-tag
+          hit
+          round
+          closable
+          size="large"
+          effect="plain"
+          @close="deleteTag(tag)"
+          >{{ tag }}</el-tag
+        >
+      </li>
+    </ul>
+  </TagModule>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
-import { ElIcon } from "element-plus";
-import { Minus } from "@element-plus/icons-vue";
+import { ElTag } from "element-plus";
 import TagModule from "@/components/share-modules/tag-module/index.vue";
 import { useInterestsStore } from "@/stores/interests";
-import {
-  useHandleAddCustom,
-  useHandleToggleTag,
-} from "@/hooks/use-tag-handler";
 import { propsType, presetTags, placeholder } from ".";
 defineProps(propsType);
 defineOptions({
@@ -32,11 +34,5 @@ defineOptions({
 });
 
 const store = useInterestsStore();
-const { addNewTag, deleteTag, hasTag } = store;
-const custom = ref("");
-const handleAddCustom = useHandleAddCustom(custom, {
-  hasTag,
-  addNewTag,
-});
-const handleToggleTag = useHandleToggleTag({ addNewTag, deleteTag, hasTag });
+const { deleteTag, addTag, hasTag } = store;
 </script>

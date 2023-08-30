@@ -1,6 +1,6 @@
 <template>
   <RichTextEditor
-    class="h-80"
+    class="h-80 max-w-[1200px] mx-auto"
     :placeholder="placeholder"
     v-model="store.editorContent"
   />

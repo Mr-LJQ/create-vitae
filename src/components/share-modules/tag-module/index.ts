@@ -1,18 +1,11 @@
-import { PropType } from "vue";
-import { isString } from "@/utils";
+import type { PropType } from "vue";
+import type { Delta } from "@vueup/vue-quill";
 
-export const UPDATE_CUSTOM = "update:custom";
 export const UPDATE_CONTENT = "update:content";
-export const HANDLE_TOGGLE_TAG = "handle_toggle_tag";
-export const HANDLE_ADD_CUSTOM = "handle_add_custom";
 export const propsType = {
   placeholder: String,
   content: {
-    type: String,
-    required: true,
-  },
-  custom: {
-    type: String,
+    type: Object as PropType<Delta>,
     required: true,
   },
   presetTags: {
@@ -23,11 +16,18 @@ export const propsType = {
     type: String,
     required: true,
   },
+  hasTag: {
+    type: Function as PropType<(tag: string) => boolean>,
+    required: true,
+  },
+  addTag: {
+    type: Function as PropType<(tag: string) => void>,
+    required: true,
+  },
+  deleteTag: {
+    type: Function as PropType<(tag: string) => boolean>,
+    required: true,
+  },
 } as const;
 
-export const emitsType = {
-  [UPDATE_CUSTOM]: (payload: unknown) => isString(payload),
-  [UPDATE_CONTENT]: (payload: unknown) => isString(payload),
-  [HANDLE_TOGGLE_TAG]: (payload: string) => isString(payload),
-  [HANDLE_ADD_CUSTOM]: null,
-};
+export const emitsType = [UPDATE_CONTENT];
