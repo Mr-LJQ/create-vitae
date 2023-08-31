@@ -20,6 +20,9 @@ dependencies:
   lodash.isequal:
     specifier: ^4.5.0
     version: registry.npmmirror.com/lodash.isequal@4.5.0
+  normalize.css:
+    specifier: ^8.0.1
+    version: registry.npmmirror.com/normalize.css@8.0.1
   pinia:
     specifier: ^2.1.6
     version: registry.npmmirror.com/pinia@2.1.6(typescript@5.0.2)(vue@3.3.4)
@@ -3168,6 +3171,12 @@ packages:
     resolution: {integrity: sha512-Wj7+EJQ8mSuXr2iWfnujrimU35R2W4FAErEyTmJoJ7ucwTn2hOUSsRehMb5RSYkxXGTM7Y9QpvPmp++w5ftoJw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/normalize-wheel-es/-/normalize-wheel-es-1.2.0.tgz}
     name: normalize-wheel-es
     version: 1.2.0
+    dev: false
+
+  registry.npmmirror.com/normalize.css@8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/normalize.css/-/normalize.css-8.0.1.tgz}
+    name: normalize.css
+    version: 8.0.1
     dev: false
 
   registry.npmmirror.com/npm-run-path@4.0.1:

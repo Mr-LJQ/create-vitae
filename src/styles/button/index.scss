@@ -4,13 +4,11 @@ $move_color: #13d8a7;
 $delete_color: #ff755d;
 
 @include b(button) {
-  display: block;
   width: 98px;
   height: 28px;
-  text-align: center;
-  line-height: 28px;
-  border-radius: 14px;
   margin-top: 20px;
+  border-radius: 14px;
+  background-color: #fff;
   cursor: pointer;
   @include m(delete) {
     border: 1px solid $delete_color;
@@ -19,6 +17,10 @@ $delete_color: #ff755d;
       background-color: $delete_color;
       color: #fff;
     }
+    &:focus-visible {
+      outline: 2px solid $delete_color;
+      outline-offset: 1px;
+    }
   }
   @include m(move) {
     border: 1px solid $move_color;
@@ -26,6 +28,10 @@ $delete_color: #ff755d;
     &:hover {
       background-color: $move_color;
       color: #fff;
+    }
+    &:focus-visible {
+      outline: 2px solid $move_color;
+      outline-offset: 1px;
     }
   }
 }

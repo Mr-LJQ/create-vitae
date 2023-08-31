@@ -72,15 +72,15 @@ export const propsType = {
 } as const;
 
 export const emitsType = {
-  [UPDATE_CONTENT]: (payload: Delta) => payload instanceof Delta,
+  [UPDATE_CONTENT]: null,
   [UPDATE_FIRST_INPUT]: (payload: string) => isString(payload),
   [UPDATE_SECOND_INPUT]: (payload: string) => isString(payload),
   [UPDATE_START_TIME]: (payload: string) => isString(payload),
   [UPDATE_FINISH_TIME]: (payload: string) => isString(payload),
   [UPDATE_IS_HITHERTO]: (payload: boolean) => isBoolean(payload),
   [HANDLE_DELETE]: null,
-  [HANDLE_MOVE_UP]: (payload: boolean) => isBoolean(payload),
-  [HANDLE_MOVE_DOWN]: (payload: boolean) => isBoolean(payload),
+  [HANDLE_MOVE_UP]: null,
+  [HANDLE_MOVE_DOWN]: null,
 };
 
 export const degrees = [

@@ -1,5 +1,5 @@
 <template>
-  <ul :class="AUTO_WRAP">
+  <ul class="flex flex-wrap justify-around">
     <EditInputItem for-id="post" label-text="求职意向">
       <input
         id="post"
@@ -34,11 +34,7 @@
       />
     </EditInputItem>
     <EditInputItem for-id="hiredate" label-text="入职时间">
-      <el-select
-        id="hiredate"
-        v-model="hiredate"
-        fit-input-width
-      >
+      <el-select id="hiredate" v-model="hiredate" fit-input-width>
         <el-option
           v-for="value of hiredates"
           :key="value"
@@ -53,10 +49,7 @@
 import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
 import EditInputItem from "@/components/edit-input-item/index.vue";
-import {
-  EDIT_INPUT_ITEM_INPUT,
-  AUTO_WRAP,
-} from "@/styles";
+import { EDIT_INPUT_ITEM_INPUT } from "@/styles";
 import { chinaCities } from "./china-cities";
 import {
   unitProps,

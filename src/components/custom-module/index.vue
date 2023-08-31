@@ -1,9 +1,11 @@
 <template>
-  <RichTextEditor
-    class="h-80 max-w-[1200px] mx-auto"
-    :placeholder="placeholder"
-    v-model="store.editorContent"
-  />
+  <div class="h-[21rem] overflow-y-auto px-5">
+    <RichTextEditor
+      class="h-80 max-w-[1200px] mx-auto"
+      :placeholder="placeholder"
+      v-model="store.editorContent"
+    />
+  </div>
 </template>
 <script lang="ts" setup>
 import RichTextEditor from "@/components/rich-text-editor/index.vue";

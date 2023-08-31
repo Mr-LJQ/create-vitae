@@ -1,15 +1,17 @@
 <template>
-  <TagModule
-    v-model:content="store.content"
-    :placeholder="placeholder"
-    :module-name="moduleName"
-    :presetTags="presetTags"
-    :has-tag="hasTag"
-    :add-tag="addTag"
-    :delete-tag="deleteTag"
-  >
-    <ShowCheckedTags :tags="store.tags" :delete-tag="deleteTag" />
-  </TagModule>
+  <div class="h-[21rem] overflow-y-auto px-5">
+    <TagModule
+      v-model:content="store.content"
+      :placeholder="placeholder"
+      :module-name="moduleName"
+      :presetTags="presetTags"
+      :has-tag="hasTag"
+      :add-tag="addTag"
+      :delete-tag="deleteTag"
+    >
+      <ShowCheckedTags :tags="store.tags" :delete-tag="deleteTag" />
+    </TagModule>
+  </div>
 </template>
 <script lang="ts" setup>
 import TagModule from "@/components/share-modules/tag-module/index.vue";

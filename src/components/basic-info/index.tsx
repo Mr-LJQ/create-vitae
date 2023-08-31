@@ -1,15 +1,11 @@
 import { defineComponent } from "vue";
 import { ElSelect, ElDatePicker, ElOption, ElCheckbox } from "element-plus";
 import { isString } from "@/utils";
-import {
-  AUTO_WRAP,
-  EDIT_INPUT_ITEM_INPUT,
-} from "@/styles";
+import { EDIT_INPUT_ITEM_INPUT } from "@/styles";
 import { useBasicInfoStore } from "@/stores/basic-info";
 import EditInputItem from "@/components/edit-input-item/index.vue";
 import FileButton from "./FileButton.vue";
 import type { SetupContext, InputHTMLAttributes, ReservedProps } from "vue";
-
 
 const politicsStatusOptions = [
   "不填",
@@ -187,12 +183,9 @@ export default defineComponent(
         },
       ];
       return (
-        <ul class={AUTO_WRAP}>
+        <ul class="flex flex-wrap justify-around">
           {items.map(({ label, component }) => (
-            <EditInputItem
-              key={label}
-              labelText={label}
-            >
+            <EditInputItem key={label} labelText={label}>
               {() => component}
             </EditInputItem>
           ))}

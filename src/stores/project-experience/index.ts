@@ -1,5 +1,6 @@
 import { reactive } from "vue";
 import { defineStore } from "pinia";
+import { Delta } from "@vueup/vue-quill";
 import { moveOneStep } from "@/utils";
 
 let uniqueId = 0;

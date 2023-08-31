@@ -17,14 +17,6 @@
         max-width: 1200px;
         margin: 0 auto 15px;
       }
-      .el-tabs__content {
-        padding: 0 20px;
-        height: 330px;
-      }
-      .el-tab-pane {
-        overflow-y: auto;
-        height: 100%;
-      }
       .el-checkbox {
         margin-left: 8px;
         vertical-align: middle;
@@ -56,9 +48,9 @@
       .ql-container {
         flex: 1;
         overflow-y: auto;
-        padding-bottom: 1em;//滚动条总是不能够触底,因此需要设置该样式，以使最后一行的输入能够完全显示
+        padding-bottom: 1em; //滚动条总是不能够触底,因此需要设置该样式，以使最后一行的输入能够完全显示
       }
-      
+
       .ql-container.ql-snow {
         //.ql-snow用于提升优先级
         border: none; //覆盖默认边框，避免双重边框

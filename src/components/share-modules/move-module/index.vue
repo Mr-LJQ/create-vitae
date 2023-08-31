@@ -1,7 +1,11 @@
 <template>
-  <section class="flex flex-row">
-    <div class="flex-1">
-      <ul class="flex flex-wrap justify-around">
+  <section class="flex flex-row relative">
+    <div
+      class="flex-1"
+      :class="$style.transition"
+      :style="{ maxWidth: showDeleteButton ? 'calc(100% - 128px)' : '100%' }"
+    >
+      <ul class="flex flex-wrap justify-between">
         <EditInputItem :label-text="firstItem.label" v-slot="{ id }">
           <EditInput
             :id="id"
@@ -34,25 +38,31 @@
         </EditInputItem>
         <slot />
       </ul>
-      <RichTextEditor :placeholder="placeholder" v-model="content" />
+      <RichTextEditor
+        class="max-h-56"
+        :placeholder="placeholder"
+        v-model="content"
+      />
     </div>
-    <div v-if="showDeleteButton">
-      <OperateButton
-        v-if="showMoveUpButton"
-        :class="BUTTON_MOVE_CLASS"
-        @click="$emit(HANDLE_MOVE_UP)"
-        >上移</OperateButton
-      >
-      <OperateButton
-        v-if="showMoveDownButton"
-        :class="BUTTON_MOVE_CLASS"
-        @click="$emit(HANDLE_MOVE_DOWN)"
-        >下移</OperateButton
-      >
-      <OperateButton :class="BUTTON_DELETE_CLASS" @click="handleDelete"
-        >删除</OperateButton
-      >
-    </div>
+    <Transition name="buttonsCol">
+      <div class="w-32 text-center" v-if="showDeleteButton">
+        <OperateButton
+          v-if="showMoveUpButton"
+          :class="BUTTON_MOVE_CLASS"
+          @click="$emit(HANDLE_MOVE_UP)"
+          >上移</OperateButton
+        >
+        <OperateButton
+          v-if="showMoveDownButton"
+          :class="BUTTON_MOVE_CLASS"
+          @click="$emit(HANDLE_MOVE_DOWN)"
+          >下移</OperateButton
+        >
+        <OperateButton :class="BUTTON_DELETE_CLASS" @click="handleDelete"
+          >删除</OperateButton
+        >
+      </div>
+    </Transition>
   </section>
 </template>
 <script lang="ts" setup>
@@ -84,7 +94,7 @@ defineOptions({
   name: "EducationalBackgroundUnit",
 });
 
-/**
+/*
  * 处理 v-model 语法糖
  */
 const content = computed({
@@ -136,7 +146,7 @@ const finish = computed({
   },
 });
 
-/**
+/*
  * 删除按钮相关逻辑
  */
 function handleDelete() {
@@ -151,3 +161,23 @@ function handleDelete() {
     .catch(() => {}); //避免用户按下取消按钮时，报未捕获的错误信息
 }
 </script>
+<style>
+.buttonsCol-enter-active,
+.buttonsCol-leave-active {
+  transition: all 0.5s ease;
+  position: absolute;
+  right: 0;
+}
+
+.buttonsCol-enter-from,
+.buttonsCol-leave-to {
+  opacity: 0;
+  transform: translateX(128px); /* 此处的 128px 取决于 buttons 列的宽度*/
+}
+</style>
+
+<style module>
+.transition {
+  transition: all 0.5s ease;
+}
+</style>

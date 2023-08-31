@@ -1,5 +1,5 @@
 @use "global.scss";
-@use "common.scss";
 @use "edit-input-item.scss";
+@use "./common/index.scss" as common;
 @use "./button/index.scss" as button;
 @use "./override/index.scss" as override;

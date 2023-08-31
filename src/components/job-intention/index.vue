@@ -1,6 +1,10 @@
 <template>
   <ul>
-    <li :class="$style.a" v-for="(item, index) of jobIntentions" :key="Object.values(item).join()">
+    <li
+      :class="$style.a"
+      v-for="(item, index) of jobIntentions"
+      :key="Object.values(item).join()"
+    >
       <JobIntentionUnit
         v-model:pay="item.pay"
         v-model:city="item.city"
@@ -22,7 +26,7 @@
 <script lang="ts" setup>
 import { ElButton } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-import AddButton from "@/components/add-button/index.vue";
+import AddButton from "@/components/buttons/AddButton.vue";
 import { useJobIntentionStore } from "@/stores/job-intention";
 import JobIntentionUnit from "./job-intention-unit/index.vue";
 defineOptions({

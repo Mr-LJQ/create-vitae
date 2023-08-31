@@ -1,13 +1,17 @@
 <template>
-  <div class="flex max-w-[1200px] mx-auto">
-    <RichTextEditor
-      class="h-80 flex-1"
-      :placeholder="placeholder"
-      v-model="store.editorContent"
-      @ready="(quill) => (quillRef = quill)"
-    />
-    <div class="w-32 text-center">
-      <el-button type="primary" round @click="addCivilities">客套话</el-button>
+  <div class="h-[21rem] overflow-y-auto px-5">
+    <div class="flex max-w-[1200px] mx-auto">
+      <RichTextEditor
+        class="h-80 flex-1"
+        :placeholder="placeholder"
+        v-model="store.editorContent"
+        @ready="(quill) => (quillRef = quill)"
+      />
+      <div class="w-32 text-center">
+        <el-button class="mt-2" type="primary" round @click="addCivilities"
+          >客套话</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +39,7 @@ const quillRef = ref<Quill | null>(null);
  */
 function adjustCursor() {
   const quill = quillRef.value;
-  if (quill == null) return;//正常情况下，quill是必定存在的
+  if (quill == null) return; //正常情况下，quill是必定存在的
   quill.blur();
   nextTick(() => {
     quill.setSelection(quill.getLength());
