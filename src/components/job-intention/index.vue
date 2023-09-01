@@ -1,10 +1,6 @@
 <template>
   <ul>
-    <li
-      :class="$style.a"
-      v-for="(item, index) of jobIntentions"
-      :key="Object.values(item).join()"
-    >
+    <li :class="$style.a" v-for="(item, index) of jobIntentions" :key="item.id">
       <JobIntentionUnit
         v-model:pay="item.pay"
         v-model:city="item.city"
@@ -21,7 +17,7 @@
       />
     </li>
   </ul>
-  <AddButton @click="addItem">求职意向</AddButton>
+  <AddButton @click="appendJobIntention">求职意向</AddButton>
 </template>
 <script lang="ts" setup>
 import { ElButton } from "element-plus";
@@ -29,19 +25,13 @@ import { Delete } from "@element-plus/icons-vue";
 import AddButton from "@/components/buttons/AddButton.vue";
 import { useJobIntentionStore } from "@/stores/job-intention";
 import JobIntentionUnit from "./job-intention-unit/index.vue";
+import { propsType } from ".";
+defineProps(propsType);
 defineOptions({
   name: "JobIntention",
 });
 const { jobIntentions, appendJobIntention, deleteJobIntention } =
   useJobIntentionStore();
-function addItem() {
-  appendJobIntention({
-    pay: "",
-    city: "",
-    post: "",
-    hiredate: "",
-  });
-}
 </script>
 <style module>
 .a {

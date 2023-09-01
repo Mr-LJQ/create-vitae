@@ -9,12 +9,7 @@
         v-model="post"
       />
     </EditInputItem>
-    <EditInputItem
-      :class="OVERRIDE_EL_INPUT_CLASS"
-      ref="cityLi"
-      for-id="city"
-      label-text="意向城市"
-    >
+    <EditInputItem ref="cityLi" for-id="city" label-text="意向城市">
       <el-cascader
         filterable
         :show-all-levels="false"
