@@ -6,5 +6,5 @@ export type AModuleData = {
   third?: string;
   isHitherto: boolean;
   editorContent: Delta;
-  timeRange: [string, string];
+  timeRange: [Date, Date] | null;
 };

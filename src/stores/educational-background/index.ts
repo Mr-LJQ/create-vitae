@@ -12,8 +12,8 @@ function createItem(): Required<AModuleData> {
     third: "",
     first: "",
     second: "",
+    timeRange: null,
     isHitherto: false,
-    timeRange: ["", ""],
     editorContent: new Delta(),
   };
 }

@@ -63,7 +63,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import EditInput from "@/components/edit-input/index.vue";
 import EditInputItem from "@/components/edit-input-item/index.vue";
 import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
@@ -127,7 +127,12 @@ const isHitherto = computed({
 });
 const timeRange = computed({
   get() {
-    return props.timeRange;
+    /**
+     * 注意，此处的 ! 是为了避免一个类型错误，原因是因为 ElDatePicker 的 v-model 不支持 null类型，
+     *  但实际上，当使用 clearable 功能使，其返回的值就是一个 null 类型，
+     *    因此这应当算是一个 ElDatePicker 的类型BUG.
+     */
+    return props.timeRange!;
   },
   set(value) {
     emit(UPDATE_TIME_RANGE, value);
@@ -148,6 +153,15 @@ function handleDelete() {
     })
     .catch(() => {}); //避免用户按下取消按钮时，报未捕获的错误信息
 }
+
+/*
+ * 实现 至今按钮 与 日期选择器 间的联动
+ */
+watchEffect(() => {
+  if (isHitherto.value && timeRange.value !== null) {
+    timeRange.value[1] = new Date();
+  }
+});
 </script>
 <style>
 .buttonsCol-enter-active,

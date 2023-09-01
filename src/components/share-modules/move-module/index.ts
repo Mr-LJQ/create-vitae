@@ -1,6 +1,6 @@
 import type { PropType } from "vue";
 import { Delta } from "@vueup/vue-quill";
-import { isString, isBoolean } from "@/utils";
+import { isString, isBoolean, isDate } from "@/utils";
 
 export const UPDATE_CONTENT = "update:content";
 export const UPDATE_FIRST_INPUT = "update:firstInput";
@@ -62,7 +62,7 @@ export const propsType = {
     required: true,
   },
   timeRange: {
-    type: Object as PropType<[string, string]>,
+    type: [Object,null] as PropType<[Date, Date] | null>,
     required: true,
   },
 } as const;
@@ -71,8 +71,9 @@ export const emitsType = {
   [UPDATE_CONTENT]: null,
   [UPDATE_FIRST_INPUT]: (payload: string) => isString(payload),
   [UPDATE_SECOND_INPUT]: (payload: string) => isString(payload),
-  [UPDATE_TIME_RANGE]: (payload: [string, string]) => {
-    return payload.length === 2 && payload.every(isString);
+  [UPDATE_TIME_RANGE]: (payload: [Date, Date] | null) => {
+    if (payload === null) return true;
+    return payload.length === 2 && payload.every(isDate);
   },
   [UPDATE_IS_HITHERTO]: (payload: boolean) => isBoolean(payload),
   [HANDLE_DELETE]: null,
