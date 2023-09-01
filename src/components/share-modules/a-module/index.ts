@@ -45,4 +45,5 @@ export const propsType = {
     type: Array as PropType<AModuleData[]>,
     required: true,
   },
+  defaultTimeValue: Object as PropType<[Date, Date]>,
 } as const;

@@ -21,3 +21,11 @@ export const propsType = {
     required: true,
   },
 } as const;
+
+/**
+ * 该项是工作经历，求职者应该是最近离职，按照两年换一次工作来想，因此开始时间是两年前
+ */
+const startTime = new Date();
+startTime.setFullYear(startTime.getFullYear() - 2);
+const endTime = new Date();
+export const defaultTimeValue: [Date, Date] = [startTime, endTime];

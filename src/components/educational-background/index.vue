@@ -4,6 +4,7 @@
     :secondItem="secondItem"
     :thirdItem="thirdItem"
     :placeholder="placeholder"
+    :defaultTimeValue="defaultTimeValue"
     :dataList="store.dataList"
     :deleteItem="deleteItem"
     :addNewItem="addNewItem"
@@ -36,6 +37,7 @@ import {
   placeholder,
   propsType,
   degrees,
+  defaultTimeValue
 } from ".";
 defineProps(propsType);
 defineOptions({

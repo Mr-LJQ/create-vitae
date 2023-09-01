@@ -16,6 +16,7 @@
           :secondItem="secondItem"
           :thirdItem="thirdItem"
           :placeholder="placeholder"
+          :defaultTimeValue="defaultTimeValue"
           v-model:content="item.editorContent"
           v-model:firstInput="item.first"
           v-model:secondInput="item.second"

@@ -4,6 +4,7 @@
     :secondItem="secondItem"
     :thirdItem="thirdItem"
     :placeholder="placeholder"
+    :defaultTimeValue="defaultTimeValue"
     :dataList="store.dataList"
     :deleteItem="deleteItem"
     :addNewItem="addNewItem"
@@ -15,7 +16,7 @@
 <script lang="ts" setup>
 import AModule from "@/components/share-modules/a-module/index.vue";
 import { useProjectExperienceStore } from "@/stores/project-experience";
-import { firstItem, secondItem, thirdItem, placeholder, propsType } from ".";
+import { firstItem, secondItem, thirdItem, placeholder, propsType,defaultTimeValue } from ".";
 defineProps(propsType);
 defineOptions({
   name: "ProjectExperience",

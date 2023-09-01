@@ -62,9 +62,10 @@ export const propsType = {
     required: true,
   },
   timeRange: {
-    type: [Object,null] as PropType<[Date, Date] | null>,
+    type: [Object, null] as PropType<[Date, Date] | null>,
     required: true,
   },
+  defaultTimeValue: Object as PropType<[Date, Date]>,
 } as const;
 
 export const emitsType = {

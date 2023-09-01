@@ -28,6 +28,7 @@
               --el-input-bg-color: #f3f4f6;
               --el-input-border-color: #f3f4f6;
             "
+            :default-value="defaultTimeValue"
             unlink-panels
             v-model="timeRange"
             type="monthrange"
