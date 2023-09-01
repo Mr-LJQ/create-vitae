@@ -23,6 +23,11 @@
         <EditInputItem :label-text="thirdItem.label" v-slot="{ id }">
           <el-date-picker
             :id="id"
+            style="
+              --el-date-editor-width: 220px;
+              --el-input-bg-color: #f3f4f6;
+              --el-input-border-color: #f3f4f6;
+            "
             unlink-panels
             v-model="timeRange"
             type="monthrange"
