@@ -1,40 +1,38 @@
 <template>
-  <div :class="$style.wrapper">
-    <TransitionGroup
-      :moveClass="moveClassRef ? 'list-move-delete' : ''"
-      tag="ul"
-      name="list"
-      class="max-w-[1200px] mx-auto"
+  <TransitionGroup
+    :moveClass="moveClassRef ? 'list-move-delete' : ''"
+    tag="ul"
+    name="list"
+    class="max-w-[1200px] mx-auto"
+  >
+    <li
+      :key="item.id"
+      :class="[BORDER_B_DASHED, 'mb-3']"
+      v-for="(item, index) of dataList"
     >
-      <li
-        :key="item.id"
-        :class="[BORDER_B_DASHED, 'mb-3']"
-        v-for="(item, index) of dataList"
+      <MoveModule
+        :firstItem="firstItem"
+        :secondItem="secondItem"
+        :thirdItem="thirdItem"
+        :placeholder="placeholder"
+        :defaultTimeValue="defaultTimeValue"
+        v-model:content="item.editorContent"
+        v-model:firstInput="item.first"
+        v-model:secondInput="item.second"
+        v-model:time-range="item.timeRange"
+        v-model:isHitherto="item.isHitherto"
+        :showDeleteButton="isMultiple"
+        :showMoveDownButton="isShowMoveDownButton(index)"
+        :showMoveUpButton="isShowMoveUpButton(index)"
+        @handle_delete="handleDelete(index)"
+        @handle_move_up="handleMoveUp(index)"
+        @handle_move_down="handleMoveDown(index)"
       >
-        <MoveModule
-          :firstItem="firstItem"
-          :secondItem="secondItem"
-          :thirdItem="thirdItem"
-          :placeholder="placeholder"
-          :defaultTimeValue="defaultTimeValue"
-          v-model:content="item.editorContent"
-          v-model:firstInput="item.first"
-          v-model:secondInput="item.second"
-          v-model:time-range="item.timeRange"
-          v-model:isHitherto="item.isHitherto"
-          :showDeleteButton="isMultiple"
-          :showMoveDownButton="isShowMoveDownButton(index)"
-          :showMoveUpButton="isShowMoveUpButton(index)"
-          @handle_delete="handleDelete(index)"
-          @handle_move_up="handleMoveUp(index)"
-          @handle_move_down="handleMoveDown(index)"
-        >
-          <slot :index="index" />
-        </MoveModule>
-      </li>
-    </TransitionGroup>
-    <AddButton @click="addNewItem">{{ moduleName }}</AddButton>
-  </div>
+        <slot :index="index" />
+      </MoveModule>
+    </li>
+  </TransitionGroup>
+  <AddButton @click="addNewItem">{{ moduleName }}</AddButton>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
@@ -74,13 +72,6 @@ function handleMoveDown(index: number) {
   moveDownItem(index);
 }
 </script>
-
-<style module>
-.wrapper {
-  @apply h-[21rem] overflow-y-scroll px-5 overflow-x-hidden;
-}
-</style>
-
 <style>
 /*
   在执行删除操纵时，在删除动画结束后，再执行移动动画

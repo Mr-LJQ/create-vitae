@@ -17,6 +17,10 @@
         max-width: 1200px;
         margin: 0 auto 15px;
       }
+      .el-tabs__content {
+        /* @apply 是 tailwind css 的语法 */
+        @apply h-[21rem] overflow-y-scroll pl-5 overflow-x-hidden;
+      }
       .el-checkbox {
         margin-left: 8px;
         vertical-align: middle;

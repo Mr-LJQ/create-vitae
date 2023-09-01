@@ -1,17 +1,15 @@
 <template>
-  <div class="h-[21rem] overflow-y-auto px-5">
-    <TagModule
-      v-model:content="store.content"
-      :placeholder="placeholder"
-      :module-name="moduleName"
-      :presetTags="presetTags"
-      :add-tag="addTag"
-      :has-tag="hasTag"
-      :delete-tag="deleteTag"
-    >
-      <ShowCheckedTags :tags="store.tags" :delete-tag="deleteTag" />
-    </TagModule>
-  </div>
+  <TagModule
+    v-model:content="store.content"
+    :placeholder="placeholder"
+    :module-name="moduleName"
+    :presetTags="presetTags"
+    :add-tag="addTag"
+    :has-tag="hasTag"
+    :delete-tag="deleteTag"
+  >
+    <ShowCheckedTags :tags="store.tags" :delete-tag="deleteTag" />
+  </TagModule>
 </template>
 <script lang="ts" setup>
 import { useCertificateStore } from "@/stores/certificate";
