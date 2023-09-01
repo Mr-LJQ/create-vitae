@@ -5,28 +5,28 @@ import { isString, isBoolean } from "@/utils";
 export const UPDATE_CONTENT = "update:content";
 export const UPDATE_FIRST_INPUT = "update:firstInput";
 export const UPDATE_SECOND_INPUT = "update:secondInput";
-export const UPDATE_START_TIME = "update:startTime";
-export const UPDATE_FINISH_TIME = "update:finishTime";
+export const UPDATE_TIME_RANGE = "update:timeRange";
 export const UPDATE_IS_HITHERTO = "update:isHitherto";
 export const HANDLE_MOVE_UP = "handle_move_up";
 export const HANDLE_MOVE_DOWN = "handle_move_down";
 export const HANDLE_DELETE = "handle_delete";
-type ItemProps = {
+type O = {
   label: string;
   placeholder: string;
+  placeholder2?: string;
 };
 
 export const propsType = {
   firstItem: {
-    type: Object as PropType<ItemProps>,
+    type: Object as PropType<O>,
     required: true,
   },
   secondItem: {
-    type: Object as PropType<ItemProps>,
+    type: Object as PropType<O>,
     required: true,
   },
   thirdItem: {
-    type: Object as PropType<ItemProps & { placeholder2: string }>,
+    type: Object as PropType<Required<O>>,
     required: true,
   },
   placeholder: {
@@ -61,12 +61,8 @@ export const propsType = {
     type: String,
     required: true,
   },
-  startTime: {
-    type: String,
-    required: true,
-  },
-  finishTime: {
-    type: String,
+  timeRange: {
+    type: Object as PropType<[string, string]>,
     required: true,
   },
 } as const;
@@ -75,8 +71,9 @@ export const emitsType = {
   [UPDATE_CONTENT]: null,
   [UPDATE_FIRST_INPUT]: (payload: string) => isString(payload),
   [UPDATE_SECOND_INPUT]: (payload: string) => isString(payload),
-  [UPDATE_START_TIME]: (payload: string) => isString(payload),
-  [UPDATE_FINISH_TIME]: (payload: string) => isString(payload),
+  [UPDATE_TIME_RANGE]: (payload: [string, string]) => {
+    return payload.length === 2 && payload.every(isString);
+  },
   [UPDATE_IS_HITHERTO]: (payload: boolean) => isBoolean(payload),
   [HANDLE_DELETE]: null,
   [HANDLE_MOVE_UP]: null,

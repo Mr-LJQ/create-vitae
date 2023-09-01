@@ -4,8 +4,7 @@ export type AModuleData = {
   first: string;
   second: string;
   third?: string;
-  startTime: string;
-  finishTime: string;
   isHitherto: boolean;
   editorContent: Delta;
+  timeRange: [string, string];
 };

@@ -10,9 +10,8 @@ function createItem(): AModuleData {
     id: uniqueId++,
     first: "",
     second: "",
-    startTime: "",
-    finishTime: "",
     isHitherto: false,
+    timeRange: ["", ""],
     editorContent: new Delta(),
   };
 }

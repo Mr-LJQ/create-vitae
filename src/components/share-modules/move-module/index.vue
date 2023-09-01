@@ -23,15 +23,12 @@
         <EditInputItem :label-text="thirdItem.label" v-slot="{ id }">
           <el-date-picker
             :id="id"
-            type="month"
-            v-model="begin"
-            :placeholder="thirdItem.placeholder"
-            clearable
-          />-
-          <el-date-picker
-            type="month"
-            v-model="finish"
-            :placeholder="thirdItem.placeholder2"
+            unlink-panels
+            v-model="timeRange"
+            type="monthrange"
+            range-separator="-"
+            :start-placeholder="thirdItem.placeholder"
+            :end-placeholder="thirdItem.placeholder2"
             clearable
           />
           <el-checkbox label="至今" v-model="isHitherto" />
@@ -78,10 +75,9 @@ import {
   emitsType,
   UPDATE_CONTENT,
   UPDATE_SECOND_INPUT,
-  UPDATE_FINISH_TIME,
   UPDATE_FIRST_INPUT,
   UPDATE_IS_HITHERTO,
-  UPDATE_START_TIME,
+  UPDATE_TIME_RANGE,
   HANDLE_DELETE,
   HANDLE_MOVE_UP,
   HANDLE_MOVE_DOWN,
@@ -129,20 +125,12 @@ const isHitherto = computed({
     emit(UPDATE_IS_HITHERTO, value);
   },
 });
-const begin = computed({
+const timeRange = computed({
   get() {
-    return props.startTime;
+    return props.timeRange;
   },
   set(value) {
-    emit(UPDATE_START_TIME, value);
-  },
-});
-const finish = computed({
-  get() {
-    return props.finishTime;
-  },
-  set(value) {
-    emit(UPDATE_FINISH_TIME, value);
+    emit(UPDATE_TIME_RANGE, value);
   },
 });
 
