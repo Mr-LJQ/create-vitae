@@ -13,7 +13,7 @@ $item_height: 32px;
     vertical-align: top;
     min-width: 65px;
     line-height: $item_height;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
   }
   @include e(input) {

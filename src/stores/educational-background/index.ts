@@ -1,45 +1,47 @@
 import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { moveOneStep } from "@/utils";
+import { Delta } from "@vueup/vue-quill";
+
+import type { AModuleData } from "@/types";
 
 let uniqueId = 0;
-
-function createItem() {
+function createItem(): Required<AModuleData> {
   return {
     id: uniqueId++,
-    degree: "",
+    third: "",
     first: "",
     second: "",
     startTime: "",
     finishTime: "",
     isHitherto: false,
-    editorContent: "",
+    editorContent: new Delta(),
   };
 }
 
 export const useEducationalBackgroundStore = defineStore(
   "educational-background",
   () => {
-    const experiences = reactive([createItem()]);
+    const dataList = reactive([createItem()]);
 
     function moveUpItem(index: number) {
-      moveOneStep(index, -1, experiences);
+      moveOneStep(index, -1, dataList);
     }
     function moveDownItem(index: number) {
-      moveOneStep(index, 1, experiences);
+      moveOneStep(index, 1, dataList);
     }
     function deleteItem(index: number) {
-      experiences.splice(index, 1);
+      dataList.splice(index, 1);
     }
     function addNewItem() {
-      experiences.push(createItem());
+      dataList.push(createItem());
     }
     return {
       deleteItem,
       addNewItem,
       moveUpItem,
       moveDownItem,
-      experiences,
+      dataList,
     };
   }
 );
