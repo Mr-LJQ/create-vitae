@@ -1,9 +1,9 @@
 import { isString } from "@/utils";
 
-export const POST_EVENT = "update:post";
-export const CITY_EVENT = "update:city";
-export const HIREDATE_EVENT = "update:hiredate";
-export const PAY_EVENT = "update:pay";
+export const UPDATE_POST = "update:post";
+export const UPDATE_CITY = "update:city";
+export const UPDATE_HIREDATE = "update:hiredate";
+export const UPDATE_PAY = "update:pay";
 
 export const unitProps = {
   post: {
@@ -25,8 +25,8 @@ export const unitProps = {
 } as const;
 
 export const unitEmits = {
-  [PAY_EVENT]: (payload: string) => isString(payload),
-  [CITY_EVENT]: (payload: string) => isString(payload),
-  [POST_EVENT]: (payload: string) => isString(payload),
-  [HIREDATE_EVENT]: (payload: string) => isString(payload),
+  [UPDATE_PAY]: (payload: string) => isString(payload),
+  [UPDATE_CITY]: (payload: string) => isString(payload),
+  [UPDATE_POST]: (payload: string) => isString(payload),
+  [UPDATE_HIREDATE]: (payload: string) => isString(payload),
 } as const;

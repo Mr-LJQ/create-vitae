@@ -13,10 +13,10 @@ let uniqueId = 0;
 function createItem(): State {
   return {
     id: uniqueId++,
+    pay: "",
     city: "",
     post: "",
-    hiredate: "",
-    pay: "",
+    hiredate: "不填",
   };
 }
 

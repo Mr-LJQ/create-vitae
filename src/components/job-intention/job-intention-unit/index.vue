@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex flex-wrap justify-around">
+  <ul class="flex flex-wrap justify-between">
     <EditInputItem for-id="post" label-text="求职意向">
       <input
         id="post"
@@ -49,22 +49,25 @@ import { chinaCities } from "./china-cities";
 import {
   unitProps,
   unitEmits,
-  POST_EVENT,
-  CITY_EVENT,
-  PAY_EVENT,
-  HIREDATE_EVENT,
+  UPDATE_PAY,
+  UPDATE_POST,
+  UPDATE_CITY,
+  UPDATE_HIREDATE,
 } from ".";
 const props = defineProps(unitProps);
 const emit = defineEmits(unitEmits);
 defineOptions({
   name: "JobIntentionUnit",
 });
+/*
+ * 提供 v-model 支持 
+ */
 const post = computed({
   get() {
     return props.post;
   },
   set(value: string) {
-    emit(POST_EVENT, value);
+    emit(UPDATE_POST, value);
   },
 });
 
@@ -73,7 +76,7 @@ const city = computed({
     return props.city;
   },
   set(value: string) {
-    emit(CITY_EVENT, value);
+    emit(UPDATE_CITY, value);
   },
 });
 
@@ -82,7 +85,7 @@ const pay = computed({
     return props.pay;
   },
   set(value: string) {
-    emit(PAY_EVENT, value);
+    emit(UPDATE_PAY, value);
   },
 });
 
@@ -91,7 +94,7 @@ const hiredate = computed({
     return props.hiredate;
   },
   set(value: string) {
-    emit(HIREDATE_EVENT, value);
+    emit(UPDATE_HIREDATE, value);
   },
 });
 
@@ -102,6 +105,5 @@ const hiredates = [
   "一月内到岗",
   "到岗时间另行商议",
 ];
-//默认值
-hiredate.value ||= hiredates[0];
+
 </script>

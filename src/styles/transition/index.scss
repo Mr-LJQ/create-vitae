@@ -1,0 +1,58 @@
+@use "../mixins/mixins.scss" as *;
+
+/*
+  用于 move-module 组件的 buttons 列的动画
+*/
+@include b("transition") {
+  @include e("buttons") {
+    @include m("slide") {
+      &-enter-active,
+      &-leave-active {
+        transition: all 0.5s ease;
+        position: absolute;
+        right: 0;
+      }
+
+      &-enter-from,
+      &-leave-to {
+        opacity: 0;
+        transform: translateX(128px); /* 此处的 128px 取决于 buttons 列的宽度*/
+      }
+    }
+  }
+}
+
+/*
+  用于 a-module 列表的动画
+*/
+
+@include b("transition") {
+  @include e("delete") {
+    transition: all 0.5s 0.5s ease;
+  }
+}
+@include b("transition") {
+  @include e("list") {
+    @include m("slide") {
+      &-move,/* 对移动中的元素应用的过渡 */
+      &-enter-active,
+      &-leave-active {
+        transition: all 0.5s ease;
+      }
+
+      &-enter-from,
+      &-leave-to {
+        opacity: 0;
+        transform: translateX(150px);
+      }
+
+      /* 
+        确保将离开的元素从布局流中删除
+        以便能够正确地计算移动的动画。 
+      */
+      &-leave-active {
+        position: absolute;
+      }
+    }
+  }
+}

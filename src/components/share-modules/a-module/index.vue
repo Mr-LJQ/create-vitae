@@ -1,8 +1,8 @@
 <template>
   <TransitionGroup
-    :moveClass="moveClassRef ? 'list-move-delete' : ''"
+    :moveClass="moveClassRef ? TRANSITION_DELETE : ''"
     tag="ul"
-    name="list"
+    :name="TRANSITION_LIST_SLIDE"
     class="max-w-[1200px] mx-auto"
   >
     <li
@@ -31,12 +31,18 @@
         <slot :index="index" />
       </MoveModule>
     </li>
+    <li key="addButton">
+      <AddButton @click="handleAdd">{{ moduleName }}</AddButton>
+    </li>
   </TransitionGroup>
-  <AddButton @click="addNewItem">{{ moduleName }}</AddButton>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { BORDER_B_DASHED } from "@/styles";
+import {
+  BORDER_B_DASHED,
+  TRANSITION_DELETE,
+  TRANSITION_LIST_SLIDE,
+} from "@/styles";
 import MoveModule from "@/components/share-modules/move-module/index.vue";
 import AddButton from "@/components/buttons/AddButton.vue";
 import { propsType } from ".";
@@ -71,30 +77,8 @@ function handleMoveDown(index: number) {
   moveClassRef.value = false;
   moveDownItem(index);
 }
+function handleAdd() {
+  moveClassRef.value = false;
+  props.addNewItem();
+}
 </script>
-<style>
-/*
-  在执行删除操纵时，在删除动画结束后，再执行移动动画
-*/
-.list-move-delete {
-  transition: all 0.5s 0.5s ease;
-}
-
-.list-move,/* 对移动中的元素应用的过渡 */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(150px);
-}
-
-/* 确保将离开的元素从布局流中删除
-  以便能够正确地计算移动的动画。 */
-.list-leave-active {
-  position: absolute;
-}
-</style>

@@ -47,7 +47,7 @@
         v-model="content"
       />
     </div>
-    <Transition name="buttonsCol">
+    <Transition :name="TRANSITION_BUTTONS_SLIDE">
       <div class="w-32 text-center" v-if="showDeleteButton">
         <OperateButton
           v-if="showMoveUpButton"
@@ -75,7 +75,11 @@ import EditInputItem from "@/components/edit-input-item/index.vue";
 import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
 import RichTextEditor from "@/components/rich-text-editor/index.vue";
 import OperateButton from "@/components/buttons/OperateButton.vue";
-import { BUTTON_MOVE_CLASS, BUTTON_DELETE_CLASS } from "@/styles";
+import {
+  BUTTON_MOVE_CLASS,
+  BUTTON_DELETE_CLASS,
+  TRANSITION_BUTTONS_SLIDE,
+} from "@/styles";
 import {
   propsType,
   emitsType,
@@ -169,21 +173,6 @@ watchEffect(() => {
   }
 });
 </script>
-<style>
-.buttonsCol-enter-active,
-.buttonsCol-leave-active {
-  transition: all 0.5s ease;
-  position: absolute;
-  right: 0;
-}
-
-.buttonsCol-enter-from,
-.buttonsCol-leave-to {
-  opacity: 0;
-  transform: translateX(128px); /* 此处的 128px 取决于 buttons 列的宽度*/
-}
-</style>
-
 <style module>
 .transition {
   transition: all 0.5s ease;
