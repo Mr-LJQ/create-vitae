@@ -47,8 +47,8 @@
         v-model="content"
       />
     </div>
-    <Transition :name="TRANSITION_BUTTONS_SLIDE">
-      <div class="w-32 text-center" v-if="showDeleteButton">
+    <Transition :name="TRANSITION_BUTTONS_SLIDE" >
+      <div class="w-32 text-center right" v-if="showDeleteButton">
         <OperateButton
           v-if="showMoveUpButton"
           :class="BUTTON_MOVE_CLASS"
