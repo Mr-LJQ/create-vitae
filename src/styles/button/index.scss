@@ -1,5 +1,6 @@
 @use "../mixins/mixins.scss" as *;
-
+@use "../var/var.scss" as *;
+@use "sass:math";
 $move_color: #13d8a7;
 $delete_color: #ff755d;
 
@@ -30,6 +31,29 @@ $delete_color: #ff755d;
       color: #fff;
     }
     &:focus-visible {
+      outline: 2px solid $move_color;
+      outline-offset: 1px;
+    }
+  }
+  @include m(file) {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100px;
+    line-height: $item_height;
+    font-size: 12px;
+    text-align: center;
+    border-radius: math.div($item_height, 2);
+    vertical-align: top;
+    cursor: pointer;
+    background-color: $move_color;
+    color: #fff;
+    input {
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border: none;
+    }
+    &:focus-within {
       outline: 2px solid $move_color;
       outline-offset: 1px;
     }

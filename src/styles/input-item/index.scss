@@ -1,6 +1,5 @@
-@use "mixins/mixins.scss" as *;
-@use "var/var.scss" as *;
-$item_height: 32px;
+@use "../mixins/mixins.scss" as *;
+@use "../var/var.scss" as *;
 
 @include b("edit-input-item") {
   @include e(li) {

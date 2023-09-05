@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
 import type { Component } from "vue";
-import BasicInfo from "@/components/basic-info/index";
+import BasicInfo from "@/components/basic-info/index.vue";
 import EditTabLabel from "./edit-tab-label/EditTabLabel.vue";
 import JobIntention from "@/components/job-intention/index.vue";
 import EducationalBackground from "@/components/educational-background/index.vue";
