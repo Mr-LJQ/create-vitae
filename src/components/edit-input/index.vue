@@ -1,8 +1,13 @@
 <template>
-  <input type="text" v-model="value" :class="EDIT_INPUT_ITEM_INPUT" />
+  <input
+    type="text"
+    ref="inputRef"
+    v-model="value"
+    :class="EDIT_INPUT_ITEM_INPUT"
+  />
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { isString } from "@/utils";
 import { EDIT_INPUT_ITEM_INPUT } from "@/styles";
 const props = defineProps({
@@ -21,6 +26,18 @@ const value = computed({
   },
   set(val) {
     emit("update:modelValue", val);
+  },
+});
+
+/**
+ * 对外暴露 focus 函数
+ */
+
+const inputRef = ref<HTMLInputElement | null>(null);
+
+defineExpose({
+  focus() {
+    inputRef.value?.focus();
   },
 });
 </script>

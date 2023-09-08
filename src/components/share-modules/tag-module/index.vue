@@ -17,7 +17,12 @@
       >
     </div>
     <div>
-      <EditInput class="mr-4" v-model="custom" placeholder="请输入自定义名称" />
+      <EditInput
+        class="mr-4"
+        v-model="custom"
+        ref="customElementRef"
+        placeholder="请输入自定义名称"
+      />
       <el-button @click="handleAddCustom" type="primary" round :icon="Plus"
         >添加自定义 {{ moduleName }}</el-button
       >
@@ -66,16 +71,12 @@ function handleToggleTag(tag: string) {
  * 处理自定义tag的添加逻辑
  */
 const custom = ref("");
+const customElementRef = ref<HTMLInputElement | null>(null);
 function handleAddCustom() {
   const currentTag = custom.value.trim();
   //避免添加空项
   if (currentTag === "") {
-    ElNotification.warning({
-      title: "提醒",
-      message: "请输入自定义标签名称",
-      position: "top-left",
-      offset: 100,
-    });
+    customElementRef.value?.focus();
     return;
   }
   //避免重复添加

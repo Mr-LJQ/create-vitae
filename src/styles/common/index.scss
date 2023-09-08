@@ -7,3 +7,13 @@
     }
   }
 }
+
+@include b("grid") {
+  @include e("auto") {
+    @include m("center") {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+      justify-items: center;
+    }
+  }
+}

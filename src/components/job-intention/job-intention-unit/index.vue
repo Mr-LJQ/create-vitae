@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex flex-wrap justify-between">
+  <ul :class="GRID_AUTO_CENTER">
     <EditInputItem for-id="post" label-text="求职意向">
       <input
         id="post"
@@ -44,7 +44,7 @@
 import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
 import EditInputItem from "@/components/edit-input-item/index.vue";
-import { EDIT_INPUT_ITEM_INPUT } from "@/styles";
+import { EDIT_INPUT_ITEM_INPUT,GRID_AUTO_CENTER } from "@/styles";
 import { chinaCities } from "./china-cities";
 import {
   unitProps,
