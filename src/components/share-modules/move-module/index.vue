@@ -5,7 +5,7 @@
       :class="$style.transition"
       :style="{ maxWidth: showDeleteButton ? 'calc(100% - 128px)' : '100%' }"
     >
-      <ul :class="GRID_AUTO_CENTER">
+      <ul class="flex flex-wrap justify-between">
         <EditInputItem :label-text="firstItem.label" v-slot="{ id }">
           <EditInput
             :id="id"
@@ -27,7 +27,6 @@
               --el-date-editor-width: 220px;
               --el-input-bg-color: #f3f4f6;
               --el-input-border-color: #f3f4f6;
-              box-sizing: border-box;
             "
             :default-value="defaultTimeValue"
             unlink-panels
@@ -77,7 +76,6 @@ import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
 import RichTextEditor from "@/components/rich-text-editor/index.vue";
 import OperateButton from "@/components/buttons/OperateButton.vue";
 import {
-  GRID_AUTO_CENTER,
   BUTTON_MOVE_CLASS,
   BUTTON_DELETE_CLASS,
   TRANSITION_BUTTONS_SLIDE,
