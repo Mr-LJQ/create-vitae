@@ -5,7 +5,7 @@
     :name="TRANSITION_LIST_SLIDE"
     class="max-w-[1200px] mx-auto"
   >
-    <li :class="$style.a" v-for="(item, index) of jobIntentions" :key="item.id">
+    <li class="w-full" :class="$style.a" v-for="(item, index) of jobIntentions" :key="item.id">
       <JobIntentionUnit
         v-model:pay="item.pay"
         v-model:city="item.city"

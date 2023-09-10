@@ -1,5 +1,5 @@
 <template>
-  <ul :class="GRID_AUTO_CENTER">
+  <ul class="w-full" :class="GRID_AUTO_CENTER">
     <EditInputItem for-id="post" label-text="求职意向">
       <input
         id="post"
@@ -44,7 +44,7 @@
 import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
 import EditInputItem from "@/components/edit-input-item/index.vue";
-import { EDIT_INPUT_ITEM_INPUT,GRID_AUTO_CENTER } from "@/styles";
+import { EDIT_INPUT_ITEM_INPUT, GRID_AUTO_CENTER } from "@/styles";
 import { chinaCities } from "./china-cities";
 import {
   unitProps,
@@ -60,7 +60,7 @@ defineOptions({
   name: "JobIntentionUnit",
 });
 /*
- * 提供 v-model 支持 
+ * 提供 v-model 支持
  */
 const post = computed({
   get() {
@@ -105,5 +105,4 @@ const hiredates = [
   "一月内到岗",
   "到岗时间另行商议",
 ];
-
 </script>
