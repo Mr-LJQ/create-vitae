@@ -131,16 +131,16 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import {
-  ElSelect,
-  ElDatePicker,
   ElOption,
-  ElCheckbox,
+  ElSelect,
   ElButton,
+  ElCheckbox,
+  ElDatePicker,
   ElMessageBox,
   ElNotification,
 } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-import { useBasicInfoStore } from "@/stores/basic-info";
+import { useBasicInfosStore } from "@/stores/basic-infos";
 import EditInputItem from "@/components/edit-input-item/index.vue";
 import EditInput from "@/components/edit-input/index.vue";
 import FileButton from "@/components/buttons/FileButton.vue";
@@ -153,11 +153,12 @@ import {
   yearsOfWorkingOptions,
 } from ".";
 defineOptions({
-  name: "BasicInfo",
+  name: "BasicInfos",
 });
 defineProps(propsType);
-const store = useBasicInfoStore();
+const store = useBasicInfosStore();
 const { addInfo, deleteInfo, hasInfo, additionalInfos } = store;
+
 /**
  * 自定义项相关逻辑
  */

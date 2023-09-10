@@ -1,9 +1,9 @@
 import { ref, reactive } from "vue";
-import { defineStore, StoreState } from "pinia";
-
+import { defineStore } from "pinia";
+import type { StoreState } from "pinia";
 type AdditionalInfos = { [key in string]: string };
 
-export const useBasicInfoStore = defineStore("BasicInfo", () => {
+export const useBasicInfosStore = defineStore("BasicInfos", () => {
   const name = ref("");
   const birth = ref("");
   const phone = ref("");
@@ -52,4 +52,4 @@ export const useBasicInfoStore = defineStore("BasicInfo", () => {
   };
 });
 
-export type State = StoreState<ReturnType<typeof useBasicInfoStore>>;
+export type State = StoreState<ReturnType<typeof useBasicInfosStore>>;

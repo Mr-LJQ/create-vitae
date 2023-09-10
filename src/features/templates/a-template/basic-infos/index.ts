@@ -1,23 +1,4 @@
-import type { PropType } from "vue";
-import type { State as BasicInfoState } from "@/stores/basic-info";
-
-export const propsType = {
-  basicInfos: {
-    type: Object as PropType<BasicInfoState>,
-    required: true,
-  },
-  jobIntention: {},
-  educationalBackground: {},
-  workExperience: {},
-  projectExperience: {},
-  internshipExperience: {},
-  campusExperience: {},
-  specialty: {},
-  certificate: {},
-  selfEvaluation: {},
-  interests: {},
-  customModule: {},
-} as const;
+import type { State as BasicInfoState } from "@/stores/basic-infos";
 
 /**
  * 通过 key 值映射到相应的图标类名上
