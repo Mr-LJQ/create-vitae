@@ -1,42 +1,51 @@
 <template>
-  <div :class="[$style.a, isSpread ? $style.c : '']">
-    <SpreadButton
-      :class="$style.b"
-      @click="handleClick"
-      :is-spread="isSpread"
-    />
-    <el-tabs
+  <div
+    class="fixed left-0 bottom-0 w-full transition-all duration-300"
+    :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
+  >
+    <button
+      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-all duration-300"
+      :class="[$style.shadow]"
+      @click="toggleShrinkOrSpread"
+    >
+      <ElIcon v-if="!isSpread" color="#13d8a7" size="35px"><ArrowUp /></ElIcon>
+      <ElIcon v-else color="#13d8a7" size="35px"><ArrowDown /></ElIcon>
+    </button>
+    <ElTabs
       stretch
-      class="edit-tabs"
+      :class="$style.editTabs"
       v-model="store.activeModuleName"
       @tab-click="handleClick"
     >
-      <el-tab-pane :name="ModuleEnum.BasicInfos" :key="ModuleEnum.BasicInfos">
+      <ElTabPane :name="ModuleEnum.BasicInfos" :key="ModuleEnum.BasicInfos">
         <template #label>
-          <div :class="$style.d">
-            <b :class="$style.e">{{ moduleNameMap[ModuleEnum.BasicInfos] }}</b>
+          <div :class="$style.tabLabel">
+            <b :class="$style.tabLabelText">{{
+              moduleNameMap[ModuleEnum.BasicInfos]
+            }}</b>
           </div>
         </template>
         <BasicInfo />
-      </el-tab-pane>
-      <el-tab-pane lazy :key="name" :name="name" v-for="name of modulesOrder">
+      </ElTabPane>
+      <ElTabPane lazy :key="name" :name="name" v-for="name of modulesOrder">
         <template #label>
-          <div :class="$style.d">
-            <b :class="$style.e">{{ moduleNameMap[name] }}</b>
-            <el-switch class="absolute" v-model="openedModules[name]" />
+          <div :class="$style.tabLabel">
+            <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
+            <ElSwitch :class="$style.switch" v-model="openedModules[name]" />
           </div>
         </template>
         <component
           :is="componentMap[name]"
           :module-name="moduleNameMap[name]"
         />
-      </el-tab-pane>
-    </el-tabs>
+      </ElTabPane>
+    </ElTabs>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { ElTabs, ElTabPane, ElSwitch } from "element-plus";
+import { ElTabs, ElTabPane, ElSwitch, ElIcon } from "element-plus";
+import { ArrowUp, ArrowDown } from "@element-plus/icons-vue";
 
 import BasicInfo from "./basic-infos/index.vue";
 import Interests from "./interests/index.vue";
@@ -51,7 +60,6 @@ import ProjectExperience from "./project-experience/index.vue";
 import InternshipExperience from "./internship-experience/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
 
-import SpreadButton from "@/components/buttons/SpreadButton.vue";
 import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
 
 const store = useModulesInfosStore();
@@ -71,37 +79,30 @@ const componentMap = {
   [ModuleEnum.CustomModule]: CustomModule,
 };
 
+/**
+ * 实现 Editor 的 展开与收缩的逻辑
+ */
 const isSpread = ref(false);
-function handleClick() {
+function toggleShrinkOrSpread() {
   isSpread.value = !isSpread.value;
 }
+
+function handleClick() {}
 </script>
+
 <style module>
-.a {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+.shadow {
   box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
-  transform: translateY(calc(100% - 55px)); /* 55px 是 TabsLabel的高度 */
-  transition: all 0.3s ease-out 0s;
-}
-.b {
-  position: absolute;
-  left: 50%;
-  top: -35px;
-  z-index: 1;
-  margin-left: -40px;
-  transition: all 0.2s ease-out 0s;
-}
-.b:hover {
-  top: -40px;
 }
 
-.a.c {
+.spread {
   transform: translateY(0);
 }
-.d {
+.shrink {
+  transform: translateY(calc(100% - 55px)); /* 55px 是 TabsLabel的高度 */
+}
+
+.tabLabel {
   box-sizing: border-box;
   float: left;
   padding: 23px 11px 0 9px;
@@ -111,7 +112,7 @@ function handleClick() {
   cursor: pointer;
   position: relative;
 }
-.e {
+.tabLabelText {
   display: block;
   max-width: 80px;
   color: #222;
@@ -122,18 +123,8 @@ function handleClick() {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-</style>
-<style lang="scss">
-.edit-tabs {
-  position: relative;
-  z-index: 2;
-  background-color: #fff;
-  .el-tabs__item {
-    padding: 0;
-    --el-tabs-header-height: 55px;
-  }
-}
-.absolute {
+
+.switch {
   position: absolute;
   left: 50%;
   top: 6px;
@@ -142,5 +133,14 @@ function handleClick() {
   opacity: 0.6;
   transition: all 0.2s ease-out 0s;
   transform: translateX(-50%);
+}
+.editTabs {
+  position: relative;
+  z-index: 2;
+  background-color: #fff;
+}
+.editTabs :global(.el-tabs__item) {
+  padding: 0;
+  --el-tabs-header-height: 55px;
 }
 </style>
