@@ -1,7 +1,8 @@
 import { reactive } from "vue";
 import { defineStore } from "pinia";
+import type { StoreState } from "pinia";
 
-interface State {
+interface S {
   id: number;
   post: string;
   city: string;
@@ -10,7 +11,7 @@ interface State {
 }
 
 let uniqueId = 0;
-function createItem(): State {
+function createItem(): S {
   return {
     id: uniqueId++,
     pay: "",
@@ -21,7 +22,7 @@ function createItem(): State {
 }
 
 export const useJobIntentionStore = defineStore("job-intention", () => {
-  const jobIntentions: State[] = reactive([createItem()]);
+  const jobIntentions: S[] = reactive([createItem()]);
   const appendJobIntention = () => {
     jobIntentions.push(createItem());
   };
@@ -34,3 +35,5 @@ export const useJobIntentionStore = defineStore("job-intention", () => {
     deleteJobIntention,
   };
 });
+
+export type State = StoreState<ReturnType<typeof useJobIntentionStore>>;

@@ -15,7 +15,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, nextTick } from "vue";
-import isEqual from "lodash.isequal";
+import { isEqual } from "lodash";
 import { ElButton, ElMessageBox } from "element-plus";
 import { Delta, Quill } from "@vueup/vue-quill";
 import RichTextEditor from "@/components/rich-text-editor/index.vue";

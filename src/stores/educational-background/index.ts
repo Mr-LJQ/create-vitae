@@ -1,6 +1,7 @@
 import { reactive } from "vue";
 import { defineStore } from "pinia";
 import { moveOneStep } from "@/utils";
+import type { StoreState } from "pinia";
 import { Delta } from "@vueup/vue-quill";
 
 import type { AModuleData } from "@/types";
@@ -44,3 +45,7 @@ export const useEducationalBackgroundStore = defineStore(
     };
   }
 );
+
+export type State = StoreState<
+  ReturnType<typeof useEducationalBackgroundStore>
+>;
