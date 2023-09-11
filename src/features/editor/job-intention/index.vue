@@ -81,6 +81,7 @@ function dragstart(index: number) {
   currentIndex = index;
 }
 function dragenter(index: number) {
+  if (currentIndex === index) return;
   dragThrottle(
     () => {
       swap(index, currentIndex, jobIntentions);
