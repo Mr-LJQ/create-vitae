@@ -25,7 +25,6 @@
     "@commitlint/config-conventional": "^17.7.0",
     "@types/lodash": "^4.14.198",
     "@vitejs/plugin-vue": "^4.2.3",
-    "@vitejs/plugin-vue-jsx": "^3.0.2",
     "autoprefixer": "^10.4.15",
     "husky": "^8.0.3",
     "postcss": "^8.4.29",

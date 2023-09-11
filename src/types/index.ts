@@ -8,3 +8,5 @@ export type AModuleData = {
   editorContent: Delta;
   timeRange: [Date, Date] | null;
 };
+
+export type AnyFunction = (...args: any[]) => any;
