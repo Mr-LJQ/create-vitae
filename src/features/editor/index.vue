@@ -4,18 +4,14 @@
     :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
   >
     <button
-      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-all duration-300"
-      :class="[$style.shadow]"
+      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-[transform,top] duration-300"
+      :class="[$style.shadow, $style.button]"
       @click="toggleShrinkOrSpread"
     >
       <ElIcon v-if="!isSpread" color="#13d8a7" size="35px"><ArrowUp /></ElIcon>
       <ElIcon v-else color="#13d8a7" size="35px"><ArrowDown /></ElIcon>
     </button>
-    <ElTabs
-      stretch
-      :class="$style.editTabs"
-      v-model="store.activeModuleName"
-    >
+    <ElTabs stretch :class="$style.editTabs" v-model="store.activeModuleName">
       <ElTabPane :name="ModuleEnum.BasicInfos" :key="ModuleEnum.BasicInfos">
         <template #label>
           <div :class="$style.tabLabel">
@@ -124,7 +120,6 @@ function dragenter(index: number) {
     currentIndex
   );
 }
-
 </script>
 
 <style module>
@@ -132,6 +127,13 @@ function dragenter(index: number) {
   box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
 }
 
+.button {
+  outline: none;
+}
+.button:focus-visible {
+  outline: 2px solid #13d8a7;
+  outline-offset: 1px;
+}
 .spread {
   transform: translateY(0);
 }
