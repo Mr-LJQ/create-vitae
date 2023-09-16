@@ -55,6 +55,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import { ArrowUp, ArrowDown } from "@element-plus/icons-vue";
 import { ElTabs, ElTabPane, ElSwitch, ElIcon } from "element-plus";
 
@@ -75,7 +76,7 @@ import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
 import { createDragThrottle, swap } from "@/utils";
 
 const store = useModulesInfosStore();
-const { moduleNameMap, modulesOrder, openedModules } = store;
+const { moduleNameMap, modulesOrder, openedModules } = storeToRefs(store);
 
 const componentMap = {
   [ModuleEnum.JobIntention]: JobIntention,
@@ -112,7 +113,7 @@ function dragenter(index: number) {
   if (currentIndex === index) return;
   dragThrottle(
     () => {
-      swap(currentIndex, index, modulesOrder);
+      swap(currentIndex, index, modulesOrder.value);
       currentIndex = index;
     },
     300,

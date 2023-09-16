@@ -97,7 +97,7 @@ import type { Delta } from "@vueup/vue-quill";
 const props = defineProps(propsType);
 const emit = defineEmits(emitsType);
 defineOptions({
-  name: "EducationalBackgroundUnit",
+  name: "MoveModule",
 });
 
 /*
