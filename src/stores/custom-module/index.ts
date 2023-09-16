@@ -1,10 +1,22 @@
-import { shallowRef } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Delta } from "@vueup/vue-quill";
 
-export const useCustomModuleStore = defineStore("custom-module", () => {
-  const editorContent = shallowRef(new Delta());
-  return {
-    editorContent,
-  };
-});
+export const useCustomModuleStore = defineStore(
+  "custom-module",
+  () => {
+    const editorContent = ref(new Delta());
+    return {
+      editorContent,
+    };
+  },
+  {
+    persistedState: {
+      deserialize(state) {
+        const _state = JSON.parse(state);
+        _state.editorContent = new Delta(_state.editorContent);
+        return _state;
+      },
+    },
+  }
+);

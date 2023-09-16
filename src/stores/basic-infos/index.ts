@@ -1,4 +1,4 @@
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { StoreState } from "pinia";
 type AdditionalInfos = { [key in string]: string };
@@ -19,15 +19,15 @@ export const useBasicInfosStore = defineStore("BasicInfos", () => {
   const politicsStatus = ref("不填");
   const convertToAge = ref(false);
   const showPhoto = ref(false);
-  const additionalInfos = reactive<AdditionalInfos>({});
+  const additionalInfos = ref<AdditionalInfos>({});
   function addInfo(key: string, value: string) {
-    additionalInfos[key] = value;
+    additionalInfos.value[key] = value;
   }
   function deleteInfo(key: string) {
-    return delete additionalInfos[key];
+    return delete additionalInfos.value[key];
   }
   function hasInfo(key: string) {
-    return Object.prototype.hasOwnProperty.call(additionalInfos, key);
+    return Object.prototype.hasOwnProperty.call(additionalInfos.value, key);
   }
   return {
     name,

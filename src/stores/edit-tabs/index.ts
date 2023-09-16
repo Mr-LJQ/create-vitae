@@ -1,7 +1,10 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
+import type { Ref } from "vue";
+
+type UnRef<T extends Ref<any>> = T extends Ref<infer R> ? R : T;
 export const useEditTabsStore = defineStore("edit-tabs", () => {
-  const tabNames = reactive([
+  const tabNames = ref([
     "求职意向",
     "教育背景",
     "工作经验",
@@ -14,7 +17,9 @@ export const useEditTabsStore = defineStore("edit-tabs", () => {
     "自我评价",
     "自定义模块",
   ] as const);
-  const activeTabName = ref<(typeof tabNames)[number] | "基本信息">("基本信息");
+  const activeTabName = ref<UnRef<typeof tabNames>[number] | "基本信息">(
+    "基本信息"
+  );
 
   return {
     tabNames,

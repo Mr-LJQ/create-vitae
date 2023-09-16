@@ -1,5 +1,5 @@
-import { markRaw } from "vue";
 import { Delta } from "@vueup/vue-quill";
+import type { StateTree } from "pinia";
 import type { AnyFunction, AModuleData } from "@/types";
 export function moveOneStep(index: number, to: -1 | 1, targetArray: any[]) {
   let targetIndex = index + to;
@@ -69,7 +69,7 @@ export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
         second: "",
         timeRange: null,
         isHitherto: false,
-        editorContent: markRaw(new Delta()),
+        editorContent: new Delta(),
       },
       third == null ? {} : { third }
     );
@@ -84,8 +84,15 @@ export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
     const _state = JSON.parse(state) as S;
     _state.dataList.forEach((data) => {
       data.id = this.id++; //重新添加上 Id
-      data.editorContent = markRaw(new Delta(data.editorContent));
+      data.editorContent = new Delta(data.editorContent);
     });
     return _state;
   };
+}
+
+export function serialize(state: StateTree) {
+  return JSON.stringify(state, (key, value) => {
+    if (key === "tags") return Array.from(value);
+    return value;
+  });
 }

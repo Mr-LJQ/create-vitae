@@ -1,24 +1,39 @@
+import { ref } from "vue";
 import { defineStore } from "pinia";
-import { shallowRef, reactive } from "vue";
+import { serialize } from "@/utils";
 import { Delta } from "@vueup/vue-quill";
 
-export const useInterestsStore = defineStore("interests", () => {
-  const content = shallowRef(new Delta());
-  const tags: Set<string> = reactive(new Set());
-  function addTag(tag: string) {
-    return tags.add(tag);
+export const useInterestsStore = defineStore(
+  "interests",
+  () => {
+    const content = ref(new Delta());
+    const tags = ref<Set<string>>(new Set());
+    function addTag(tag: string) {
+      return tags.value.add(tag);
+    }
+    function hasTag(tag: string) {
+      return tags.value.has(tag);
+    }
+    function deleteTag(tag: string) {
+      return tags.value.delete(tag);
+    }
+    return {
+      tags,
+      content,
+      hasTag,
+      addTag,
+      deleteTag,
+    };
+  },
+  {
+    persistedState: {
+      serialize,
+      deserialize(state: string) {
+        const _state = JSON.parse(state);
+        _state.content = new Delta(_state.content);
+        _state.tags = new Set(_state.tags);
+        return _state;
+      },
+    },
   }
-  function hasTag(tag: string) {
-    return tags.has(tag);
-  }
-  function deleteTag(tag: string) {
-    return tags.delete(tag);
-  }
-  return {
-    tags,
-    content,
-    hasTag,
-    addTag,
-    deleteTag,
-  };
-});
+);

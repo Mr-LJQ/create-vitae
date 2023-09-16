@@ -1,4 +1,4 @@
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 
 export enum ModuleEnum {
@@ -31,7 +31,7 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
     InternshipExperience,
     EducationalBackground,
   } = ModuleEnum;
-  const moduleNameMap = reactive<Record<ModuleEnum, string>>({
+  const moduleNameMap = ref<Record<ModuleEnum, string>>({
     [BasicInfos]: "基本信息",
     [JobIntention]: "求职意向",
     [EducationalBackground]: "教育背景",
@@ -45,7 +45,7 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
     [SelfEvaluation]: "自我评价",
     [Interests]: "兴趣爱好",
   });
-  const modulesOrder = reactive<Exclude<ModuleEnum, ModuleEnum.BasicInfos>[]>([
+  const modulesOrder = ref<Exclude<ModuleEnum, ModuleEnum.BasicInfos>[]>([
     Interests,
     Specialty,
     Certificate,
@@ -58,7 +58,7 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
     InternshipExperience,
     EducationalBackground,
   ]);
-  const openedModules = reactive({
+  const openedModules = ref({
     [JobIntention]: true,
     [EducationalBackground]: true,
     [CampusExperience]: false,
@@ -73,9 +73,9 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
   });
   const activeModuleName = ref<ModuleEnum>(ModuleEnum.BasicInfos);
   return {
-    moduleNameMap,
     modulesOrder,
-    activeModuleName,
+    moduleNameMap,
     openedModules,
+    activeModuleName,
   };
 });
