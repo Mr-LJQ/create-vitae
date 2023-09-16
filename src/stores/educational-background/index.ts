@@ -1,40 +1,26 @@
-import { reactive } from "vue";
+import { ref, unref } from "vue";
 import { defineStore } from "pinia";
-import { moveOneStep } from "@/utils";
+import { moveOneStep, AModuleStoreHandler } from "@/utils";
 import type { StoreState } from "pinia";
-import { Delta } from "@vueup/vue-quill";
 
-import type { AModuleData } from "@/types";
-
-let uniqueId = 0;
-function createItem(): Required<AModuleData> {
-  return {
-    id: uniqueId++,
-    third: "",
-    first: "",
-    second: "",
-    timeRange: null,
-    isHitherto: false,
-    editorContent: new Delta(),
-  };
-}
+const { createAModuleData, persistedState } = new AModuleStoreHandler("");
 
 export const useEducationalBackgroundStore = defineStore(
   "educational-background",
   () => {
-    const dataList = reactive([createItem()]);
+    const dataList = ref([createAModuleData()]);
 
     function moveUpItem(index: number) {
-      moveOneStep(index, -1, dataList);
+      moveOneStep(index, -1, unref(dataList));
     }
     function moveDownItem(index: number) {
-      moveOneStep(index, 1, dataList);
+      moveOneStep(index, 1, unref(dataList));
     }
     function deleteItem(index: number) {
-      dataList.splice(index, 1);
+      unref(dataList).splice(index, 1);
     }
     function addNewItem() {
-      dataList.push(createItem());
+      unref(dataList).push(createAModuleData());
     }
     return {
       deleteItem,
@@ -43,7 +29,8 @@ export const useEducationalBackgroundStore = defineStore(
       moveDownItem,
       dataList,
     };
-  }
+  },
+  { persistedState }
 );
 
 export type State = StoreState<

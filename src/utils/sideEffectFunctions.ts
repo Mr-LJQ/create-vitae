@@ -1,4 +1,6 @@
-import type { AnyFunction } from "@/types";
+import { markRaw } from "vue";
+import { Delta } from "@vueup/vue-quill";
+import type { AnyFunction, AModuleData } from "@/types";
 export function moveOneStep(index: number, to: -1 | 1, targetArray: any[]) {
   let targetIndex = index + to;
   if (targetIndex < 0) return;
@@ -39,5 +41,51 @@ export function createDragThrottle() {
       prevTime = currTime;
       callback();
     }
+  };
+}
+
+/**
+ * 用于处理 AModule 类型的 store 相关的可复用逻辑
+ */
+export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
+  private id: number; //用于 key 的唯一id
+  private third?: string; //educational-background 较为特殊有额外的第三个项
+  persistedState;
+  constructor(third?: string, id = 0) {
+    this.id = id;
+    this.third = third;
+    this.persistedState = {
+      serialize: this.serialize,
+      deserialize: this.deserialize,
+    };
+  }
+  createAModuleData = (): AModuleData => {
+    const id = this.id++;
+    const third = this.third;
+    return Object.assign(
+      {
+        id,
+        first: "",
+        second: "",
+        timeRange: null,
+        isHitherto: false,
+        editorContent: markRaw(new Delta()),
+      },
+      third == null ? {} : { third }
+    );
+  };
+  serialize = (state: S) => {
+    return JSON.stringify(state, (key, value) => {
+      if (key === "id") return; //id 无需缓存到本地
+      return value;
+    });
+  };
+  deserialize = (state: string) => {
+    const _state = JSON.parse(state) as S;
+    _state.dataList.forEach((data) => {
+      data.id = this.id++; //重新添加上 Id
+      data.editorContent = markRaw(new Delta(data.editorContent));
+    });
+    return _state;
   };
 }

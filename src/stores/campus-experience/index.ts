@@ -1,41 +1,33 @@
-import { reactive } from "vue";
+import { ref, unref } from "vue";
 import { defineStore } from "pinia";
-import { Delta } from "@vueup/vue-quill";
-import { moveOneStep } from "@/utils";
-import type { AModuleData } from "@/types";
-let uniqueId = 0;
+import { moveOneStep, AModuleStoreHandler } from "@/utils";
 
-function createItem(): AModuleData {
-  return {
-    id: uniqueId++,
-    first: "",
-    second: "",
-    timeRange: null,
-    isHitherto: false,
-    editorContent: new Delta(),
-  };
-}
+const { createAModuleData, persistedState } = new AModuleStoreHandler();
 
-export const useCampusExperienceStore = defineStore("campus-experience", () => {
-  const dataList = reactive([createItem()]);
+export const useCampusExperienceStore = defineStore(
+  "campus-experience",
+  () => {
+    const dataList = ref([createAModuleData()]);
 
-  function moveUpItem(index: number) {
-    moveOneStep(index, -1, dataList);
-  }
-  function moveDownItem(index: number) {
-    moveOneStep(index, 1, dataList);
-  }
-  function deleteItem(index: number) {
-    dataList.splice(index, 1);
-  }
-  function addNewItem() {
-    dataList.push(createItem());
-  }
-  return {
-    dataList,
-    deleteItem,
-    addNewItem,
-    moveUpItem,
-    moveDownItem,
-  };
-});
+    function moveUpItem(index: number) {
+      moveOneStep(index, -1, unref(dataList));
+    }
+    function moveDownItem(index: number) {
+      moveOneStep(index, 1, unref(dataList));
+    }
+    function deleteItem(index: number) {
+      unref(dataList).splice(index, 1);
+    }
+    function addNewItem() {
+      unref(dataList).push(createAModuleData());
+    }
+    return {
+      dataList,
+      deleteItem,
+      addNewItem,
+      moveUpItem,
+      moveDownItem,
+    };
+  },
+  { persistedState }
+);

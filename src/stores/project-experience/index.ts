@@ -1,37 +1,25 @@
-import { reactive } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
-import { moveOneStep } from "@/utils";
-import { Delta } from "@vueup/vue-quill";
-import type { AModuleData } from "@/types";
+import { moveOneStep, AModuleStoreHandler } from "@/utils";
 
-let uniqueId = 0;
-function createItem(): AModuleData {
-  return {
-    id: uniqueId++,
-    first: "",
-    second: "",
-    timeRange: null,
-    isHitherto: false,
-    editorContent: new Delta(),
-  };
-}
+const { createAModuleData, persistedState } = new AModuleStoreHandler();
 
 export const useProjectExperienceStore = defineStore(
   "project-experience",
   () => {
-    const dataList = reactive([createItem()]);
+    const dataList = ref([createAModuleData()]);
 
     function moveUpItem(index: number) {
-      moveOneStep(index, -1, dataList);
+      moveOneStep(index, -1, dataList.value);
     }
     function moveDownItem(index: number) {
-      moveOneStep(index, 1, dataList);
+      moveOneStep(index, 1, dataList.value);
     }
     function deleteItem(index: number) {
-      dataList.splice(index, 1);
+      dataList.value.splice(index, 1);
     }
     function addNewItem() {
-      dataList.push(createItem());
+      dataList.value.push(createAModuleData());
     }
     return {
       dataList,
@@ -40,5 +28,6 @@ export const useProjectExperienceStore = defineStore(
       moveUpItem,
       moveDownItem,
     };
-  }
+  },
+  { persistedState }
 );
