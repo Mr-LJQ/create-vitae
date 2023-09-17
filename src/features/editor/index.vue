@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 bottom-0 w-full transition-all duration-300"
+    class="fixed left-0 bottom-0 z-10 w-full transition-all duration-300"
     :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
   >
     <button

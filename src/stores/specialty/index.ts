@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Delta } from "@vueup/vue-quill";
 import { serialize } from "@/utils";
-import type { proficiency, presentation } from "@/features/editor/specialty";
+import type { Proficiency, Presentation } from "@/types";
 export const useSpecialtyStore = defineStore(
   "specialty",
   () => {
@@ -11,8 +11,8 @@ export const useSpecialtyStore = defineStore(
       Map<
         string,
         {
-          proficiency: (typeof proficiency)[number];
-          presentation: (typeof presentation)[number];
+          proficiency: Proficiency[number];
+          presentation: Presentation[number];
         }
       >
     >(new Map());

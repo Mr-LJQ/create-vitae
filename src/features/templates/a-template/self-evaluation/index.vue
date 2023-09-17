@@ -3,6 +3,7 @@
     <Separation>{{ moduleName }}</Separation>
     <ReadOnlyRichText
       :content="store.editorContent"
+      class="mt-3"
       v-if="!isEmptyDelta(store.editorContent)"
     />
   </div>

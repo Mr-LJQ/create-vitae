@@ -1,3 +1,5 @@
+import type { Proficiency, Presentation } from "@/types";
+
 export const placeholder = "技能特长文字描述，非必填。";
 
 export const propsType = {
@@ -20,6 +22,12 @@ export const presetTags = [
   "Office软件",
 ];
 
-export const proficiency = ["一般", "良好", "熟练", "擅长", "精通"] as const;
+export const proficiency: Proficiency = [
+  "一般",
+  "良好",
+  "熟练",
+  "擅长",
+  "精通",
+];
 
-export const presentation = ["文字", "百分比"] as const;
+export const presentation: Presentation = ["文字", "百分比"];

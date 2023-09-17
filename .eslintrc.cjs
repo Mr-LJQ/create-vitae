@@ -1,5 +1,4 @@
 module.exports = {
-  ignorePatterns: ["src/features/templates/*"],
   env: {
     browser: true,
     es2021: true,

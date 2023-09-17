@@ -2,21 +2,25 @@
   <div class="mt-3">
     <Separation>{{ moduleName }}</Separation>
     <ReadOnlyRichText
-      :content="store.editorContent"
       class="mt-3"
-      v-if="!isEmptyDelta(store.editorContent)"
+      :content="store.content"
+      v-if="!isEmptyDelta(store.content)"
     />
+    <div class="flex flex-wrap mt-2">
+      <Tag :key="tag" v-for="tag of store.tags">{{ tag }}</Tag>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
+import Tag from "../tag/index.vue";
 import Separation from "../separation/index.vue";
 import { isEmptyDelta } from "@/utils";
 import ReadOnlyRichText from "@/components/read-only-rich-text/index.vue";
-import { useCustomModuleStore } from "@/stores/custom-module";
+import { useCertificateStore } from "@/stores/certificate";
 import { propsType } from ".";
 defineOptions({
-  name: "CustomModule",
+  name: "HonorCertificate",
 });
 defineProps(propsType);
-const store = useCustomModuleStore();
+const store = useCertificateStore();
 </script>

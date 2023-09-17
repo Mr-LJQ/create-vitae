@@ -1,24 +1,18 @@
 <template>
   <div class="w-[51.25rem] h-[72.5rem] bg-white mx-auto px-8 pt-5 box-border">
     <BasicInfos />
-    <!-- <component
+    <component
       :key="name"
       :is="componentMap[name]"
       :module-name="moduleNameMap[name]"
-      v-for="name of modulesOrder"
-    /> -->
-    <JobIntention module-name="意向职位" />
-    <EducationalBackground module-name="教育背景" />
-    <WorkExperience module-name="工作经历" />
-    <InternshipExperience module-name="实习经历" />
-    <ProjectExperience module-name="项目经历" />
-    <CampusExperience module-name="校园经历" />
-    <SelfEvaluation module-name="自我评价" />
-    <CustomModule module-name="自定义" />
+      v-for="name of activeModulesOrder"
+    />
   </div>
 </template>
 <script lang="ts" setup>
-//import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+
 import BasicInfos from "./basic-infos/index.vue";
 import JobIntention from "./job-intention/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
@@ -28,17 +22,26 @@ import InternshipExperience from "./internship-experience/index.vue";
 import ProjectExperience from "./project-experience/index.vue";
 import SelfEvaluation from "./self-evaluation/index.vue";
 import CustomModule from "./custom-module/index.vue";
-/*import Certificate from "./certificate/index.vue";
+import Certificate from "./certificate/index.vue";
 import Interests from "./interests/index.vue";
-import Specialty from "./specialty/index.vue"; */
+import Specialty from "./specialty/index.vue";
 
-// import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
+import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
 defineOptions({
   name: "ATemplate",
 });
 
-/* const store = useModulesInfosStore();
+const store = useModulesInfosStore();
 const { moduleNameMap, modulesOrder, openedModules } = storeToRefs(store);
+/**
+ * 过滤掉无需显示的 module
+ */
+const activeModulesOrder = computed(() => {
+  return modulesOrder.value.filter((key) => {
+    return openedModules.value[key];
+  });
+});
+
 const componentMap = {
   [ModuleEnum.JobIntention]: JobIntention,
   [ModuleEnum.EducationalBackground]: EducationalBackground,
@@ -51,5 +54,5 @@ const componentMap = {
   [ModuleEnum.Interests]: Interests,
   [ModuleEnum.SelfEvaluation]: SelfEvaluation,
   [ModuleEnum.CustomModule]: CustomModule,
-}; */
+};
 </script>
