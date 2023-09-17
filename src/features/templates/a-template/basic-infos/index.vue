@@ -1,39 +1,79 @@
 <template>
-  <section>
-    <img src="" alt="照片" />
+  <section class="flex text-[#333]">
     <div>
-      <h1>{{ store.name }}</h1>
-      <div class="grid grid-cols-2">
-        <div v-for="(value, key) of infos" :key="key">
-          <span :class="`iconfont icon-${iconMap[key]}`" /><span>{{ key }}</span
-          >:<span>{{ value }}</span>
-        </div>
-        <div v-for="(value, key) of store.additionalInfos" :key="key">
-          <span :class="`iconfont icon-${customIcon}`" /><span>{{ key }}</span
-          >:<span>{{ value }}</span>
-        </div>
-      </div>
+      <img class="w-32" :src="pictureUrl" alt="照片" />
+    </div>
+    <div>
+      <dl class="pl-8">
+        <dt class="mb-[0.65rem]">
+          <strong class="text-2xl leading-[2.88rem]">{{ store.name }}</strong>
+        </dt>
+        <dd :key="key" :class="$style.dd" v-for="[key, name, value] of infos">
+          <span
+            :class="[`mr-3 align-top iconfont icon-${iconMap[key]}`]"
+          /><span :class="$style.name">{{ name }}</span
+          >：{{ value }}
+        </dd>
+        <dd
+          :key="key"
+          :class="$style.dd"
+          v-for="(value, key) of store.additionalInfos"
+        >
+          <span :class="[`mr-3 align-top iconfont icon-${customIcon}`]" /><span
+            :class="$style.name"
+            >{{ key }}</span
+          >：{{ value }}
+        </dd>
+      </dl>
     </div>
   </section>
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
+import "@/assets/fonts/iconfont.css";
 import { omit } from "lodash";
-import { iconMap, customIcon } from ".";
-import type { IconMap } from ".";
+import { iconMap, customIcon, nameMap, order } from ".";
+import type { KeysType } from ".";
 import { useBasicInfosStore } from "@/stores/basic-infos";
 defineOptions({
-  name: "basicInfos",
+  name: "BasicInfos",
 });
 const store = useBasicInfosStore();
 
-const heightOrWidth = computed(() => {
-  return store.height + "/" + store.weight;
+/**
+ * 处理身高与体重
+ */
+const heightWeight = computed(() => {
+  let value = "";
+  let name = "";
+  const { height, weight } = store;
+  if (height && weight) {
+    name = "身高体重";
+    value = height + "cm/" + weight + "kg";
+  } else if (height) {
+    name = "身高";
+    value = height + "cm";
+  } else if (weight) {
+    name = "体重";
+    value = weight + "kg";
+  }
+  return [name, value];
 });
-const infos = computed<IconMap>(() => {
-  return {
-    heightOrWidth: heightOrWidth.value,
-    ...omit(store, [
+
+/**
+ * 处理照片
+ */
+const pictureUrl = computed(() => {
+  return store.picture && URL.createObjectURL(store.picture);
+});
+
+/**
+ * 将 object 装换为 entries 格式并排序，以使其按顺序显示
+ */
+const infos = computed(() => {
+  const items = {
+    heightWeight: heightWeight.value[1],
+    ...omit(store.$state, [
       "name",
       "picture",
       "weight",
@@ -43,7 +83,50 @@ const infos = computed<IconMap>(() => {
       "additionalInfos",
     ]),
   };
+  //order 的顺序决定显示的顺序
+  let result: [keyof KeysType, string, string][] = order.map((key) => {
+    let name = nameMap[key]; //转换为对应的 name
+    let value = items[key]; //获取值
+    switch (
+      key //需要特殊处理的项
+    ) {
+      case "heightWeight": {
+        name = heightWeight.value[0];
+        break;
+      }
+      case "birth": {
+        const { convertToAge } = store;
+        const date = new Date(value);
+        const birthYear = date.getFullYear();
+        const currentYear = new Date().getFullYear();
+        name = convertToAge ? "年龄" : "出生年月";
+        value = convertToAge
+          ? String(currentYear - birthYear)
+          : `${birthYear}-${date.getMonth() + 1}`;
+        break;
+      }
+    }
+    return [key, name, value];
+  });
+  //过滤掉用户没填写的项
+  result = result.filter((entry) => {
+    return entry[2].trim(); //过滤掉为 "" 的项
+  });
+  return result;
 });
 </script>
-<style></style>
-@/stores/basic-infos
+<style module>
+.dd {
+  float: left;
+  font-size: 13px;
+  min-width: 50%;
+  margin: 0;
+  @apply py-0.5;
+}
+.name {
+  display: inline-block;
+  text-align-last: justify;
+  vertical-align: middle;
+  @apply w-14 h-5;
+}
+</style>

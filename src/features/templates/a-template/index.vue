@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-[51.25rem] h-[72.5rem] bg-white mx-auto px-8 pt-5 box-border">
     <BasicInfos />
   </div>
 </template>
@@ -16,6 +16,7 @@ import JobIntention from "./job-intention/index.vue";
 import ProjectExperience from "./project-experience/index.vue";
 import SelfEvaluation from "./self-evaluation/index.vue";
 import Specialty from "./specialty/index.vue";
+
 defineOptions({
   name: "ATemplate",
 });

@@ -5,10 +5,16 @@
 /* 设置默认字体大小，通过继承避免重复设置 */
 #app {
   font-size: 14px;
+  font-family:
+    Microsoft YaHei,
+    SimSun,
+    PingFang SC,
+    PingFang SC Regular;
 }
 
 ul,
-ol {
+ol,
+dl {
   padding: 0;
   margin: 0;
   list-style: none;
