@@ -1,7 +1,7 @@
 <template>
-  <span :class="BUTTON_FILE_CLASS" @Click="handleUploadFileClick">
+  <span :class="BUTTON_FILE_CLASS" @click="handleUploadFileClick">
     上传照片
-    <input v-bind="$attrs" type="file" ref="{fileInput}" />
+    <input v-bind="$attrs" type="file" ref="fileInput" />
   </span>
 </template>
 <script lang="ts" setup>

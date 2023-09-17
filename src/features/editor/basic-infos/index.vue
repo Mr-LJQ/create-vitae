@@ -34,7 +34,7 @@
         </ElSelect>
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="照片设置">
-        <FileButton />
+        <FileButton @change="handleFileChange" accept="image/*"/>
         <ElCheckbox :id="id" v-model="store.showPhoto" label="展示照片" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="性别">
@@ -130,6 +130,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import {
   ElOption,
   ElSelect,
@@ -157,8 +158,8 @@ defineOptions({
 });
 defineProps(propsType);
 const store = useBasicInfosStore();
-const { addInfo, deleteInfo, hasInfo, additionalInfos } = store;
-
+const { addInfo, deleteInfo, hasInfo } = store;
+const { additionalInfos } = storeToRefs(store);
 /**
  * 自定义项相关逻辑
  */
@@ -181,7 +182,7 @@ function addCustomInfo() {
   //如果 key 已存在，则对用户进行提醒
   if (hasInfo(key)) {
     // key 与 value 均已存在,向用户发出提醒
-    if (additionalInfos[key] === value) {
+    if (additionalInfos.value[key] === value) {
       ElNotification.warning({
         title: "提醒",
         message: `内容：${key}:${value} 已经添加，重复添加无效。`,
@@ -213,5 +214,16 @@ function addCustomInfo() {
   addInfo(key, value);
   customKeyRef.value = "";
   customValueRef.value = "";
+}
+
+/**
+ * 图片上传相关逻辑
+ */
+
+function handleFileChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  if (file == null) return;
+  store.picture = file
 }
 </script>
