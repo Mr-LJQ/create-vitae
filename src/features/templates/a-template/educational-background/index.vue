@@ -11,4 +11,3 @@ defineOptions({
 defineProps(propsType);
 const store = useEducationalBackgroundStore();
 </script>
-<style></style>

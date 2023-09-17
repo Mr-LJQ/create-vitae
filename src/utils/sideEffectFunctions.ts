@@ -86,6 +86,9 @@ export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
     _state.dataList.forEach((data) => {
       data.id = this.id++; //重新添加上 Id
       data.editorContent = new Delta(data.editorContent);
+      data.timeRange =
+        data.timeRange &&
+        (data.timeRange.map((date) => new Date(date)) as [Date, Date]);
     });
     return _state;
   };

@@ -99,5 +99,16 @@
         }
       }
     }
+    /*
+      专用于 ReadOnlyRichText
+    */
+    @include m("read-only") {
+      .ql-container.ql-snow {
+        border: none;
+      }
+      .ql-editor {
+        padding: 0;
+      }
+    }
   }
 }

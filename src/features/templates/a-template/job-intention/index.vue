@@ -1,5 +1,5 @@
 <template>
-  <Section class="mt-3">
+  <section class="mt-3">
     <Separation>{{ moduleName }}</Separation>
     <div
       v-for="{ id, pay, city, hiredate, post } of store.jobIntentions"
@@ -12,7 +12,7 @@
         <li class="flex-1 text-end">{{ hiredate }}</li>
       </ul>
     </div>
-  </Section>
+  </section>
 </template>
 <script lang="ts" setup>
 import { useJobIntentionStore } from "@/stores/job-intention";

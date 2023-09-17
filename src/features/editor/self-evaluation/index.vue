@@ -15,12 +15,12 @@
 </template>
 <script lang="ts" setup>
 import { ref, nextTick } from "vue";
-import { isEqual } from "lodash";
 import { ElButton, ElMessageBox } from "element-plus";
 import { Delta, Quill } from "@vueup/vue-quill";
 import RichTextEditor from "@/components/rich-text-editor/index.vue";
-import { placeholder, civilities } from ".";
+import { isEmptyDelta } from "@/utils";
 import { useSelfEvaluationStore } from "@/stores/self-evaluation";
+import { placeholder, civilities } from ".";
 defineOptions({
   name: "SelfEvaluation",
 });
@@ -44,13 +44,7 @@ function adjustCursor() {
   });
 }
 function addCivilities() {
-  const length = store.editorContent.length();
-  if (
-    //该情况是，用户从未进行输入
-    length === 0 ||
-    //该情况是，用户曾经进行过输入，但是后面全部删除了
-    (length === 1 && isEqual(store.editorContent.ops, [{ insert: "\n" }]))
-  ) {
+  if (isEmptyDelta(store.editorContent)) {
     store.editorContent = new Delta().insert(civilities);
     adjustCursor();
     return;
