@@ -1,7 +1,7 @@
 export default {
-  "**/*.{js,ts,jsx,tsx,vue}": [
+  "**/*.{mjs,cjs,js,ts,jsx,tsx,vue}": [
     "eslint --fix",
     "prettier --write --ignore-unknown",
   ],
-  "**/!(*.{js,ts,jsx,tsx,vue})": "prettier --write --ignore-unknown",
+  "**/!(*.{mjs,cjs,js,ts,jsx,tsx,vue})": "prettier --write --ignore-unknown",
 };
