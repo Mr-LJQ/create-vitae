@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <span>
+  <div :class="$style.titleHeader">
+    <span :class="$style.contentBox">
       <slot />
     </span>
   </div>
