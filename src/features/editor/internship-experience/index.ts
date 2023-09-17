@@ -26,8 +26,7 @@ export const propsType = {
 /**
  * 该项是实习经验，填写该项的大概率是毕业不久的学生，因此开始时间是最近一年
  */
- const startTime = new Date()
- startTime.setFullYear(startTime.getFullYear() - 1)
- const endTime = new Date()
- export const defaultTimeValue: [Date, Date] = [startTime, endTime];
- 
+const startTime = new Date();
+startTime.setFullYear(startTime.getFullYear() - 1);
+const endTime = new Date();
+export const defaultTimeValue: [Date, Date] = [startTime, endTime];

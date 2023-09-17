@@ -34,7 +34,7 @@
         </ElSelect>
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="照片设置">
-        <FileButton @change="handleFileChange" accept="image/*"/>
+        <FileButton @change="handleFileChange" accept="image/*" />
         <ElCheckbox :id="id" v-model="store.showPhoto" label="展示照片" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="性别">
@@ -97,9 +97,10 @@
       :class="GRID_AUTO_CENTER"
     >
       <EditInputItem
-        v-for="(_, key) of additionalInfos"
+        :key="key"
         v-slot="{ id }"
         :label-text="key"
+        v-for="(_, key) of additionalInfos"
       >
         <EditInput :id="id" v-model="additionalInfos[key]" />
         <ElButton
@@ -199,7 +200,7 @@ function addCustomInfo() {
           confirmButtonText: "覆盖",
           cancelButtonText: "取消",
           type: "warning",
-        }
+        },
       )
         .then(() => {
           addInfo(key, value);
@@ -224,6 +225,6 @@ function handleFileChange(event: Event) {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (file == null) return;
-  store.picture = file
+  store.picture = file;
 }
 </script>

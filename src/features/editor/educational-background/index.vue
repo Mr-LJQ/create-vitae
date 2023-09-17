@@ -37,7 +37,7 @@ import {
   placeholder,
   propsType,
   degrees,
-  defaultTimeValue
+  defaultTimeValue,
 } from ".";
 defineProps(propsType);
 defineOptions({

@@ -16,7 +16,14 @@
 <script lang="ts" setup>
 import AModule from "@/components/share-modules/a-module/index.vue";
 import { useInternshipExperienceStore } from "@/stores/internship-experience";
-import { firstItem, secondItem, thirdItem, placeholder, propsType,defaultTimeValue } from ".";
+import {
+  firstItem,
+  secondItem,
+  thirdItem,
+  placeholder,
+  propsType,
+  defaultTimeValue,
+} from ".";
 defineProps(propsType);
 defineOptions({
   name: "internshipExperience",

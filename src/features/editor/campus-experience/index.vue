@@ -16,7 +16,14 @@
 <script lang="ts" setup>
 import AModule from "@/components/share-modules/a-module/index.vue";
 import { useCampusExperienceStore } from "@/stores/campus-experience";
-import { firstItem, secondItem, thirdItem, placeholder, propsType,defaultTimeValue } from ".";
+import {
+  firstItem,
+  secondItem,
+  thirdItem,
+  placeholder,
+  propsType,
+  defaultTimeValue,
+} from ".";
 defineProps(propsType);
 defineOptions({
   name: "campusExperience",

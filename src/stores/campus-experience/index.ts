@@ -29,5 +29,5 @@ export const useCampusExperienceStore = defineStore(
       moveDownItem,
     };
   },
-  { persistedState }
+  { persistedState },
 );

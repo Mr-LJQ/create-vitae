@@ -29,5 +29,5 @@ export const useProjectExperienceStore = defineStore(
       moveDownItem,
     };
   },
-  { persistedState }
+  { persistedState },
 );

@@ -89,7 +89,7 @@ function dragenter(index: number) {
     },
     300,
     index,
-    currentIndex
+    currentIndex,
   );
 }
 </script>

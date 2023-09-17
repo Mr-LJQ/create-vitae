@@ -62,7 +62,7 @@ import {
 } from ".";
 defineProps(propsType);
 defineOptions({
-  name: "specialty",
+  name: "SpecialSkill",
 });
 
 const store = useSpecialtyStore();

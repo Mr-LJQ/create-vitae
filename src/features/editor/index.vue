@@ -74,7 +74,9 @@ import EducationalBackground from "./educational-background/index.vue";
 
 import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
 import { createDragThrottle, swap } from "@/utils";
-
+defineOptions({
+  name: "EditorSection",
+});
 const store = useModulesInfosStore();
 const { moduleNameMap, modulesOrder, openedModules } = storeToRefs(store);
 
@@ -118,7 +120,7 @@ function dragenter(index: number) {
     },
     300,
     index,
-    currentIndex
+    currentIndex,
   );
 }
 </script>

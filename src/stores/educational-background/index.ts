@@ -30,7 +30,7 @@ export const useEducationalBackgroundStore = defineStore(
       dataList,
     };
   },
-  { persistedState }
+  { persistedState },
 );
 
 export type State = StoreState<

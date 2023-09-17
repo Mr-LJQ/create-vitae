@@ -9,4 +9,4 @@ export type AModuleData = {
   timeRange: [Date, Date] | null;
 };
 
-export type AnyFunction = (...args: any[]) => any;
+export type AnyFunction = (...args: unknown[]) => unknown;

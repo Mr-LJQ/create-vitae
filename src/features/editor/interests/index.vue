@@ -18,7 +18,7 @@ import { useInterestsStore } from "@/stores/interests";
 import { propsType, presetTags, placeholder } from ".";
 defineProps(propsType);
 defineOptions({
-  name: "interests",
+  name: "HobbyInterests",
 });
 
 const store = useInterestsStore();

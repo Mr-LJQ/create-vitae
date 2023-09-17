@@ -17,5 +17,5 @@ export const useSelfEvaluationStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );

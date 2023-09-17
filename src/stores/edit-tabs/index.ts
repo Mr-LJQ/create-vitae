@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Ref } from "vue";
 
-type UnRef<T extends Ref<any>> = T extends Ref<infer R> ? R : T;
+type UnRef<T extends Ref<unknown>> = T extends Ref<infer R> ? R : T;
 export const useEditTabsStore = defineStore("edit-tabs", () => {
   const tabNames = ref([
     "求职意向",
@@ -18,7 +18,7 @@ export const useEditTabsStore = defineStore("edit-tabs", () => {
     "自定义模块",
   ] as const);
   const activeTabName = ref<UnRef<typeof tabNames>[number] | "基本信息">(
-    "基本信息"
+    "基本信息",
   );
 
   return {

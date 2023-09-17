@@ -46,5 +46,5 @@ export const useSpecialtyStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );

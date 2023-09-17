@@ -18,7 +18,7 @@ import ShowCheckedTags from "@/components/show-checked-tags/index.vue";
 import { placeholder, propsType, presetTags } from ".";
 defineProps(propsType);
 defineOptions({
-  name: "certificate",
+  name: "HonorCertificate",
 });
 const store = useCertificateStore();
 const { hasTag, deleteTag, addTag } = store;

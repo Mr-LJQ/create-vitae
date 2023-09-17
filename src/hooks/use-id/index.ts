@@ -30,7 +30,7 @@ export const useId = () => {
     usage: app.provide(ID_INJECTION_KEY, {
       prefix: number,
       current: number,
-    })`
+    })`,
     );
   }
   const idRef = computed(() => {

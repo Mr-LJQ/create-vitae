@@ -28,5 +28,5 @@ export const useInternshipExperienceStore = defineStore(
       moveDownItem,
     };
   },
-  { persistedState }
+  { persistedState },
 );

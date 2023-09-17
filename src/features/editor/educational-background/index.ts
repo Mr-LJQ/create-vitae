@@ -36,12 +36,10 @@ export const propsType = {
   },
 } as const;
 
-
 /**
  * 该项是教育背景，填写该项的大概率已毕业，因此开始时间是四年前到今年
  */
- const startTime = new Date()
- startTime.setFullYear(startTime.getFullYear() - 4)
- const endTime = new Date()
- export const defaultTimeValue: [Date, Date] = [startTime, endTime];
- 
+const startTime = new Date();
+startTime.setFullYear(startTime.getFullYear() - 4);
+const endTime = new Date();
+export const defaultTimeValue: [Date, Date] = [startTime, endTime];

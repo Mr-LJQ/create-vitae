@@ -35,5 +35,5 @@ export const useCertificateStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );

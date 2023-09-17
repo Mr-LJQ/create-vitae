@@ -47,6 +47,9 @@ import MoveModule from "@/components/share-modules/move-module/index.vue";
 import AddButton from "@/components/buttons/AddButton.vue";
 import { propsType } from ".";
 const props = defineProps(propsType);
+defineOptions({
+  name: "AModule",
+});
 const { deleteItem, moveDownItem, moveUpItem } = props;
 /*
  * 用于判断相关按钮是否显示

@@ -62,7 +62,7 @@ function addCivilities() {
       confirmButtonText: "确认",
       cancelButtonText: "取消",
       type: "warning",
-    }
+    },
   )
     .then(() => {
       store.editorContent = new Delta().insert(civilities);

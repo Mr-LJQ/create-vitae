@@ -24,8 +24,7 @@ export const propsType = {
 /**
  * 该项是项目经历，先填写的应该是最近的项目，因此开始时间是最近一年
  */
- const startTime = new Date()
- startTime.setFullYear(startTime.getFullYear() - 1)
- const endTime = new Date()
- export const defaultTimeValue:[Date,Date] = [startTime, endTime];
- 
+const startTime = new Date();
+startTime.setFullYear(startTime.getFullYear() - 1);
+const endTime = new Date();
+export const defaultTimeValue: [Date, Date] = [startTime, endTime];

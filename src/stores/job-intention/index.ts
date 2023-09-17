@@ -53,7 +53,7 @@ export const useJobIntentionStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );
 
 export type State = StoreState<ReturnType<typeof useJobIntentionStore>>;

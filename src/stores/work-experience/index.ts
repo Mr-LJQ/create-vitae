@@ -31,5 +31,5 @@ export const useWorkExperienceStore = defineStore(
   },
   {
     persistedState,
-  }
+  },
 );

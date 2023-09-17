@@ -35,5 +35,5 @@ export const useInterestsStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );

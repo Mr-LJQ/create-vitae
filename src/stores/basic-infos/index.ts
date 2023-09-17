@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { omit } from "lodash";
 import type { StoreState } from "pinia";
 type AdditionalInfos = { [key in string]: string };
 
@@ -57,20 +56,20 @@ export const useBasicInfosStore = defineStore(
   {
     persistedState: {
       serialize(state) {
-        let _state = JSON.stringify(state);
-        let pictureFile = state.picture;
+        const _state = JSON.stringify(state);
+        const pictureFile = state.picture;
         return {
           _state,
           pictureFile,
         };
       },
       deserialize(data) {
-        let state = JSON.parse(data._state);
+        const state = JSON.parse(data._state);
         state.picture = data.pictureFile;
         return state;
       },
     },
-  }
+  },
 );
 
 export type State = StoreState<ReturnType<typeof useBasicInfosStore>>;

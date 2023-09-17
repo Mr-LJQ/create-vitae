@@ -1,14 +1,15 @@
 import { Delta } from "@vueup/vue-quill";
 import type { StateTree } from "pinia";
 import type { AnyFunction, AModuleData } from "@/types";
-export function moveOneStep(index: number, to: -1 | 1, targetArray: any[]) {
-  let targetIndex = index + to;
+
+export function moveOneStep(index: number, to: -1 | 1, targetArray: unknown[]) {
+  const targetIndex = index + to;
   if (targetIndex < 0) return;
   if (targetIndex >= targetArray.length) return;
   swap(index, targetIndex, targetArray);
 }
 
-export function swap(i: number, j: number, arr: any[]) {
+export function swap(i: number, j: number, arr: unknown[]) {
   const temp = arr[i];
   arr[i] = arr[j];
   arr[j] = temp;
@@ -31,12 +32,12 @@ export function createDragThrottle() {
     //这里实际上存在一个隐性BUG,当 i,j 大于 1 << 16 时，不能够继续保证唯一性，
     //  但是该BUG基本上是不可能触发的，因为触发该BUG意味着用户要在列表中生成 65536 项，
     //  而这么多项本身就是一种错误用法
-    let _sign = Math.max(i, j) + (Math.min(i, j) << 16);
+    const _sign = Math.max(i, j) + (Math.min(i, j) << 16);
     if (_sign !== sign) {
       prevTime = 0; //使得 callback 能够马上被调用
       sign = _sign;
     }
-    let currTime = Date.now();
+    const currTime = Date.now();
     if (currTime - prevTime >= wait) {
       prevTime = currTime;
       callback();
@@ -71,7 +72,7 @@ export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
         isHitherto: false,
         editorContent: new Delta(),
       },
-      third == null ? {} : { third }
+      third == null ? {} : { third },
     );
   };
   serialize = (state: S) => {

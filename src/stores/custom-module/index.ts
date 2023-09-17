@@ -18,5 +18,5 @@ export const useCustomModuleStore = defineStore(
         return _state;
       },
     },
-  }
+  },
 );
