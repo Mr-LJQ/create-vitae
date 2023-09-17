@@ -13,6 +13,8 @@
     <InternshipExperience module-name="实习经历" />
     <ProjectExperience module-name="项目经历" />
     <CampusExperience module-name="校园经历" />
+    <SelfEvaluation module-name="自我评价" />
+    <CustomModule module-name="自定义" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -24,10 +26,10 @@ import WorkExperience from "./work-experience/index.vue";
 import CampusExperience from "./campus-experience/index.vue";
 import InternshipExperience from "./internship-experience/index.vue";
 import ProjectExperience from "./project-experience/index.vue";
-/*import Certificate from "./certificate/index.vue";
-import CustomModule from "./custom-module/index.vue";
-import Interests from "./interests/index.vue";
 import SelfEvaluation from "./self-evaluation/index.vue";
+import CustomModule from "./custom-module/index.vue";
+/*import Certificate from "./certificate/index.vue";
+import Interests from "./interests/index.vue";
 import Specialty from "./specialty/index.vue"; */
 
 // import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
