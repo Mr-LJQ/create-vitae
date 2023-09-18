@@ -18,7 +18,7 @@
         <el-option
           v-for="item of degrees"
           :key="item"
-          :label="item"
+          :label="item || '不填'"
           :value="item"
         />
       </el-select>

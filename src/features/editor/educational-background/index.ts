@@ -14,7 +14,7 @@ export const thirdItem = {
 } as const;
 
 export const degrees = [
-  "不填",
+  "",
   "初中",
   "高中",
   "中专",

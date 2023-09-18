@@ -28,7 +28,7 @@
           <ElOption
             v-for="value in yearsOfWorkingOptions"
             :key="value"
-            :label="value"
+            :label="value || '不填'"
             :value="value"
           />
         </ElSelect>
@@ -42,7 +42,7 @@
           <ElOption
             v-for="value in genderOptions"
             :key="value"
-            :label="value"
+            :label="value || '不填'"
             :value="value"
           />
         </ElSelect>
@@ -52,7 +52,7 @@
           <ElOption
             v-for="value of maritalStatusOptions"
             :key="value"
-            :label="value"
+            :label="value || '不填'"
             :value="value"
           />
         </ElSelect>
@@ -86,7 +86,7 @@
           <ElOption
             v-for="value of politicsStatusOptions"
             :key="value"
-            :label="value"
+            :label="value || '不填'"
             :value="value"
           />
         </ElSelect>
