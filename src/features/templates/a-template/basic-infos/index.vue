@@ -29,7 +29,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 import "@/assets/fonts/iconfont.css";
 import { omit } from "lodash";
 import { iconMap, customIcon, nameMap, order } from ".";
@@ -63,16 +63,25 @@ const heightWeight = computed(() => {
 /**
  * 处理照片
  */
+let pictureObjectURL: string | null = null;
 const pictureUrl = computed(() => {
-  return store.picture && URL.createObjectURL(store.picture);
+  if (store.picture) {
+    pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
+    pictureObjectURL = URL.createObjectURL(store.picture);
+    return pictureObjectURL;
+  }
+  return "";
 });
-
+onUnmounted(() => {
+  pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
+});
 /**
  * 将 object 装换为 entries 格式并排序，以使其按顺序显示
  */
 const infos = computed(() => {
   const items = {
     heightWeight: heightWeight.value[1],
+    //此处应当使用 omit 的写法，以让以后添加的 额外 basic-info ref 能够自然的呈现
     ...omit(store.$state, [
       "name",
       "picture",
@@ -84,9 +93,10 @@ const infos = computed(() => {
     ]),
   };
   //order 的顺序决定显示的顺序
-  let result: [keyof KeysType, string, string][] = order.map((key) => {
+  let result: [keyof KeysType, string, string | null][] = order.map((key) => {
     let name = nameMap[key]; //转换为对应的 name
     let value = items[key]; //获取值
+    if (!value.trim()) return [key, name, value];
     switch (
       key //需要特殊处理的项
     ) {
@@ -109,10 +119,9 @@ const infos = computed(() => {
     return [key, name, value];
   });
   //过滤掉用户没填写的项
-  result = result.filter((entry) => {
-    return entry[2].trim(); //过滤掉为 "" 的项
+  return result.filter((entry) => {
+    return entry[2];
   });
-  return result;
 });
 </script>
 <style module>
