@@ -65,6 +65,10 @@
         &.ql-blank::before {
           font-style: normal; //默认样式的 placeholder 部分是倾斜的，覆盖它，使其不再倾斜
         }
+        ul,
+        ol {
+          padding-left: 0;
+        }
       }
 
       .ql-snow {
@@ -108,6 +112,10 @@
       }
       .ql-editor {
         padding: 0;
+        ul,
+        ol {
+          padding-left: 0;
+        }
       }
     }
   }
