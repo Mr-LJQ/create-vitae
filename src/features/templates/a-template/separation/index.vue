@@ -13,25 +13,24 @@ defineOptions({
 </script>
 <style module>
 .titleHeader {
+  position: relative;
   height: 28px;
   font-size: 15px;
-  font-weight: 400;
-  position: relative;
   white-space: nowrap;
 }
 .titleHeader::before {
+  position: absolute;
   display: block;
+  left: 0;
+  top: 14px;
   content: "";
   width: 100%;
   height: 1px;
   background-color: #999;
-  position: absolute;
-  left: 0;
-  top: 14px;
 }
 .contentBox {
-  display: inline-block;
   position: relative;
+  display: inline-block;
   z-index: 2;
   height: 28px;
   padding: 0 20px;
@@ -42,13 +41,13 @@ defineOptions({
   background-color: #284967;
 }
 .contentBox::before {
+  position: absolute;
   display: block;
+  left: -5px;
+  top: 8px;
   content: "";
   width: 10px;
   height: 10px;
-  position: absolute;
-  left: -5px;
-  top: 8px;
   background-color: #eee;
   transform: rotate(45deg);
 }

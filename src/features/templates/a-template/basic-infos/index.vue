@@ -1,12 +1,12 @@
 <template>
-  <section class="flex text-[#333]">
+  <section class="flex">
     <div>
       <img class="w-32" :src="pictureUrl" alt="照片" />
     </div>
     <div>
       <dl class="pl-8">
-        <dt class="mb-[0.65rem]">
-          <strong class="text-2xl leading-[2.88rem]">{{ store.name }}</strong>
+        <dt class="mb-3">
+          <strong class="text-2xl">{{ store.name }}</strong>
         </dt>
         <dd :key="key" :class="$style.dd" v-for="[key, name, value] of infos">
           <span
@@ -93,7 +93,7 @@ const infos = computed(() => {
     ]),
   };
   //order 的顺序决定显示的顺序
-  let result: [keyof KeysType, string, string | null][] = order.map((key) => {
+  let result: [keyof KeysType, string, string][] = order.map((key) => {
     let name = nameMap[key]; //转换为对应的 name
     let value = items[key]; //获取值
     if (!value.trim()) return [key, name, value];
@@ -120,14 +120,13 @@ const infos = computed(() => {
   });
   //过滤掉用户没填写的项
   return result.filter((entry) => {
-    return entry[2];
+    return entry[2].trim();
   });
 });
 </script>
 <style module>
 .dd {
   float: left;
-  font-size: 13px;
   min-width: 50%;
   margin: 0;
   @apply py-0.5;

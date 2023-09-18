@@ -1,5 +1,7 @@
 <template>
-  <div class="w-[51.25rem] h-[72.5rem] bg-white mx-auto px-8 pt-5 box-border">
+  <div
+    class="w-[51.25rem] h-[72.5rem] bg-white mx-auto px-8 pt-5 box-border text-[13px] text-[#333]"
+  >
     <BasicInfos />
     <component
       :key="name"

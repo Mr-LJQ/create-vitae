@@ -3,15 +3,15 @@
 </template>
 <script lang="ts" setup>
 defineOptions({
-  name: "TagComponent",
+  name: "Tag",
 });
 </script>
 <style module>
 .tag {
+  position: relative;
+  z-index: 2;
   display: inline-block;
   border-radius: 16px;
-  z-index: 2;
-  position: relative;
   border: 1px solid #eee;
   background-color: #eee;
   color: #555;
