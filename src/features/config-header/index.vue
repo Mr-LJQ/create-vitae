@@ -19,9 +19,6 @@
         <ElIcon v-else size="2rem"><ArrowUp /></ElIcon>
       </span>
     </header>
-    <main>
-      <slot :templateRefCallback="templateRefCallback" />
-    </main>
   </div>
 </template>
 <script lang="ts" setup>
@@ -38,16 +35,6 @@ const drawerVisible = ref(true);
 function toggleDrawer() {
   drawerVisible.value = !drawerVisible.value;
 }
-
-/**
- * 此属性用于作用域插槽，其目的在于将其赋值给 简历 模版的最外层元素，
- *  用于为内部的 生成 PDF 逻辑提供支持
- */
-const templateRef = ref<HTMLElement | null>(null);
-function templateRefCallback(element: HTMLElement | null) {
-  templateRef.value = element;
-}
-
 /**
  * 下载为 PDF
  */
