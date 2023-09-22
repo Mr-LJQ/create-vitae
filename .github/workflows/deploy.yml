@@ -43,7 +43,7 @@ jobs:
 
       - name: Get repository name
         id: repo_name
-        run: echo $GITHUB_REPOSITORY | cut -d '/' -f 2
+        run: echo "$GITHUB_REPOSITORY" | cut -d '/' -f 2
 
       - name: Build Pages
         run: pnpm run build --base "${{ steps.repo_name.outputs.stdout }}"
