@@ -18,4 +18,3 @@ pinia.use(persist);
 const app = createApp(App);
 app.use(pinia);
 app.mount("#app");
-//避免 empty commit 错误，可删除
