@@ -16,7 +16,7 @@
 </template>
 <script lang="ts" setup>
 import { useJobIntentionStore } from "@/stores/job-intention";
-import Separation from "../separation/index.vue";
+import Separation from "../../components/separation/index.vue";
 import { propsType } from ".";
 defineOptions({
   name: "JobIntention",

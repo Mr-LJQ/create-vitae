@@ -2,12 +2,12 @@
   <AModule :data-list="store.dataList" :module-name="moduleName" />
 </template>
 <script lang="ts" setup>
-import AModule from "../a-module/index.vue";
-import { useCampusExperienceStore } from "@/stores/campus-experience";
+import AModule from "../../components/a-module/index.vue";
+import { useWorkExperienceStore } from "@/stores/work-experience";
 import { propsType } from ".";
 defineOptions({
-  name: "CampusExperience",
+  name: "WorkExperience",
 });
 defineProps(propsType);
-const store = useCampusExperienceStore();
+const store = useWorkExperienceStore();
 </script>

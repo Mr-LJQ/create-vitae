@@ -6,7 +6,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import "@/assets/fonts/iconfont.css";
 defineOptions({
   name: "Separation",
 });

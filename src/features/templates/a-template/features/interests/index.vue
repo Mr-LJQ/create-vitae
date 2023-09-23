@@ -12,8 +12,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Tag from "../tag/index.vue";
-import Separation from "../separation/index.vue";
+import Tag from "../../components/tag/index.vue";
+import Separation from "../../components/separation/index.vue";
 import { isEmptyDelta } from "@/utils";
 import ReadOnlyRichText from "@/components/read-only-rich-text/index.vue";
 import { useInterestsStore } from "@/stores/interests";

@@ -9,14 +9,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Separation from "../separation/index.vue";
+import Separation from "../../components/separation/index.vue";
 import { isEmptyDelta } from "@/utils";
 import ReadOnlyRichText from "@/components/read-only-rich-text/index.vue";
-import { useSelfEvaluationStore } from "@/stores/self-evaluation";
+import { useCustomModuleStore } from "@/stores/custom-module";
 import { propsType } from ".";
 defineOptions({
-  name: "SelfEvaluation",
+  name: "CustomModule",
 });
 defineProps(propsType);
-const store = useSelfEvaluationStore();
+const store = useCustomModuleStore();
 </script>

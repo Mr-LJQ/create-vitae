@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import ConfigHeader from "@/features/config-header/index.vue";
 import EditDrawer from "@/features/editor/index.vue";
-import ATemplate from "@/features/templates/a-template/index.vue";
+import { ATemplate } from "@/features/templates";
 import { OVERRIDE_ELEMENT_PLUS } from "@/styles";
 import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";

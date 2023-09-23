@@ -20,7 +20,7 @@
 </template>
 <script lang="ts" setup>
 import { ElProgress } from "element-plus";
-import Separation from "../separation/index.vue";
+import Separation from "../../components/separation/index.vue";
 import { isEmptyDelta } from "@/utils";
 import ReadOnlyRichText from "@/components/read-only-rich-text/index.vue";
 import { useSpecialtyStore } from "@/stores/specialty";
