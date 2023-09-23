@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "icon_font_template_a"; /* Project id 4244010 */
+  src:
+    url("iconfont.woff2?t=1695474422706") format("woff2"),
+    url("iconfont.woff?t=1695474422706") format("woff"),
+    url("iconfont.ttf?t=1695474422706") format("truetype");
+}
+
+.icon_font_template_a {
+  font-family: "icon_font_template_a" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-template-a-native_place:before {
+  content: "\e681";
+}
+
+.icon-template-a-measurements:before {
+  content: "\e603";
+}
+
+.icon-template-a-politics:before {
+  content: "\e60f";
+}
+
+.icon-template-a-matrimony:before {
+  content: "\e7a8";
+}
+
+.icon-template-a-gender:before {
+  content: "\e7f8";
+}
+
+.icon-template-a-phone:before {
+  content: "\e601";
+}
+
+.icon-template-a-email:before {
+  content: "\e908";
+}
+
+.icon-template-a-nation:before {
+  content: "\e64a";
+}
+
+.icon-template-a-working_years:before {
+  content: "\e60b";
+}
+
+.icon-template-a-age:before {
+  content: "\e69d";
+}
+
+.icon-template-a-custom:before {
+  content: "\e616";
+}

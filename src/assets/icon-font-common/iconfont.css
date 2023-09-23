@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "icon_font_common"; /* Project id 4265679 */
+  src:
+    url("iconfont.woff2?t=1695474417689") format("woff2"),
+    url("iconfont.woff?t=1695474417689") format("woff"),
+    url("iconfont.ttf?t=1695474417689") format("truetype");
+}
+
+.icon_font_common {
+  font-family: "icon_font_common" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-common-download:before {
+  content: "\e600";
+}
+
+.icon-common-envelope:before {
+  content: "\e69e";
+}
+
+.icon-common-cover:before {
+  content: "\e62c";
+}
+
+.icon-common-user:before {
+  content: "\e63f";
+}
+
+.icon-common-font:before {
+  content: "\e6db";
+}
+
+.icon-common-skin:before {
+  content: "\e654";
+}
+
+.icon-common-template:before {
+  content: "\e60d";
+}
+
+.icon-common-line_padding:before {
+  content: "\e622";
+}
+
+.icon-common-vitae:before {
+  content: "\e662";
+}

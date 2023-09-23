@@ -10,7 +10,9 @@
         </dt>
         <dd :key="key" :class="$style.dd" v-for="[key, name, value] of infos">
           <span
-            :class="[`mr-3 align-top iconfont icon-${iconMap[key]}`]"
+            :class="[
+              `mr-3 align-top icon_font_template_a icon-template-a-${iconMap[key]}`,
+            ]"
           /><span :class="$style.name">{{ name }}</span
           >：{{ value }}
         </dd>
@@ -19,9 +21,11 @@
           :class="$style.dd"
           v-for="(value, key) of store.additionalInfos"
         >
-          <span :class="[`mr-3 align-top iconfont icon-${customIcon}`]" /><span
-            :class="$style.name"
-            >{{ key }}</span
+          <span
+            :class="[
+              `mr-3 align-top icon_font_template_a icon-template-a-${customIcon}`,
+            ]"
+          /><span :class="$style.name">{{ key }}</span
           >：{{ value }}
         </dd>
       </dl>
@@ -30,7 +34,6 @@
 </template>
 <script lang="ts" setup>
 import { computed, onUnmounted } from "vue";
-import "@/assets/fonts/iconfont.css";
 import { omit } from "lodash";
 import { iconMap, customIcon, nameMap, order } from ".";
 import type { KeysType } from ".";

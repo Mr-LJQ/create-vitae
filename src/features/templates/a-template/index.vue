@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
+import "@/assets/icon-font-template-a/iconfont.css";
 
 import BasicInfos from "./basic-infos/index.vue";
 import JobIntention from "./job-intention/index.vue";

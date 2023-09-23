@@ -36,19 +36,19 @@ export const order: Array<keyof KeysType> = [
 ];
 
 export const iconMap: KeysType = {
-  birth: "nianling",
-  phone: "dianhua",
-  email: "youxiang",
-  yearsOfWorking: "gongzuonianxian",
-  maritalStatus: "keaide",
-  gender: "xingbie",
-  nation: "minzu",
-  nativePlace: "nianling",
-  politicsStatus: "zhengzhi",
-  heightWeight: "celiang",
+  birth: "age",
+  phone: "phone",
+  email: "email",
+  yearsOfWorking: "working_years",
+  maritalStatus: "matrimony",
+  gender: "gender",
+  nation: "nation",
+  nativePlace: "native_place",
+  politicsStatus: "politics",
+  heightWeight: "measurements",
 };
 
-export const customIcon = "18";
+export const customIcon = "custom";
 
 export const nameMap: KeysType = {
   birth: "年龄",
