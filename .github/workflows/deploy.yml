@@ -7,18 +7,13 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,11 +37,10 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Get repository name
-        id: repo_name
-        run: echo "$GITHUB_REPOSITORY" | cut -d '/' -f 2
+        run: echo "REPOSITORY_NAME="`echo "$GITHUB_REPOSITORY" | cut -d '/' -f 2` >> "$GITHUB_ENV"
 
       - name: Build Pages
-        run: pnpm run build --base "${{ steps.repo_name.outputs.stdout }}"
+        run: pnpm run build --base "$REPOSITORY_NAME"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
