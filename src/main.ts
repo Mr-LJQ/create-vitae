@@ -1,11 +1,13 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import { createPersistedStatePlugin } from "pinia-plugin-persistedstate-2";
 import localforage from "localforage";
+import { createPersistedStatePlugin } from "pinia-plugin-persistedstate-2";
+
 import App from "./App.vue";
-import "normalize.css";
+
 import "./index.css";
 import "@/styles/index.scss";
+
 const pinia = createPinia();
 const persist = createPersistedStatePlugin({
   storage: {
