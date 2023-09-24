@@ -4,8 +4,11 @@
       class="flex justify-around items-center fixed left-0 top-0 z-10 w-full h-16 shadow-lg bg-white transition-all duration-300 icon_font_common"
       :class="[drawerVisible ? '' : '-translate-y-16']"
     >
-      <h1 class="text-[#13d8a7] text-[2.5rem]">
-        <span class="icon-common-vitae"></span>简历生成
+      <h1>
+        <img src="/logo.svg" class="w-8 inline align-bottom" /><span
+          class="text-2xl text-[#13d8a7]"
+          >简历</span
+        >
       </h1>
       <ul class="flex h-full">
         <li class="px-2">
