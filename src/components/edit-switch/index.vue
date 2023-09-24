@@ -1,0 +1,66 @@
+<template>
+  <div>
+    <Switch
+      v-model="enabled"
+      :class="motionSwitchClass"
+      class="relative inline-flex h-4 cursor-pointer rounded-full outline-none border-2 border-transparent focus-visible:outline-[#13ce66] transition-all duration-300"
+    >
+      <span class="sr-only">{{ alt }}</span>
+      <span
+        aria-hidden="true"
+        :class="motionSpanClass"
+        class="pointer-events-none inline-block w-3 h-3 rounded-full transform translate-x-0 transition duration-300"
+      />
+    </Switch>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+import { Switch } from "@headlessui/vue";
+import { propsType, emitsType, UPDATE_MODEL_VALUE } from ".";
+defineOptions({
+  name: "EditSwitch",
+});
+const props = defineProps(propsType);
+const emits = defineEmits(emitsType);
+
+const enabled = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emits(UPDATE_MODEL_VALUE, val);
+  },
+});
+
+const motionSwitchClass = computed(() => {
+  //背景颜色只跟 enabled 有关
+  let className = [enabled.value ? "bg-[#13ce66]" : "bg-[#ccc]"];
+  if (props.selected) {
+    //如果状态是选中，则总是撑开的，且选中状态优先级最高
+    className.push("w-9");
+    return className.join(" ");
+  }
+  className.push("group-hover:w-9 w-4");
+  return className.join(" ");
+});
+const motionSpanClass = computed(() => {
+  let className = [];
+  //选中状态优先级最高
+  if (props.selected) {
+    className.push("bg-white");
+    className.push(enabled.value ? "translate-x-5" : "translate-x-0");
+    return className.join(" ");
+  }
+  //第二优先级
+  className.push("translate-x-0"); //正常状态总是位于原地
+  className.push(enabled.value ? "bg-[#13ce66]" : "bg-[#ccc]"); //缩起时样式有是否 enabled 决定
+
+  //hover 时，总是白色
+  className.push("group-hover:bg-white");
+  //hover 时，原点位置由 enabled 决定
+  enabled.value && className.push("group-hover:translate-x-5");
+  return className.join(" ");
+});
+</script>

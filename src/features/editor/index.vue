@@ -8,56 +8,104 @@
       :class="[$style.shadow, $style.button]"
       @click="toggleShrinkOrSpread"
     >
-      <ElIcon v-if="!isSpread" color="#13d8a7" size="35px"><ArrowUp /></ElIcon>
-      <ElIcon v-else color="#13d8a7" size="35px"><ArrowDown /></ElIcon>
+      <ElIcon v-if="!isSpread" color="#13ce66" size="35px"><ArrowUp /></ElIcon>
+      <ElIcon v-else color="#13ce66" size="35px"><ArrowDown /></ElIcon>
     </button>
-    <ElTabs stretch :class="$style.editTabs" v-model="store.activeModuleName">
-      <ElTabPane :name="ModuleEnum.BasicInfos" :key="ModuleEnum.BasicInfos">
-        <template #label>
-          <div :class="$style.tabLabel">
+    <TabGroup as="div" class="relative z-[2] bg-white">
+      <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
+        <span
+          :style="`transform:translateX(${translationXRef}rem)`"
+          :class="$style.selectedLine"
+        ></span>
+        <Tab as="template" v-slot="{ selected }"
+          ><div
+            class="shrink-0"
+            :class="[
+              $style.tabLabel,
+              selected ? 'selected' : '',
+              selected && computeTranslationX(),
+            ]"
+          >
             <b :class="$style.tabLabelText">{{
               moduleNameMap[ModuleEnum.BasicInfos]
             }}</b>
-          </div>
-        </template>
-        <BasicInfo />
-      </ElTabPane>
-      <!-- 
-        下面的写法之所以是 :key="`${name},${index}`"
-          是因为当前版本的 ElTabs 还不能够随着 modulesOrder 顺序的更新
-          而相应的更新视图，经过源码阅读发现想要同步更新，需要将 key与 index关联才会触发重新更新，
-          因此才有下面的写法，该写法实际上是一种 hack 写法
-       -->
-      <ElTabPane
-        lazy
-        :key="`${name},${index}`"
-        :name="name"
-        v-for="(name, index) of modulesOrder"
-      >
-        <template #label>
+          </div></Tab
+        >
+        <Tab
+          as="template"
+          :key="name"
+          v-slot="{ selected }"
+          :disabled="!openedModules[name]"
+          v-for="(name, index) of modulesOrder"
+        >
           <div
-            :class="$style.tabLabel"
-            draggable="true"
-            @dragstart="dragstart(index)"
-            @dragenter="dragenter(index)"
+            class="group shrink-0"
+            :class="[
+              $style.tabLabel,
+              selected ? 'selected' : '',
+              selected && computeTranslationX(index),
+            ]"
           >
             <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
-            <ElSwitch :class="$style.switch" v-model="openedModules[name]" />
+            <EditSwitch
+              :title="openedModules[name] ? '点击后隐藏模块' : '点击后显示模块'"
+              :selected="selected"
+              v-model="openedModules[name]"
+              :alt="`${moduleNameMap[name]}开关`"
+              class="absolute left-1/2 top-1 -translate-x-1/2"
+            />
+            <ElIcon
+              title="修改模块名称"
+              class="group-hover:flex hidden absolute right-0 bottom-1 p-0.5"
+              color="#13ce66"
+              size="1.25rem"
+              ><Edit
+            /></ElIcon>
+            <ElIcon
+              title="左移模块"
+              v-if="index !== 0"
+              class="group-hover:flex hidden absolute left-1 top-2 p-0.5 rounded-full hover:opacity-100 opacity-50 bg-[#13ce66]"
+              color="white"
+              size="1rem"
+              @click="moveLeft(index)"
+              ><ArrowLeft
+            /></ElIcon>
+            <ElIcon
+              title="右移模块"
+              v-if="index !== modulesOrder.length - 1"
+              class="group-hover:flex hidden absolute right-1 top-2 p-0.5 rounded-full hover:opacity-100 opacity-50 bg-[#13ce66]"
+              color="white"
+              size="1rem"
+              @click="moveRight(index)"
+              ><ArrowRight
+            /></ElIcon>
           </div>
-        </template>
-        <component
-          :is="componentMap[name]"
-          :module-name="moduleNameMap[name]"
-        />
-      </ElTabPane>
-    </ElTabs>
+        </Tab>
+      </TabList>
+      <TabPanels class="h-[21rem]">
+        <TabPanel as="template"><BasicInfo /></TabPanel>
+        <TabPanel :key="name" v-for="name of modulesOrder"
+          ><component
+            :is="componentMap[name]"
+            :module-name="moduleNameMap[name]"
+        /></TabPanel>
+      </TabPanels>
+    </TabGroup>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { ArrowUp, ArrowDown } from "@element-plus/icons-vue";
-import { ElTabs, ElTabPane, ElSwitch, ElIcon } from "element-plus";
+import {
+  Edit,
+  ArrowUp,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+} from "@element-plus/icons-vue";
+import { ElIcon } from "element-plus";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
+import { EditSwitch } from "@/components";
 
 import BasicInfo from "./basic-infos/index.vue";
 import Interests from "./interests/index.vue";
@@ -73,7 +121,7 @@ import InternshipExperience from "./internship-experience/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
 
 import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
-import { createDragThrottle, swap } from "@/utils";
+import { moveOneStep } from "@/utils";
 defineOptions({
   name: "EditorSection",
 });
@@ -105,23 +153,21 @@ function toggleShrinkOrSpread() {
 /**
  * 实现拖拽逻辑
  */
-let currentIndex: number = null!;
-const dragThrottle = createDragThrottle();
-function dragstart(index: number) {
-  currentIndex = index;
+function moveLeft(index: number) {
+  moveOneStep(index, -1, modulesOrder.value);
+}
+function moveRight(index: number) {
+  moveOneStep(index, 1, modulesOrder.value);
 }
 
-function dragenter(index: number) {
-  if (currentIndex === index) return;
-  dragThrottle(
-    () => {
-      swap(currentIndex, index, modulesOrder.value);
-      currentIndex = index;
-    },
-    300,
-    index,
-    currentIndex,
-  );
+/**
+ * 实现 tab 切换的动画效果
+ */
+const translationXRef = ref(0);
+function computeTranslationX(index?: number) {
+  if (index == null) return (translationXRef.value = 0);
+  //因为 "基本信息" 项是独立，且在设计上位于首位，因此此处需要 + 1
+  translationXRef.value = (index + 1) * 6; //此处的 6 指的是 tab 的宽度为 6rem
 }
 </script>
 
@@ -145,15 +191,22 @@ function dragenter(index: number) {
 }
 
 .tabLabel {
-  box-sizing: border-box;
-  float: left;
-  padding: 23px 11px 0 9px;
-  height: 55px;
-  width: 100px;
-  border-bottom: 2px solid #ddd;
-  cursor: pointer;
   position: relative;
+  box-sizing: border-box;
+  border-bottom: 2px solid #ddd;
+  outline: none;
+  cursor: pointer;
+  /* 
+    w-24 如需改变，则 computeTranslationX 函数亦要改变
+  */
+  @apply w-24 h-14 pt-6 pr-3 pl-2;
 }
+.selectedLine {
+  position: absolute;
+  border-bottom: 2px #f60 solid;
+  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform translate-x-0 duration-300;
+}
+
 .tabLabelText {
   display: block;
   max-width: 80px;

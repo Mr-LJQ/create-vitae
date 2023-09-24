@@ -8,6 +8,9 @@ dependencies:
   "@element-plus/icons-vue":
     specifier: ^2.1.0
     version: registry.npmmirror.com/@element-plus/icons-vue@2.1.0(vue@3.3.4)
+  "@headlessui/vue":
+    specifier: ^1.7.16
+    version: registry.npmmirror.com/@headlessui/vue@1.7.16(vue@3.3.4)
   "@vueup/vue-quill":
     specifier: ^1.2.0
     version: registry.npmmirror.com/@vueup/vue-quill@1.2.0(vue@3.3.4)
@@ -1014,6 +1017,23 @@ packages:
       }
     name: "@floating-ui/utils"
     version: 0.1.1
+    dev: false
+
+  registry.npmmirror.com/@headlessui/vue@1.7.16(vue@3.3.4):
+    resolution:
+      {
+        integrity: sha512-nKT+nf/q6x198SsyK54mSszaQl/z+QxtASmgMEJtpxSX2Q0OPJX0upS/9daDyiECpeAsvjkoOrm2O/6PyBQ+Qg==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/@headlessui/vue/-/vue-1.7.16.tgz,
+      }
+    id: registry.npmmirror.com/@headlessui/vue/1.7.16
+    name: "@headlessui/vue"
+    version: 1.7.16
+    engines: { node: ">=10" }
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: registry.npmmirror.com/vue@3.3.4
     dev: false
 
   registry.npmmirror.com/@humanwhocodes/config-array@0.11.11:
