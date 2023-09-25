@@ -4,50 +4,44 @@
     :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
   >
     <button
-      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-[transform,top] duration-300"
-      :class="[$style.shadow, $style.button]"
+      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 focus-visible:outline-[#13ce66] outline-none w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-[transform,top] duration-300"
+      :class="$style.shadow"
       @click="toggleShrinkOrSpread"
     >
       <ElIcon v-if="!isSpread" color="#13ce66" size="35px"><ArrowUp /></ElIcon>
       <ElIcon v-else color="#13ce66" size="35px"><ArrowDown /></ElIcon>
     </button>
-    <TabGroup as="div" class="relative z-[2] bg-white">
+    <TabGroup
+      as="div"
+      @change="computeTranslationX"
+      class="relative z-[2] bg-white"
+    >
       <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
+        <!-- 这是表示 tab 选中状态的底部条状样式 -->
         <span
           :style="`transform:translateX(${translationXRef}rem)`"
           :class="$style.selectedLine"
         ></span>
-        <Tab as="template" v-slot="{ selected }"
-          ><div
-            class="shrink-0"
-            :class="[
-              $style.tabLabel,
-              selected ? 'selected' : '',
-              selected && computeTranslationX(),
-            ]"
-          >
-            <b :class="$style.tabLabelText">{{
-              moduleNameMap[ModuleEnum.BasicInfos]
-            }}</b>
-          </div></Tab
-        >
-        <Tab
-          as="template"
-          :key="name"
-          v-slot="{ selected }"
-          :disabled="!openedModules[name]"
-          v-for="(name, index) of modulesOrder"
-        >
-          <div
+        <Tab class="shrink-0" :class="$style.tabLabel">
+          <b :class="$style.tabLabelText">{{
+            moduleNameMap[ModuleEnum.BasicInfos]
+          }}</b>
+        </Tab>
+        <TransitionGroup :move-class="$style.transition">
+          <Tab
+            :key="name"
+            v-slot="{ selected }"
+            @mousemove="swapPosition(index)"
+            @mouseenter="swapPosition(index)"
+            @mousedown="mousedown($event, index)"
+            :disabled="!openedModules[name]"
             class="group shrink-0"
-            :class="[
-              $style.tabLabel,
-              selected ? 'selected' : '',
-              selected && computeTranslationX(index),
-            ]"
+            :class="$style.tabLabel"
+            v-for="(name, index) of modulesOrder"
           >
             <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
             <EditSwitch
+              :tabindex="selected ? 0 : -1"
               :title="openedModules[name] ? '点击后隐藏模块' : '点击后显示模块'"
               :selected="selected"
               v-model="openedModules[name]"
@@ -59,28 +53,11 @@
               class="group-hover:flex hidden absolute right-0 bottom-1 p-0.5"
               color="#13ce66"
               size="1.25rem"
+              @click.prevent=""
               ><Edit
             /></ElIcon>
-            <ElIcon
-              title="左移模块"
-              v-if="index !== 0"
-              class="group-hover:flex hidden absolute left-1 top-2 p-0.5 rounded-full hover:opacity-100 opacity-50 bg-[#13ce66]"
-              color="white"
-              size="1rem"
-              @click="moveLeft(index)"
-              ><ArrowLeft
-            /></ElIcon>
-            <ElIcon
-              title="右移模块"
-              v-if="index !== modulesOrder.length - 1"
-              class="group-hover:flex hidden absolute right-1 top-2 p-0.5 rounded-full hover:opacity-100 opacity-50 bg-[#13ce66]"
-              color="white"
-              size="1rem"
-              @click="moveRight(index)"
-              ><ArrowRight
-            /></ElIcon>
-          </div>
-        </Tab>
+          </Tab>
+        </TransitionGroup>
       </TabList>
       <TabPanels class="h-[21rem]">
         <TabPanel as="template"><BasicInfo /></TabPanel>
@@ -96,13 +73,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import {
-  Edit,
-  ArrowUp,
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-} from "@element-plus/icons-vue";
+import { Edit, ArrowUp, ArrowDown } from "@element-plus/icons-vue";
 import { ElIcon } from "element-plus";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import { EditSwitch } from "@/components";
@@ -121,7 +92,7 @@ import InternshipExperience from "./internship-experience/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
 
 import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
-import { moveOneStep } from "@/utils";
+import { swap, createDragThrottle } from "@/utils";
 defineOptions({
   name: "EditorSection",
 });
@@ -152,12 +123,58 @@ function toggleShrinkOrSpread() {
 
 /**
  * 实现拖拽逻辑
+ * 由于 @headlessui/vue 在实现 Tab 组件的时候，对 tab 的 mousedown 进行了监听，并调用了 preventDefault()
+ *  因此 drag 相关事件无法生效，因此此处使用 mouse 相关事件去实现拖拽
  */
-function moveLeft(index: number) {
-  moveOneStep(index, -1, modulesOrder.value);
+let dragging = false;
+let currentIndex: number = null!;
+function mousedown(event: MouseEvent, index: number) {
+  const currentTarget = event.currentTarget as HTMLElement;
+  if (currentTarget == null) return;
+  currentIndex = index;
+  dragging = true;
+  const { left, top } = currentTarget.getBoundingClientRect();
+  const { clientX, clientY } = event;
+  const offsetX = clientX - left;
+  const offsetY = clientY - top;
+  const moveElement = currentTarget.cloneNode(true) as HTMLElement;
+  document.body.appendChild(moveElement);
+  /**
+   * pointer-events: none; 是必须的，否则元素会遮挡鼠标，导致mouseenter 无法触发
+   */
+  moveElement.style.cssText = `
+    position:fixed;
+    z-index:100;
+    opacity:.8;
+    pointer-events: none;
+  `;
+  function mousemove(event: MouseEvent) {
+    const { clientX, clientY } = event;
+    moveElement.style.left = `${clientX - offsetX}px`;
+    moveElement.style.top = `${clientY - offsetY}px`;
+  }
+  function cleanup() {
+    document.removeEventListener("mousemove", mousemove, { capture: true });
+    document.removeEventListener("mouseup", cleanup, { capture: true });
+    moveElement.remove();
+    dragging = false;
+  }
+  document.addEventListener("mousemove", mousemove, { capture: true });
+  document.addEventListener("mouseup", cleanup, { capture: true });
 }
-function moveRight(index: number) {
-  moveOneStep(index, 1, modulesOrder.value);
+const dragThrottle = createDragThrottle();
+
+function swapPosition(index: number) {
+  if (currentIndex === index || !dragging) return;
+  dragThrottle(
+    () => {
+      swap(index, currentIndex, modulesOrder.value);
+      currentIndex = index;
+    },
+    300,
+    index,
+    currentIndex,
+  );
 }
 
 /**
@@ -166,8 +183,7 @@ function moveRight(index: number) {
 const translationXRef = ref(0);
 function computeTranslationX(index?: number) {
   if (index == null) return (translationXRef.value = 0);
-  //因为 "基本信息" 项是独立，且在设计上位于首位，因此此处需要 + 1
-  translationXRef.value = (index + 1) * 6; //此处的 6 指的是 tab 的宽度为 6rem
+  translationXRef.value = index * 6; //此处的 6 指的是 tab 的宽度为 6rem,与 tab 长度有关
 }
 </script>
 
@@ -187,9 +203,9 @@ function computeTranslationX(index?: number) {
   transform: translateY(0);
 }
 .shrink {
-  transform: translateY(calc(100% - 55px)); /* 55px 是 TabsLabel的高度 */
+  /* panel 的高度可能会发生变化,因此使用该计算方法 是 3.5rem 是 tab 的高度 */
+  transform: translateY(calc(100% - 3.5rem));
 }
-
 .tabLabel {
   position: relative;
   box-sizing: border-box;
@@ -204,7 +220,7 @@ function computeTranslationX(index?: number) {
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;
-  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform translate-x-0 duration-300;
+  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform duration-300;
 }
 
 .tabLabelText {
@@ -219,23 +235,7 @@ function computeTranslationX(index?: number) {
   text-overflow: ellipsis;
 }
 
-.switch {
-  position: absolute;
-  left: 50%;
-  top: 6px;
-  height: 14px;
-  line-height: 14px;
-  opacity: 0.6;
-  transition: all 0.2s ease-out 0s;
-  transform: translateX(-50%);
-}
-.editTabs {
-  position: relative;
-  z-index: 2;
-  background-color: #fff;
-}
-.editTabs :global(.el-tabs__item) {
-  padding: 0;
-  --el-tabs-header-height: 55px;
+.transition {
+  transition: all 0.5s ease;
 }
 </style>
