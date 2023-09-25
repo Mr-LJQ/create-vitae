@@ -8,6 +8,7 @@ export const propsType = {
   },
   alt: String,
   selected: Boolean,
+  tabindex: Number,
 } as const;
 
 export const emitsType = {
