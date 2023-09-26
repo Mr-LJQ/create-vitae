@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 bottom-0 z-10 w-full transition-all duration-300"
+    class="text-sm fixed left-0 bottom-0 z-10 w-full transition-all duration-300"
     :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
   >
     <button
@@ -60,7 +60,7 @@
           </Tab>
         </TransitionGroup>
       </TabList>
-      <TabPanels class="h-[21rem]">
+      <TabPanels :as="ElScrollbar" class="h-[21rem] pt-2 overflow-y-hidden">
         <TabPanel as="template"><BasicInfo /></TabPanel>
         <TabPanel :key="name" v-for="name of modulesOrder"
           ><component
@@ -75,7 +75,7 @@
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { Edit, ArrowUp, ArrowDown } from "@element-plus/icons-vue";
-import { ElIcon } from "element-plus";
+import { ElIcon, ElScrollbar } from "element-plus";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import { EditSwitch } from "@/components";
 

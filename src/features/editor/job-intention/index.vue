@@ -10,8 +10,8 @@
       @dragstart="dragstart(index)"
       @dragenter="dragenter(index)"
       :key="item.id"
-      class="w-full"
-      :class="$style.a"
+      class="relative w-full mb-3 border border-[#ddd] cursor-grab"
+      :class="$style.bottomLine"
       v-for="(item, index) of jobIntentions"
     >
       <JobIntentionUnit
@@ -25,7 +25,7 @@
           circle
           type="danger"
           :icon="Delete"
-          :class="$style.b"
+          class="absolute top-0 right-2"
           v-if="jobIntentions.length > 1"
           @click="handleDelete(index)"
         />
@@ -95,15 +95,7 @@ function dragenter(index: number) {
 </script>
 
 <style module>
-.a {
-  position: relative;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
-  cursor: grab;
-}
-.b {
-  position: absolute;
-  top: 0;
-  right: 10px;
+.bottomLine {
+  border-bottom;:1px solid #ddd
 }
 </style>
