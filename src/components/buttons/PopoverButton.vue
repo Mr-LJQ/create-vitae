@@ -5,7 +5,7 @@
       class="relative w-16 h-full outline-none bg-white hover:text-[#13d8a7] text-[#13a783]"
     >
       <span
-        :class="`icon-common-${iconName}`"
+        :class="`icon_font_common icon-common-${iconName}`"
         class="block text-[1.5rem] h-8"
       ></span>
       <span class="block text-sm">

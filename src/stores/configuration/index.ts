@@ -7,10 +7,12 @@ export const useConfigurationStore = defineStore("configuration", () => {
   const moduleGap = ref(20);
   const lineGap = ref(0.7);
   const templateEdgeGap = ref(30);
-  //---字体/语言---
+  //---字体语言---
   const fontSize = ref<number>(14);
   const language = ref<string>("中文（简）");
   const fontFamily = ref<string>("微软雅黑");
+  //---模版颜色---
+  const templateColor = ref<string>("");
   return {
     lineGap,
     moduleGap,
@@ -18,6 +20,7 @@ export const useConfigurationStore = defineStore("configuration", () => {
     fontSize,
     language,
     fontFamily,
+    templateColor,
   };
 });
 
