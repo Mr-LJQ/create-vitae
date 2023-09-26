@@ -1,8 +1,8 @@
 <template>
   <PopoverButton as="template" v-slot="{ open }">
     <button
-      :class="[$style.focus, open && $style.shadow]"
-      class="relative z-[1] w-16 h-full outline-none bg-white hover:text-[#13d8a7] text-[#13a783]"
+      :class="[$style.focus, open && $style.shadow, open && 'z-[1]']"
+      class="relative w-16 h-full outline-none bg-white hover:text-[#13d8a7] text-[#13a783]"
     >
       <span
         :class="`icon-common-${iconName}`"
