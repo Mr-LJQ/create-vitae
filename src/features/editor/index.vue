@@ -13,13 +13,14 @@
     </button>
     <TabGroup
       as="div"
-      @change="computeTranslationX"
+      :selectedIndex="selectedIndex"
+      @change="tabChange"
       class="relative z-[2] bg-white"
     >
       <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
         <!-- 这是表示 tab 选中状态的底部条状样式 -->
         <span
-          :style="`transform:translateX(${translationXRef}rem)`"
+          :style="`transform:translateX(${selectedIndex * 6}rem)`"
           :class="$style.selectedLine"
         ></span>
         <Tab class="shrink-0" :class="$style.tabLabel">
@@ -122,6 +123,14 @@ function toggleShrinkOrSpread() {
 }
 
 /**
+ * 可控 Tabs
+ */
+const selectedIndex = ref(0);
+function tabChange(index: number) {
+  selectedIndex.value = index;
+}
+
+/**
  * 实现拖拽逻辑
  * 由于 @headlessui/vue 在实现 Tab 组件的时候，对 tab 的 mousedown 进行了监听，并调用了 preventDefault()
  *  因此 drag 相关事件无法生效，因此此处使用 mouse 相关事件去实现拖拽
@@ -141,13 +150,13 @@ function mousedown(event: MouseEvent, index: number) {
   document.body.appendChild(moveElement);
   /**
    * pointer-events: none; 是必须的，否则元素会遮挡鼠标，导致mouseenter 无法触发
+   *  不要使用 cssText 语法，避免意外的覆盖
    */
-  moveElement.style.cssText = `
-    position:fixed;
-    z-index:100;
-    opacity:.8;
-    pointer-events: none;
-  `;
+  moveElement.style.position = "fixed";
+  moveElement.style.zIndex = "100";
+  moveElement.style.opacity = ".8";
+  moveElement.style.pointerEvents = "none";
+
   function mousemove(event: MouseEvent) {
     const { clientX, clientY } = event;
     moveElement.style.left = `${clientX - offsetX}px`;
@@ -169,21 +178,18 @@ function swapPosition(index: number) {
   dragThrottle(
     () => {
       swap(index, currentIndex, modulesOrder.value);
+      //与当前焦点元素互换位置
+      if (index === selectedIndex.value - 1) {
+        selectedIndex.value = currentIndex + 1;
+      } else if (currentIndex === selectedIndex.value - 1) {
+        selectedIndex.value = index + 1;
+      }
       currentIndex = index;
     },
     300,
     index,
     currentIndex,
   );
-}
-
-/**
- * 实现 tab 切换的动画效果
- */
-const translationXRef = ref(0);
-function computeTranslationX(index?: number) {
-  if (index == null) return (translationXRef.value = 0);
-  translationXRef.value = index * 6; //此处的 6 指的是 tab 的宽度为 6rem,与 tab 长度有关
 }
 </script>
 
