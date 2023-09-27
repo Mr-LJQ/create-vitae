@@ -18,11 +18,6 @@
       class="relative z-[2] bg-white"
     >
       <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
-        <!-- 这是表示 tab 选中状态的底部条状样式 -->
-        <span
-          :style="`transform:translateX(${selectedIndex * 6}rem)`"
-          :class="$style.selectedLine"
-        ></span>
         <Tab class="shrink-0" :class="$style.tabLabel">
           <b :class="$style.tabLabelText">{{
             moduleNameMap[ModuleEnum.BasicInfos]
@@ -58,6 +53,7 @@
               ><Edit
             /></ElIcon>
           </Tab>
+          <Tab hidden :key="modulesOrder.toString()" />
         </TransitionGroup>
       </TabList>
       <TabPanels :as="ElScrollbar" class="h-[21rem] pt-2 overflow-y-hidden">
@@ -92,7 +88,7 @@ import ProjectExperience from "./project-experience/index.vue";
 import InternshipExperience from "./internship-experience/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
 
-import { useModulesInfosStore, ModuleEnum } from "@/stores/modules-infos";
+import { useModulesInfosStore, ModuleEnum } from "@/stores";
 import { swap, createDragThrottle } from "@/utils";
 defineOptions({
   name: "EditorSection",
@@ -140,24 +136,27 @@ let currentIndex: number = null!;
 function mousedown(event: MouseEvent, index: number) {
   const currentTarget = event.currentTarget as HTMLElement;
   if (currentTarget == null) return;
-  currentIndex = index;
-  dragging = true;
+  let moveElement: HTMLElement | null = null;
   const { left, top } = currentTarget.getBoundingClientRect();
   const { clientX, clientY } = event;
   const offsetX = clientX - left;
   const offsetY = clientY - top;
-  const moveElement = currentTarget.cloneNode(true) as HTMLElement;
-  document.body.appendChild(moveElement);
-  /**
-   * pointer-events: none; 是必须的，否则元素会遮挡鼠标，导致mouseenter 无法触发
-   *  不要使用 cssText 语法，避免意外的覆盖
-   */
-  moveElement.style.position = "fixed";
-  moveElement.style.zIndex = "100";
-  moveElement.style.opacity = ".8";
-  moveElement.style.pointerEvents = "none";
 
   function mousemove(event: MouseEvent) {
+    if (!moveElement) {
+      moveElement = currentTarget.cloneNode(true) as HTMLElement;
+      document.body.appendChild(moveElement);
+      currentIndex = index;
+      dragging = true;
+      /**
+       * pointer-events: none; 是必须的，否则元素会遮挡鼠标，导致mouseenter 无法触发
+       *  不要使用 cssText 语法，避免意外的覆盖
+       */
+      moveElement.style.position = "fixed";
+      moveElement.style.zIndex = "100";
+      moveElement.style.opacity = ".8";
+      moveElement.style.pointerEvents = "none";
+    }
     const { clientX, clientY } = event;
     moveElement.style.left = `${clientX - offsetX}px`;
     moveElement.style.top = `${clientY - offsetY}px`;
@@ -165,7 +164,7 @@ function mousedown(event: MouseEvent, index: number) {
   function cleanup() {
     document.removeEventListener("mousemove", mousemove, { capture: true });
     document.removeEventListener("mouseup", cleanup, { capture: true });
-    moveElement.remove();
+    moveElement?.remove();
     dragging = false;
   }
   document.addEventListener("mousemove", mousemove, { capture: true });
@@ -177,16 +176,17 @@ function swapPosition(index: number) {
   if (currentIndex === index || !dragging) return;
   dragThrottle(
     () => {
+      /* //与当前焦点元素互换位置
+      console.log(selectedIndex.value - 1, index, currentIndex);
+      if (selectedIndex.value - 1 === index) {
+        bottomLinePosition.value = currentIndex + 1
+      } else if (selectedIndex.value - 1 === currentIndex) {
+        bottomLinePosition.value = index + 1;
+      } */
       swap(index, currentIndex, modulesOrder.value);
-      //与当前焦点元素互换位置
-      if (index === selectedIndex.value - 1) {
-        selectedIndex.value = currentIndex + 1;
-      } else if (currentIndex === selectedIndex.value - 1) {
-        selectedIndex.value = index + 1;
-      }
       currentIndex = index;
     },
-    300,
+    500, //与拖拽动画的时常相同
     index,
     currentIndex,
   );
@@ -219,13 +219,17 @@ function swapPosition(index: number) {
   outline: none;
   cursor: pointer;
   /* 
-    w-24 如需改变，则 computeTranslationX 函数亦要改变
+    该宽度如果修改，需要同步修改其它几处与其关联的样式的宽度（tab width关联）
   */
   @apply w-24 h-14 pt-6 pr-3 pl-2;
+}
+.tabLabel:focus {
+  border-bottom-color: #f60;
 }
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;
+  /* tab width关联 */
   @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform duration-300;
 }
 

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 export enum ModuleEnum {
@@ -71,11 +71,29 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
     [SelfEvaluation]: true,
     [Interests]: false,
   });
-  const activeModuleName = ref<ModuleEnum>(ModuleEnum.BasicInfos);
+  watch(
+    openedModules,
+    () => {
+      const closed: Exclude<ModuleEnum, ModuleEnum.BasicInfos>[] = [];
+      const opened: Exclude<ModuleEnum, ModuleEnum.BasicInfos>[] = [];
+      modulesOrder.value.forEach((val) => {
+        const switchStatus = openedModules.value;
+        if (switchStatus[val]) {
+          opened.push(val);
+        } else {
+          closed.push(val);
+        }
+      });
+      modulesOrder.value = opened.concat(closed);
+    },
+    {
+      immediate: true,
+      deep: true,
+    },
+  );
   return {
     modulesOrder,
     moduleNameMap,
     openedModules,
-    activeModuleName,
   };
 });
