@@ -54,7 +54,7 @@ type StateDefinition = {
   unregisterPanel(panel: Ref<HTMLElement | null>): void;
   updatePanel(panel: Ref<HTMLElement | null>): void;
 };
-function createUseContext(_context: InjectionKey<unknown>, parentName: string) {
+function createUseContext<T>(_context: InjectionKey<T>, parentName: string) {
   return (component: string) => {
     const context = inject(_context, null);
 
