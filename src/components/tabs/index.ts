@@ -450,15 +450,9 @@ export const Tab = defineComponent({
     // This is important because we want to only focus the tab when it gets focus
     // OR it finished the click event (mouseup). However, if you perform a `click`,
     // then you will first get the `focus` and then get the `click` event.
-    //let prevFocused: Element | null = null;
     function handleMouseDown(event: MouseEvent) {
-      if (attrs.draggable == null || attrs.draggable === "false") {
-        //该行会导致拖拽事件不被触发，因此需要先判断用户是否需要拖拽
-        event.preventDefault();
-      } else {
-        //用户需要使用拖拽事件
-        //prevFocused = document.activeElement;
-      }
+      //会导致 拖拽相关事件无法触发
+      event.preventDefault();
     }
 
     const type = useResolveButtonType(

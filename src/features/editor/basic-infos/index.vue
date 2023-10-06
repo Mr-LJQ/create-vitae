@@ -174,7 +174,6 @@ function addCustomInfo() {
   const value = customValueRef.value.trim();
   //用户未输入任何内容/输入不全，却点击提交，此时提用户聚焦到未输入的元素中
   if (key === "" || value === "") {
-    console.log(customKeyElementRef.value);
     key === ""
       ? customKeyElementRef.value?.focus()
       : customValueElementRef.value?.focus();

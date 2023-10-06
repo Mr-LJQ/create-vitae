@@ -11,13 +11,13 @@
       <ElIcon v-if="!isSpread" color="#13ce66" size="35px"><ArrowUp /></ElIcon>
       <ElIcon v-else color="#13ce66" size="35px"><ArrowDown /></ElIcon>
     </button>
-    <TabGroup
-      as="div"
-      :selectedIndex="selectedIndex"
-      @change="tabChange"
-      class="relative z-[2] bg-white"
-    >
+    <TabGroup as="div" v-model="selectedIndex" class="relative z-[2] bg-white">
       <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
+        <!-- 这是表示 tab 选中状态的底部条状样式  tab width关联-->
+        <span
+          :style="`transform:translateX(${selectedIndex * 6}rem)`"
+          :class="$style.selectedLine"
+        ></span>
         <Tab class="shrink-0" :class="$style.tabLabel">
           <b :class="$style.tabLabelText">{{
             moduleNameMap[ModuleEnum.BasicInfos]
@@ -27,6 +27,7 @@
           <Tab
             :key="name"
             v-slot="{ selected }"
+            title="可通过拖拽调整位置"
             @mousemove="swapPosition(index)"
             @mouseenter="swapPosition(index)"
             @mousedown="mousedown($event, index)"
@@ -53,10 +54,9 @@
               ><Edit
             /></ElIcon>
           </Tab>
-          <Tab hidden :key="modulesOrder.toString()" />
         </TransitionGroup>
       </TabList>
-      <TabPanels :as="ElScrollbar" class="h-[21rem] pt-2 overflow-y-hidden">
+      <TabPanels lazy :as="ElScrollbar" class="h-[21rem] pt-2">
         <TabPanel as="template"><BasicInfo /></TabPanel>
         <TabPanel :key="name" v-for="name of modulesOrder"
           ><component
@@ -70,10 +70,8 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { Edit, ArrowUp, ArrowDown } from "@element-plus/icons-vue";
 import { ElIcon, ElScrollbar } from "element-plus";
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import { EditSwitch } from "@/components";
+import { Edit, ArrowUp, ArrowDown } from "@element-plus/icons-vue";
 
 import BasicInfo from "./basic-infos/index.vue";
 import Interests from "./interests/index.vue";
@@ -88,8 +86,17 @@ import ProjectExperience from "./project-experience/index.vue";
 import InternshipExperience from "./internship-experience/index.vue";
 import EducationalBackground from "./educational-background/index.vue";
 
-import { useModulesInfosStore, ModuleEnum } from "@/stores";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabGroup,
+  TabPanels,
+  EditSwitch,
+} from "@/components";
 import { swap, createDragThrottle } from "@/utils";
+import { useModulesInfosStore, ModuleEnum } from "@/stores";
+
 defineOptions({
   name: "EditorSection",
 });
@@ -122,13 +129,10 @@ function toggleShrinkOrSpread() {
  * 可控 Tabs
  */
 const selectedIndex = ref(0);
-function tabChange(index: number) {
-  selectedIndex.value = index;
-}
 
 /**
  * 实现拖拽逻辑
- * 由于 @headlessui/vue 在实现 Tab 组件的时候，对 tab 的 mousedown 进行了监听，并调用了 preventDefault()
+ * 由于在实现 Tab 组件的时候，对 tab 的 mousedown 进行了监听，并调用了 preventDefault()
  *  因此 drag 相关事件无法生效，因此此处使用 mouse 相关事件去实现拖拽
  */
 let dragging = false;
@@ -154,8 +158,11 @@ function mousedown(event: MouseEvent, index: number) {
        */
       moveElement.style.position = "fixed";
       moveElement.style.zIndex = "100";
-      moveElement.style.opacity = ".8";
+      moveElement.style.opacity = ".5";
       moveElement.style.pointerEvents = "none";
+      if (currentIndex + 1 === selectedIndex.value) {
+        moveElement.style.borderBottomColor = "#f60";
+      }
     }
     const { clientX, clientY } = event;
     moveElement.style.left = `${clientX - offsetX}px`;
@@ -176,13 +183,6 @@ function swapPosition(index: number) {
   if (currentIndex === index || !dragging) return;
   dragThrottle(
     () => {
-      /* //与当前焦点元素互换位置
-      console.log(selectedIndex.value - 1, index, currentIndex);
-      if (selectedIndex.value - 1 === index) {
-        bottomLinePosition.value = currentIndex + 1
-      } else if (selectedIndex.value - 1 === currentIndex) {
-        bottomLinePosition.value = index + 1;
-      } */
       swap(index, currentIndex, modulesOrder.value);
       currentIndex = index;
     },
@@ -197,20 +197,13 @@ function swapPosition(index: number) {
 .shadow {
   box-shadow: 0 0 20px rgb(0, 0, 0, 0.2);
 }
-
-.button {
-  outline: none;
-}
-.button:focus-visible {
-  outline: 2px solid #13d8a7;
-  outline-offset: 1px;
-}
 .spread {
   transform: translateY(0);
 }
 .shrink {
   /* panel 的高度可能会发生变化,因此使用该计算方法 是 3.5rem 是 tab 的高度 */
-  transform: translateY(calc(100% - 3.5rem));
+  transform: translateY(100%);
+  transform: translateY(calc(100% - 3.5rem)); /* h-14 === 3.5rem */
 }
 .tabLabel {
   position: relative;
@@ -223,14 +216,12 @@ function swapPosition(index: number) {
   */
   @apply w-24 h-14 pt-6 pr-3 pl-2;
 }
-.tabLabel:focus {
-  border-bottom-color: #f60;
-}
+
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;
   /* tab width关联 */
-  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform duration-300;
+  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform duration-500; /* 与拖拽动画的时常相同 */
 }
 
 .tabLabelText {
@@ -244,8 +235,7 @@ function swapPosition(index: number) {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 .transition {
-  transition: all 0.5s ease;
+  transition: all 0.5s ease; /* 拖拽动画 */
 }
 </style>
