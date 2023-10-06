@@ -54,21 +54,30 @@ type StateDefinition = {
   unregisterPanel(panel: Ref<HTMLElement | null>): void;
   updatePanel(panel: Ref<HTMLElement | null>): void;
 };
+function createUseContext(_context: InjectionKey<unknown>, parentName: string) {
+  return (component: string) => {
+    const context = inject(_context, null);
 
-const TabsContext = Symbol("TabsContext") as InjectionKey<StateDefinition>;
+    if (context === null) {
+      const err = new Error(
+        `<${component} /> is missing a parent <${parentName} /> component.`,
+      );
+      throw err;
+    }
 
-function useTabsContext(component: string) {
-  const context = inject(TabsContext, null);
-
-  if (context === null) {
-    const err = new Error(
-      `<${component} /> is missing a parent <TabGroup /> component.`,
-    );
-    throw err;
-  }
-
-  return context;
+    return context;
+  };
 }
+const TabsContext = Symbol("TabsContext") as InjectionKey<StateDefinition>;
+const useTabsContext = createUseContext(TabsContext, "TabGroup");
+
+type PanelsDefinition = {
+  lazy: boolean;
+};
+const TabPanelsContext = Symbol(
+  "TabPanelsContext",
+) as InjectionKey<PanelsDefinition>;
+const useTabPanelsContext = createUseContext(TabPanelsContext, "TabPanels");
 
 let id = 0;
 function getId() {
@@ -491,10 +500,14 @@ export const Tab = defineComponent({
 export const TabPanels = defineComponent({
   name: "TabPanels",
   props: {
+    lazy: { type: Boolean, default: false },
     as: { type: [Object, String], default: "div" },
   },
   setup(props, { slots, attrs }) {
     const api = useTabsContext("TabPanels");
+    provide(TabPanelsContext, {
+      lazy: props.lazy,
+    });
     return () => {
       const slot = { selectedIndex: api.selectedIndex.value };
 
@@ -514,12 +527,14 @@ export const TabPanel = defineComponent({
   name: "TabPanel",
   props: {
     tabIndex: { type: Number, default: 0 },
-    lazy: { type: Boolean, default: false },
+    lazy: { type: Boolean, default: void 0 },
     as: { type: [Object, String], default: "div" },
     id: { type: String, default: () => `tabs-panel-${getId()}` },
   },
   setup(props, { attrs, slots, expose }) {
     const api = useTabsContext("TabPanel");
+    const { lazy: _lazy } = useTabPanelsContext("TabPanels");
+    const lazy = props.lazy ?? _lazy;
     const internalPanelRef = ref<HTMLElement | null>(null);
 
     expose({ el: internalPanelRef, $el: internalPanelRef });
@@ -545,7 +560,7 @@ export const TabPanel = defineComponent({
         tabIndex: selected.value ? tabIndex : -1,
       };
 
-      if (props.lazy && !selected.value && neverSelected) {
+      if (lazy && !selected.value && neverSelected) {
         return null;
       }
       neverSelected = false;
