@@ -1,5 +1,5 @@
 import { type Ref, isRef } from "vue";
-import { dom } from "./dom";
+import { dom } from "@/utils";
 
 export function getOwnerDocument<T extends Element | Ref<Element | null>>(
   element: T | null | undefined,

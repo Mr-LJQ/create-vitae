@@ -3,7 +3,7 @@
     :moveClass="moveClassRef ? TRANSITION_DELETE : ''"
     tag="ul"
     :name="TRANSITION_LIST_SLIDE"
-    class="max-w-[1200px] mx-auto"
+    class="max-w-[75rem] mx-auto"
   >
     <li
       :key="item.id"

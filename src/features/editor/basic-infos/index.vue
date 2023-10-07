@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1200px] mx-auto">
+  <div class="max-w-[75rem] mx-auto">
     <ul class="mb-4" :class="[BORDER_B_DASHED, GRID_AUTO_CENTER]">
       <EditInputItem v-slot="{ id }" label-text="您的姓名">
         <EditInput :id="id" placeholder="请输入您的姓名" v-model="store.name" />

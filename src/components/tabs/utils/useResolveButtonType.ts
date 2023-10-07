@@ -5,7 +5,7 @@ import {
   type Ref,
   type ComponentPublicInstance,
 } from "vue";
-import { dom } from ".";
+import { dom } from "@/utils";
 
 function resolveType(type: unknown, as: string | object) {
   if (type) return type;

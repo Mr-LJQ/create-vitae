@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1200px] mx-auto">
+  <div class="max-w-[75rem] mx-auto">
     <RichTextEditor
       class="max-h-56"
       :placeholder="placeholder"

@@ -11,8 +11,8 @@ import {
   type Ref,
 } from "vue";
 import { omit } from "lodash";
+import { dom } from "@/utils";
 import {
-  dom,
   Keys,
   match,
   Focus,

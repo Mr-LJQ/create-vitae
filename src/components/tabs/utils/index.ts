@@ -1,4 +1,3 @@
-export * from "./dom";
 export * from "./match";
 export * from "./owner";
 export * from "./render";

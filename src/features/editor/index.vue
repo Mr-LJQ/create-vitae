@@ -8,53 +8,89 @@
       :class="$style.shadow"
       @click="toggleShrinkOrSpread"
     >
-      <ElIcon v-if="!isSpread" color="#13ce66" size="35px"><ArrowUp /></ElIcon>
-      <ElIcon v-else color="#13ce66" size="35px"><ArrowDown /></ElIcon>
+      <ElIcon v-if="!isSpread" color="#13ce66" size="2.25rem"
+        ><ArrowUp
+      /></ElIcon>
+      <ElIcon v-else color="#13ce66" size="2.25rem"><ArrowDown /></ElIcon>
     </button>
     <TabGroup as="div" v-model="selectedIndex" class="relative z-[2] bg-white">
-      <TabList class="flex relative overflow-hidden max-w-[1200px] mx-auto">
-        <!-- 这是表示 tab 选中状态的底部条状样式  tab width关联-->
-        <span
-          :style="`transform:translateX(${selectedIndex * 6}rem)`"
-          :class="$style.selectedLine"
-        ></span>
-        <Tab class="shrink-0" :class="$style.tabLabel">
-          <b :class="$style.tabLabelText">{{
-            moduleNameMap[ModuleEnum.BasicInfos]
-          }}</b>
-        </Tab>
-        <TransitionGroup :move-class="$style.transition">
-          <Tab
-            :key="name"
-            v-slot="{ selected }"
-            title="可通过拖拽调整位置"
-            @mousemove="swapPosition(index)"
-            @mouseenter="swapPosition(index)"
-            @mousedown="mousedown($event, index)"
-            :disabled="!openedModules[name]"
-            class="group shrink-0"
-            :class="$style.tabLabel"
-            v-for="(name, index) of modulesOrder"
+      <TabList
+        ref="tabListRef"
+        class="relative box-border pl-6 max-w-[75rem] mx-auto"
+      >
+        <div class="flex relative" ref="tabListNavRef" :style="tabListNavStyle">
+          <TransitionGroup
+            :move-class="stopTransition ? void 0 : $style.transition"
           >
-            <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
-            <EditSwitch
-              :tabindex="selected ? 0 : -1"
-              :title="openedModules[name] ? '点击后隐藏模块' : '点击后显示模块'"
-              :selected="selected"
-              v-model="openedModules[name]"
-              :alt="`${moduleNameMap[name]}开关`"
-              class="absolute left-1/2 top-1 -translate-x-1/2"
-            />
-            <ElIcon
-              title="修改模块名称"
-              class="group-hover:flex hidden absolute right-0 bottom-1 p-0.5"
-              color="#13ce66"
-              size="1.25rem"
-              @click.prevent=""
-              ><Edit
-            /></ElIcon>
-          </Tab>
-        </TransitionGroup>
+            <Tab
+              :key="ModuleEnum.BasicInfos"
+              class="shrink-0"
+              :class="$style.tabLabel"
+            >
+              <b :class="$style.tabLabelText">{{
+                moduleNameMap[ModuleEnum.BasicInfos]
+              }}</b>
+            </Tab>
+            <Tab
+              :key="name"
+              v-slot="{ selected }"
+              title="可通过拖拽调整位置"
+              @mousemove="swapPosition(index)"
+              @mouseenter="swapPosition(index)"
+              @mousedown="mousedown($event, index)"
+              :disabled="!openedModules[name]"
+              class="group shrink-0"
+              :class="$style.tabLabel"
+              v-for="(name, index) of modulesOrder"
+            >
+              <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
+              <EditSwitch
+                :tabindex="selected ? 0 : -1"
+                :title="
+                  openedModules[name] ? '点击后隐藏模块' : '点击后显示模块'
+                "
+                :selected="selected"
+                v-model="openedModules[name]"
+                :alt="`${moduleNameMap[name]}开关`"
+                class="absolute left-1/2 top-1 -translate-x-1/2"
+              />
+              <ElIcon
+                title="修改模块名称"
+                class="group-hover:flex hidden absolute right-0 bottom-1 p-0.5"
+                color="#13ce66"
+                size="1.25rem"
+                @click.prevent=""
+                ><Edit
+              /></ElIcon>
+            </Tab>
+          </TransitionGroup>
+          <!-- 这是表示 tab 选中状态的底部条状样式  tab width关联-->
+          <span
+            :style="`transform:translateX(${selectedIndex * 6}rem)`"
+            :class="$style.selectedLine"
+          ></span>
+        </div>
+        <!-- 空间不够时，用于左右移动 TabList -->
+        <span
+          @click="moveLeft"
+          @mouseup="smoothLeftEnd"
+          @mousedown="smoothLeftStart"
+          ref="leftButtonRef"
+          v-if="visibleMoveButton"
+          class="flex items-center absolute inset-y-0 left-0 bg-white cursor-pointer"
+        >
+          <ElIcon size="1.5rem"><ArrowLeft /></ElIcon>
+        </span>
+        <span
+          @click="moveRight"
+          @mouseup="smoothRightEnd"
+          @mousedown="smoothRightStart"
+          ref="rightButtonRef"
+          v-if="visibleMoveButton"
+          class="flex items-center absolute inset-y-0 right-0 bg-white cursor-pointer"
+        >
+          <ElIcon size="1.5rem"><ArrowRight /></ElIcon>
+        </span>
       </TabList>
       <TabPanels lazy :as="ElScrollbar" class="h-[21rem] pt-2">
         <TabPanel as="template"><BasicInfo /></TabPanel>
@@ -68,10 +104,23 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import {
+  ref,
+  onMounted,
+  computed,
+  nextTick,
+  type ComponentPublicInstance,
+} from "vue";
+import { useResizeObserver } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { ElIcon, ElScrollbar } from "element-plus";
-import { Edit, ArrowUp, ArrowDown } from "@element-plus/icons-vue";
+import {
+  Edit,
+  ArrowUp,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+} from "@element-plus/icons-vue";
 
 import BasicInfo from "./basic-infos/index.vue";
 import Interests from "./interests/index.vue";
@@ -94,6 +143,7 @@ import {
   TabPanels,
   EditSwitch,
 } from "@/components";
+import { dom } from "@/utils";
 import { swap, createDragThrottle } from "@/utils";
 import { useModulesInfosStore, ModuleEnum } from "@/stores";
 
@@ -191,6 +241,111 @@ function swapPosition(index: number) {
     currentIndex,
   );
 }
+
+/**
+ * 当 TabList 空间不足以展示全部 Tab 时，需要提供左右移动的能力
+ */
+
+const tabListNavRef = ref<HTMLElement | null>(null);
+const leftButtonRef = ref<HTMLElement | null>(null);
+const rightButtonRef = ref<HTMLElement | null>(null);
+const tabListRef = ref<ComponentPublicInstance | null>(null);
+const offsetX = ref(0);
+const stopTransition = ref(false);
+const visibleMoveButton = ref(false);
+const tabListNavStyle = computed(
+  () => `transform:translateX(${offsetX.value}px)`,
+);
+const leftButtonWidth = computed(() => leftButtonRef.value?.offsetWidth || 0);
+const rightButtonWidth = computed(() => rightButtonRef.value?.offsetWidth || 0);
+const tabListNavWidth = computed(() => tabListNavRef.value?.scrollWidth || 0);
+let tabListWidth = Number.MAX_SAFE_INTEGER;
+onMounted(() => {
+  tabListWidth = dom(tabListRef)?.scrollWidth || tabListWidth;
+});
+useResizeObserver(tabListRef, (entries) => {
+  const entry = entries[0];
+  let width =
+    entry.borderBoxSize && entry.borderBoxSize.length > 0
+      ? entry.borderBoxSize[0].inlineSize
+      : dom(tabListRef)!.getBoundingClientRect().width;
+
+  /**
+   * 保证如果 TabList 的宽度发生变化，且 TabList 已经移动到最右边，
+   *  此时继续拓展 TabList 的宽度的话，最右边依然能够紧贴浏览器，
+   *    否则会由于 translateX 而导致出现空白
+   */
+  const limitWidth =
+    width -
+    (tabListNavWidth.value +
+      leftButtonWidth.value +
+      rightButtonWidth.value +
+      offsetX.value);
+  if (limitWidth > 0) {
+    /**
+     * 这次 offsetX调整无需动画，因此停止相关过渡
+     */
+    stopTransition.value = true;
+    offsetX.value = Math.min(limitWidth + offsetX.value, 0);
+    nextTick(() => {
+      stopTransition.value = false;
+    });
+  }
+  //实现当宽度不够时，显现左右移动按钮
+  if (width < tabListWidth) {
+    visibleMoveButton.value = true;
+  } else {
+    visibleMoveButton.value = false;
+  }
+});
+
+//实现点击展示更多Tab
+// 点击触发的移动是：尽可能的展现更多不可见的 Tab
+function moveRight() {
+  if (!tabListNavRef.value || !tabListRef.value) return;
+  const contentWidth =
+    (dom(tabListRef) as HTMLElement).clientWidth -
+    leftButtonWidth.value -
+    rightButtonWidth.value;
+
+  offsetX.value += -Math.min(
+    tabListNavWidth.value + offsetX.value - contentWidth,
+    contentWidth,
+  );
+}
+function moveLeft() {
+  if (!tabListNavRef.value || !tabListRef.value) return;
+  const contentWidth =
+    (dom(tabListRef) as HTMLElement).clientWidth -
+    leftButtonWidth.value -
+    rightButtonWidth.value;
+
+  offsetX.value = Math.min(0, contentWidth + offsetX.value);
+}
+
+//实现按住按钮，缓慢移动 展示其它 Tab 的效果
+let rightButtonTimerId: number | null = null;
+let leftButtonTimerId: number | null = null;
+function smoothRightStart() {
+  const frameCallback = () => {
+    offsetX.value -= 5;
+    requestAnimationFrame(frameCallback);
+  };
+  rightButtonTimerId = requestAnimationFrame(frameCallback);
+}
+function smoothRightEnd() {
+  cancelAnimationFrame(rightButtonTimerId!);
+}
+function smoothLeftStart() {
+  const frameCallback = () => {
+    offsetX.value = Math.min(0, offsetX.value + 5);
+    requestAnimationFrame(frameCallback);
+  };
+  leftButtonTimerId = requestAnimationFrame(frameCallback);
+}
+function smoothLeftEnd() {
+  cancelAnimationFrame(leftButtonTimerId!);
+}
 </script>
 
 <style module>
@@ -205,6 +360,7 @@ function swapPosition(index: number) {
   transform: translateY(100%);
   transform: translateY(calc(100% - 3.5rem)); /* h-14 === 3.5rem */
 }
+
 .tabLabel {
   position: relative;
   box-sizing: border-box;
@@ -221,7 +377,7 @@ function swapPosition(index: number) {
   position: absolute;
   border-bottom: 2px #f60 solid;
   /* tab width关联 */
-  @apply z-[1] w-24 left-0 top-[3.375rem] transition-transform duration-500; /* 与拖拽动画的时常相同 */
+  @apply z-[1] w-24 left-0 bottom-0 transition-transform duration-500; /* 与拖拽动画的时常相同 */
 }
 
 .tabLabelText {

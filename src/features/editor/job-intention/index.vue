@@ -3,7 +3,7 @@
     tag="ul"
     :move-class="moveClassRef ? TRANSITION_DELETE : ''"
     :name="TRANSITION_LIST_SLIDE"
-    class="max-w-[1200px] mx-auto"
+    class="max-w-[75rem] mx-auto"
   >
     <li
       draggable="true"
