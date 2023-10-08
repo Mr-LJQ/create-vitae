@@ -1,5 +1,6 @@
 import {
   ref,
+  watch,
   inject,
   provide,
   computed,
@@ -10,6 +11,7 @@ import {
   type InjectionKey,
   type Ref,
 } from "vue";
+import { useEventListener } from "@vueuse/core";
 import { omit, isNumber } from "lodash";
 import { dom } from "@/utils";
 import {
@@ -356,7 +358,17 @@ export const Tab = defineComponent({
     });
     const selected = computed(() => myIndex.value === api.selectedIndex.value);
     const selectedIndex = computed(() => api.selectedIndex.value!);
-
+    /**
+     * 因为 disabled 后 Tab 不再响应键盘事件，而此时可能出现一种特殊情况，
+     *  也即该元素是被选中元素，为了使用户仍然可以通过键盘进行切换，因此有下面的实现
+     */
+    let cleanup: (() => void) | null = null;
+    watch([() => props.disabled, selected], ([disabled, selected]) => {
+      cleanup && cleanup();
+      if (disabled && selected) {
+        cleanup = useEventListener(document, "keydown", handleKeyDown);
+      }
+    });
     /**
      * 根据用户的键盘操纵切换 Tab
      */
