@@ -15,13 +15,9 @@ import { dom } from "@/utils";
 import {
   Keys,
   match,
-  Focus,
   render,
-  focusIn,
   microTask,
-  FocusResult,
   sortByDomNode,
-  getOwnerDocument,
   useResolveButtonType,
 } from "./utils";
 
@@ -163,6 +159,12 @@ export const TabGroup = defineComponent({
         });
         //存在一种情况是，如果所有元素不可聚焦，则 nextSelectedIndex === -1
         if (nextSelectedIndex !== -1) {
+          match(direction, {
+            [Direction.Forwards]: () =>
+              dom(focusableTabs[0])?.focus({ preventScroll: true }),
+            [Direction.Backwards]: () =>
+              dom(focusableTabs[0])?.focus({ preventScroll: true }),
+          });
           emit("change", nextSelectedIndex, selectedIndex.value);
           selectedIndex.value = nextSelectedIndex;
         }
@@ -178,11 +180,11 @@ export const TabGroup = defineComponent({
         );
         //没有任何可聚焦的 tab
         if (!next) return;
-
         let localSelectedIndex = tabs.value.indexOf(next);
         if (localSelectedIndex === -1)
           localSelectedIndex = api.selectedIndex.value;
 
+        dom(next)?.focus({ preventScroll: true });
         emit("change", localSelectedIndex, selectedIndex.value);
         //改变当前被选中的元素
         selectedIndex.value = localSelectedIndex;
@@ -334,7 +336,6 @@ export const TabList = defineComponent({
 });
 
 // ---
-
 export const Tab = defineComponent({
   name: "Tab",
   props: {
@@ -354,29 +355,12 @@ export const Tab = defineComponent({
       return api.tabs.value.indexOf(internalTabRef);
     });
     const selected = computed(() => myIndex.value === api.selectedIndex.value);
-
-    /**
-     * 将 selectedIndex 切换为当前聚焦的元素
-     */
-    function activateUsing(cb: () => FocusResult) {
-      const result = cb();
-
-      if (result === FocusResult.Success && api.activation.value === "auto") {
-        const newTab = getOwnerDocument(internalTabRef)?.activeElement;
-        const idx = api.tabs.value.findIndex((tab) => dom(tab) === newTab);
-        if (idx !== -1) api.setSelectedIndex(idx);
-      }
-      return result;
-    }
+    const selectedIndex = computed(() => api.selectedIndex.value!);
 
     /**
      * 根据用户的键盘操纵切换 Tab
      */
     function handleKeyDown(event: KeyboardEvent) {
-      const list = api.tabs.value
-        .map((tab) => dom(tab))
-        .filter(Boolean) as HTMLElement[];
-
       //选中 tab
       if (event.key === Keys.Space || event.key === Keys.Enter) {
         event.preventDefault();
@@ -392,38 +376,29 @@ export const Tab = defineComponent({
         case Keys.PageUp:
           event.preventDefault();
           event.stopPropagation();
-          // focusIn 的作用是：根据 第二个参数 Focus，确定下一个被聚焦的 Tab.
-          // activateUsing 则是根据被聚焦的 Tab，来赋值 selectedIndex.
-          return activateUsing(() => focusIn(list, Focus.First));
+          return api.setSelectedIndex(0);
 
         case Keys.End:
         case Keys.PageDown:
           event.preventDefault();
           event.stopPropagation();
-          return activateUsing(() => focusIn(list, Focus.Last));
+          return api.setSelectedIndex(-1);
       }
 
       //通过方向键切换 tab,根据垂直与水平的不同，通过不同的方向键来进行切换
-      const result = activateUsing(() =>
-        match(api.orientation.value, {
-          vertical() {
-            if (event.key === Keys.ArrowUp)
-              return focusIn(list, Focus.Previous | Focus.WrapAround);
-            if (event.key === Keys.ArrowDown)
-              return focusIn(list, Focus.Next | Focus.WrapAround);
-            return FocusResult.Error;
-          },
-          horizontal() {
-            if (event.key === Keys.ArrowLeft)
-              return focusIn(list, Focus.Previous | Focus.WrapAround);
-            if (event.key === Keys.ArrowRight)
-              return focusIn(list, Focus.Next | Focus.WrapAround);
-            return FocusResult.Error;
-          },
-        }),
-      );
+      const result = match(api.orientation.value, {
+        vertical() {
+          if (event.key === Keys.ArrowUp) return selectedIndex.value - 1;
+          if (event.key === Keys.ArrowDown) return selectedIndex.value + 1;
+        },
+        horizontal() {
+          if (event.key === Keys.ArrowLeft) return selectedIndex.value - 1;
+          if (event.key === Keys.ArrowRight) return selectedIndex.value + 1;
+        },
+      });
 
-      if (result === FocusResult.Success) {
+      if (result != null) {
+        api.setSelectedIndex(result);
         return event.preventDefault();
       }
     }
@@ -437,7 +412,6 @@ export const Tab = defineComponent({
       ready.value = true;
       //此处决定了 disabled 使得点击无法切换 tab
       if (props.disabled) return;
-
       dom(internalTabRef)?.focus({ preventScroll: true });
       api.setSelectedIndex(myIndex.value);
 
