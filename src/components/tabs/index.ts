@@ -10,7 +10,7 @@ import {
   type InjectionKey,
   type Ref,
 } from "vue";
-import { omit } from "lodash";
+import { omit, isNumber } from "lodash";
 import { dom } from "@/utils";
 import {
   Keys,
@@ -88,8 +88,9 @@ const UPDATE_MODEL_VALUE = "update:modelValue";
 export const TabGroup = defineComponent({
   name: "TabGroup",
   emits: {
-    change: (index: number) => typeof index === "number",
     [UPDATE_MODEL_VALUE]: (value: number) => typeof value === "number",
+    change: (index: number, oldIndex: number) =>
+      isNumber(index) && isNumber(oldIndex),
   },
 
   props: {
@@ -123,6 +124,7 @@ export const TabGroup = defineComponent({
      * 主要用于处理越界回归问题
      */
     function setSelectedIndex(indexToSet: number) {
+      if (indexToSet === selectedIndex.value) return;
       const focusableTabs = tabs.value.filter(
         (tab) => !dom(tab)?.hasAttribute("disabled"),
       );
@@ -161,6 +163,7 @@ export const TabGroup = defineComponent({
         });
         //存在一种情况是，如果所有元素不可聚焦，则 nextSelectedIndex === -1
         if (nextSelectedIndex !== -1) {
+          emit("change", nextSelectedIndex, selectedIndex.value);
           selectedIndex.value = nextSelectedIndex;
         }
       }
@@ -180,6 +183,7 @@ export const TabGroup = defineComponent({
         if (localSelectedIndex === -1)
           localSelectedIndex = api.selectedIndex.value;
 
+        emit("change", localSelectedIndex, selectedIndex.value);
         //改变当前被选中的元素
         selectedIndex.value = localSelectedIndex;
       }
@@ -193,16 +197,11 @@ export const TabGroup = defineComponent({
       activation: computed(() => (props.manual ? "manual" : "auto")),
       tabs,
       panels,
-      setSelectedIndex(index: number) {
-        const prevSelectedIndex = selectedIndex.value;
-        /**
-         * 只在通过 Tabs 改变 index 的时候进行越界校正
-         * 如果是用户直接提供的 modelValue 越界，则不进行校正
-         */
-        setSelectedIndex(index);
-        if (prevSelectedIndex !== selectedIndex.value)
-          emit("change", selectedIndex.value);
-      },
+      /**
+       * 只在通过 Tabs 改变 index 的时候进行越界校正
+       * 如果是用户直接提供的 modelValue 越界，则不进行校正
+       */
+      setSelectedIndex,
 
       registerTab(tab: (typeof tabs)["value"][number]) {
         if (tabs.value.includes(tab)) return;
