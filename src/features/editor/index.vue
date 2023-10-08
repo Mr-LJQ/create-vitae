@@ -73,8 +73,8 @@
         <!-- 空间不够时，用于左右移动 TabList -->
         <span
           @click="moveLeft"
-          @mouseup="smoothLeftEnd"
-          @mousedown="smoothLeftStart"
+          @mouseleave="smoothLeftEnd"
+          @mouseenter="smoothLeftStart"
           ref="leftButtonRef"
           v-if="visibleMoveButton"
           class="flex items-center absolute inset-y-0 left-0 bg-white cursor-pointer"
@@ -83,8 +83,8 @@
         </span>
         <span
           @click="moveRight"
-          @mouseup="smoothRightEnd"
-          @mousedown="smoothRightStart"
+          @mouseleave="smoothRightEnd"
+          @mouseenter="smoothRightStart"
           ref="rightButtonRef"
           v-if="visibleMoveButton"
           class="flex items-center absolute inset-y-0 right-0 bg-white cursor-pointer"
@@ -323,28 +323,54 @@ function moveLeft() {
   offsetX.value = Math.min(0, contentWidth + offsetX.value);
 }
 
-//实现按住按钮，缓慢移动 展示其它 Tab 的效果
+//使用户在拖拽的过程中，将鼠标放置到相关按钮上，可以移动 TabList
+const smoothSpeed = 5;
+let startLeftSmooth = false;
+let startRightSmooth = false;
 let rightButtonTimerId: number | null = null;
 let leftButtonTimerId: number | null = null;
 function smoothRightStart() {
+  if (!dragging) return;
+  startRightSmooth = true;
+  //此时应该禁止过渡动画
+  stopTransition.value = true;
+  const contentWidth =
+    (dom(tabListRef) as HTMLElement).clientWidth -
+    leftButtonWidth.value -
+    rightButtonWidth.value;
   const frameCallback = () => {
-    offsetX.value -= 5;
-    requestAnimationFrame(frameCallback);
+    offsetX.value = Math.max(
+      offsetX.value - smoothSpeed,
+      contentWidth - tabListNavWidth.value,
+    );
+    rightButtonTimerId = requestAnimationFrame(frameCallback);
   };
   rightButtonTimerId = requestAnimationFrame(frameCallback);
 }
 function smoothRightEnd() {
-  cancelAnimationFrame(rightButtonTimerId!);
+  if (!startRightSmooth) return;
+  startRightSmooth = false;
+  stopTransition.value = false;
+  typeof rightButtonTimerId == "number" &&
+    cancelAnimationFrame(rightButtonTimerId);
 }
 function smoothLeftStart() {
+  if (!dragging) return;
+  startLeftSmooth = true;
+  //此时应该禁止过渡动画
+  stopTransition.value = true;
   const frameCallback = () => {
-    offsetX.value = Math.min(0, offsetX.value + 5);
-    requestAnimationFrame(frameCallback);
+    offsetX.value = Math.min(0, offsetX.value + smoothSpeed);
+    leftButtonTimerId = requestAnimationFrame(frameCallback);
   };
   leftButtonTimerId = requestAnimationFrame(frameCallback);
 }
 function smoothLeftEnd() {
-  cancelAnimationFrame(leftButtonTimerId!);
+  if (!startLeftSmooth) return;
+  startLeftSmooth = false;
+  stopTransition.value = false;
+  typeof leftButtonTimerId == "number" &&
+    cancelAnimationFrame(leftButtonTimerId);
 }
 </script>
 
