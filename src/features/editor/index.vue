@@ -13,7 +13,12 @@
       /></ElIcon>
       <ElIcon v-else color="#13ce66" size="2.25rem"><ArrowDown /></ElIcon>
     </button>
-    <TabGroup as="div" v-model="selectedIndex" class="relative z-[2] bg-white">
+    <TabGroup
+      as="div"
+      v-model="selectedIndex"
+      @change="selectedIndexChange"
+      class="relative z-[2] bg-white"
+    >
       <TabList
         ref="tabListRef"
         class="relative box-border pl-6 max-w-[75rem] mx-auto"
@@ -25,7 +30,10 @@
             <Tab
               :key="ModuleEnum.BasicInfos"
               class="shrink-0"
-              :class="$style.tabLabel"
+              :class="[
+                $style.tabLabel,
+                selectedIndex === 0 && !transitionRunning ? 'active' : '',
+              ]"
             >
               <b :class="$style.tabLabelText">{{
                 moduleNameMap[ModuleEnum.BasicInfos]
@@ -40,7 +48,12 @@
               @mousedown="mousedown($event, index)"
               :disabled="!openedModules[name]"
               class="group shrink-0"
-              :class="$style.tabLabel"
+              :class="[
+                $style.tabLabel,
+                selectedIndex - 1 === index && !transitionRunning
+                  ? 'active'
+                  : '',
+              ]"
               v-for="(name, index) of modulesOrder"
             >
               <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
@@ -64,10 +77,14 @@
               /></ElIcon>
             </Tab>
           </TransitionGroup>
-          <!-- 这是表示 tab 选中状态的底部条状样式  tab width关联-->
+          <!-- 这是表示 tab 选中状态的底部条状样式 -->
           <span
-            :style="`transform:translateX(${selectedIndex * 6}rem)`"
-            :class="$style.selectedLine"
+            ref="bottomLineRef"
+            @transitionend="transitionEnd"
+            :class="[
+              $style.selectedLine,
+              transitionRunning ? 'visible' : 'invisible',
+            ]"
           ></span>
         </div>
         <!-- 空间不够时，用于左右移动 TabList -->
@@ -110,6 +127,7 @@ import {
   computed,
   nextTick,
   type ComponentPublicInstance,
+  watch,
 } from "vue";
 import { useResizeObserver } from "@vueuse/core";
 import { storeToRefs } from "pinia";
@@ -210,9 +228,6 @@ function mousedown(event: MouseEvent, index: number) {
       moveElement.style.zIndex = "100";
       moveElement.style.opacity = ".5";
       moveElement.style.pointerEvents = "none";
-      if (currentIndex + 1 === selectedIndex.value) {
-        moveElement.style.borderBottomColor = "#f60";
-      }
     }
     const { clientX, clientY } = event;
     moveElement.style.left = `${clientX - offsetX}px`;
@@ -372,6 +387,36 @@ function smoothLeftEnd() {
   typeof leftButtonTimerId == "number" &&
     cancelAnimationFrame(leftButtonTimerId);
 }
+
+/**
+ * 底部选中条的动画效果，需要特别定制
+ */
+const transitionRunning = ref(false);
+const bottomLineRef = ref<HTMLElement | null>(null);
+/**
+ * 在 Tabs 的实现中 v-model 与 @change 是有区别的，
+ *  @change 会在用户单击 Tab /通过键盘操作切换 Tab 的时候,被触发
+ *  而 v-model 除了会在用户单击 Tab /通过键盘操作切换 Tab 的时候触发，也会在用户调整Tab顺序的时候触发
+ *  因此，通过下面的写法可以实现在让底部选中条只在在 用户单击 Tab /通过键盘操作切换 Tab 时呈现动画效果
+ */
+function selectedIndexChange() {
+  transitionRunning.value = true;
+}
+
+watch(selectedIndex, (index) => {
+  if (transitionRunning.value) return;
+  //translateX 的值与 tab width关联
+  bottomLineRef.value!.style.transform = `translateX(${index * 6}rem)`;
+});
+
+watch(selectedIndex, (index) => {
+  if (!transitionRunning.value) return;
+  //translateX 的值与 tab width关联
+  bottomLineRef.value!.style.transform = `translateX(${index * 6}rem)`;
+});
+function transitionEnd() {
+  transitionRunning.value = false;
+}
 </script>
 
 <style module>
@@ -399,13 +444,17 @@ function smoothLeftEnd() {
   @apply w-24 h-14 pt-6 pr-3 pl-2;
 }
 
+.tabLabel:global(.active) {
+  z-index: 1;
+  border-bottom-color: #f60;
+}
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;
+  transition: transform 0.3s ease;
   /* tab width关联 */
-  @apply z-[1] w-24 left-0 bottom-0 transition-transform duration-500; /* 与拖拽动画的时常相同 */
+  @apply z-[1] w-24 left-0 bottom-0;
 }
-
 .tabLabelText {
   display: block;
   max-width: 80px;
@@ -418,6 +467,6 @@ function smoothLeftEnd() {
   text-overflow: ellipsis;
 }
 .transition {
-  transition: all 0.5s ease; /* 拖拽动画 */
+  transition: all 0.5s ease;
 }
 </style>
