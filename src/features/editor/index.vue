@@ -28,6 +28,7 @@
             :move-class="stopTransition ? void 0 : $style.transition"
           >
             <Tab
+              ref="tabRef"
               :key="ModuleEnum.BasicInfos"
               class="shrink-0"
               :class="[
@@ -123,7 +124,6 @@
 <script lang="ts" setup>
 import {
   ref,
-  onMounted,
   computed,
   nextTick,
   type ComponentPublicInstance,
@@ -260,7 +260,9 @@ function swapPosition(index: number) {
 /**
  * 当 TabList 空间不足以展示全部 Tab 时，需要提供左右移动的能力
  */
-
+//此处有一个约定，即在实现上，所有的 Tab 的宽度是一样的，
+// 因此可以通过获取其中一个 Tab 的宽度，来获取所有的 Tab 的宽度
+const tabRef = ref<HTMLElement | null>(null);
 const tabListNavRef = ref<HTMLElement | null>(null);
 const leftButtonRef = ref<HTMLElement | null>(null);
 const rightButtonRef = ref<HTMLElement | null>(null);
@@ -271,13 +273,14 @@ const visibleMoveButton = ref(false);
 const tabListNavStyle = computed(
   () => `transform:translateX(${offsetX.value}px)`,
 );
+const tabWidth = computed(() => dom(tabRef)?.clientWidth || 0);
+const tabListNavWidth = computed(() => tabListNavRef.value?.scrollWidth || 0);
 const leftButtonWidth = computed(() => leftButtonRef.value?.offsetWidth || 0);
 const rightButtonWidth = computed(() => rightButtonRef.value?.offsetWidth || 0);
-const tabListNavWidth = computed(() => tabListNavRef.value?.scrollWidth || 0);
-let tabListWidth = Number.MAX_SAFE_INTEGER;
-onMounted(() => {
-  tabListWidth = dom(tabListRef)?.scrollWidth || tabListWidth;
-});
+const tabListWidth = computed(
+  () => dom(tabListRef)?.scrollWidth || Number.MAX_SAFE_INTEGER,
+);
+
 useResizeObserver(tabListRef, (entries) => {
   const entry = entries[0];
   let width =
@@ -307,7 +310,7 @@ useResizeObserver(tabListRef, (entries) => {
     });
   }
   //实现当宽度不够时，显现左右移动按钮
-  if (width < tabListWidth) {
+  if (width < tabListWidth.value) {
     visibleMoveButton.value = true;
   } else {
     visibleMoveButton.value = false;
@@ -401,22 +404,49 @@ const bottomLineRef = ref<HTMLElement | null>(null);
  */
 function selectedIndexChange() {
   transitionRunning.value = true;
+  bottomLineRef.value!.style.transition = "transform .5s ease";
 }
 
 watch(selectedIndex, (index) => {
   if (transitionRunning.value) return;
-  //translateX 的值与 tab width关联
-  bottomLineRef.value!.style.transform = `translateX(${index * 6}rem)`;
+  bottomLineRef.value!.style.transform = `translateX(${
+    index * tabWidth.value
+  }px)`;
 });
 
 watch(selectedIndex, (index) => {
   if (!transitionRunning.value) return;
-  //translateX 的值与 tab width关联
-  bottomLineRef.value!.style.transform = `translateX(${index * 6}rem)`;
+  bottomLineRef.value!.style.transform = `translateX(${
+    index * tabWidth.value
+  }px)`;
 });
 function transitionEnd() {
   transitionRunning.value = false;
 }
+
+/**
+ * 当通过键盘切换被选中 Tab 不可见时，调整 TabList 的位置，以让其可见
+ */
+
+watch(selectedIndex, (index) => {
+  if (!transitionRunning.value) return;
+
+  const contentWidth =
+    (dom(tabListRef) as HTMLElement).clientWidth -
+    leftButtonWidth.value -
+    rightButtonWidth.value;
+  const currentTabOffsetX = index * tabWidth.value + offsetX.value;
+  //如果为负，则意味着其被左侧遮挡住了，想要显示出来，需要调整offsetX.value的值，以使其显示
+  if (currentTabOffsetX < 0) {
+    offsetX.value += -currentTabOffsetX;
+  } else if (contentWidth - currentTabOffsetX - tabWidth.value < 0) {
+    offsetX.value += contentWidth - currentTabOffsetX - tabWidth.value;
+  } else {
+    return;
+  }
+  //需要禁用 bottomLine 的过渡效果
+  bottomLineRef.value!.style.transition = "none";
+});
 </script>
 
 <style module>
@@ -451,7 +481,6 @@ function transitionEnd() {
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;
-  transition: transform 0.3s ease;
   /* tab width关联 */
   @apply z-[1] w-24 left-0 bottom-0;
 }
