@@ -59,7 +59,7 @@
             >
               <b :class="$style.tabLabelText">{{ moduleNameMap[name] }}</b>
               <EditSwitch
-                :tabindex="selected ? 0 : -1"
+                :tabindex="-1"
                 :title="
                   openedModules[name] ? '点击后隐藏模块' : '点击后显示模块'
                 "
