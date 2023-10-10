@@ -73,7 +73,7 @@
                 class="group-hover:flex hidden absolute right-0 bottom-1 p-0.5"
                 color="#13ce66"
                 size="1.25rem"
-                @click.prevent=""
+                @click.prevent="editTabTitle(name)"
                 ><Edit
               /></ElIcon>
             </Tab>
@@ -131,7 +131,7 @@ import {
 } from "vue";
 import { useResizeObserver } from "@vueuse/core";
 import { storeToRefs } from "pinia";
-import { ElIcon, ElScrollbar } from "element-plus";
+import { ElIcon, ElScrollbar, ElMessageBox } from "element-plus";
 import {
   Edit,
   ArrowUp,
@@ -193,6 +193,22 @@ function toggleShrinkOrSpread() {
   isSpread.value = !isSpread.value;
 }
 
+/**
+ * 点击 Tab 上的编辑图标，弹出消息框，允许用户修改标题
+ */
+const editTabTitle = (name: ModuleEnum) => {
+  ElMessageBox.prompt("请输入新标题", "提示", {
+    confirmButtonText: "确认",
+    cancelButtonText: "取消",
+    inputValue: moduleNameMap.value[name],
+  })
+    .then(({ value }) => {
+      moduleNameMap.value[name] = value;
+    })
+    .catch(() => {
+      /*避免未捕获错误*/
+    });
+};
 /**
  * 可控 Tabs
  */
