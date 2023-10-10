@@ -25,8 +25,6 @@
 2. Prevent adjustments of font size after orientation changes in iOS.
 3. Use a more readable tab size.
 4. Use the user's configured `sans` font-family by default.
-5. Use the user's configured `sans` font-feature-settings by default.
-6. Use the user's configured `sans` font-variation-settings by default.
 */
 
 html {
@@ -51,14 +49,8 @@ html {
     "Segoe UI Symbol",
     "Noto Color Emoji"
   ); /* 4 */
-  font-feature-settings: theme(
-    "fontFamily.sans[1].fontFeatureSettings",
-    normal
-  ); /* 5 */
-  font-variation-settings: theme(
-    "fontFamily.sans[1].fontVariationSettings",
-    normal
-  ); /* 6 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
 }
 
 /*
@@ -378,8 +370,6 @@ Make sure disabled buttons don't get the pointer cursor.
 
 /*
 1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
-2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
-   This can trigger a poorly considered lint error in some tools but is included by design.
 */
 
 img,
@@ -391,7 +381,6 @@ iframe,
 embed,
 object {
   display: block; /* 1 */
-  vertical-align: middle; /* 2 */
 }
 
 /*
