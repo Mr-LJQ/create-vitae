@@ -39,7 +39,7 @@ export const useModulesInfosStore = defineStore("modules-infos", () => {
     [WorkExperience]: "工作经验",
     [ProjectExperience]: "项目经验",
     [InternshipExperience]: "实习经历",
-    [CustomModule]: "自定义模块",
+    [CustomModule]: "自定义",
     [Certificate]: "荣誉证书",
     [Specialty]: "技能特长",
     [SelfEvaluation]: "自我评价",
