@@ -196,6 +196,7 @@ function toggleShrinkOrSpread() {
 /**
  * 点击 Tab 上的编辑图标，弹出消息框，允许用户修改标题
  */
+
 const editTabTitle = (name: ModuleEnum) => {
   ElMessageBox.prompt("请输入新标题", "提示", {
     confirmButtonText: "确认",
