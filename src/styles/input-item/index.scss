@@ -20,14 +20,17 @@
     padding: 0 10px;
     outline: none;
     width: 180px;
-    background-color: $input-item-bg-color;
-    border: 1px solid $input-item-bg-color;
+    background-color: white;
+    border: 1px solid #dcdfe6;
     border-radius: 3px;
     height: $item_height;
     line-height: $item_height;
     color: #606266;
+    &:hover {
+      border: 1px solid #c0c4cc;
+    }
     &:focus {
-      box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+      border: 1px solid #409eff;
     }
     &.w60 {
       width: 60px;

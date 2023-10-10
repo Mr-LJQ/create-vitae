@@ -110,7 +110,12 @@
           <ElIcon size="1.5rem"><ArrowRight /></ElIcon>
         </span>
       </TabList>
-      <TabPanels lazy :as="ElScrollbar" class="h-[21rem] pt-2">
+      <TabPanels
+        lazy
+        :as="ElScrollbar"
+        class="h-[21rem] pt-2"
+        :class="OVERRIDE_ELEMENT_PLUS"
+      >
         <TabPanel as="template"><BasicInfo /></TabPanel>
         <TabPanel :key="name" v-for="name of modulesOrder"
           ><component
@@ -161,8 +166,8 @@ import {
   TabPanels,
   EditSwitch,
 } from "@/components";
-import { dom } from "@/utils";
-import { swap, createDragThrottle } from "@/utils";
+import { OVERRIDE_ELEMENT_PLUS } from "@/styles";
+import { swap, createDragThrottle, dom } from "@/utils";
 import { useModulesInfosStore, ModuleEnum } from "@/stores";
 
 defineOptions({

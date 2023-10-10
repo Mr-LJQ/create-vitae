@@ -24,11 +24,11 @@
         <EditInput :id="id" placeholder="输入联系邮箱" v-model="store.email" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="工作年限">
-        <ElSelect :id="id" v-model="store.yearsOfWorking">
+        <ElSelect :id="id" v-model="store.yearsOfWorking" placeholder="不填">
           <ElOption
             v-for="value in yearsOfWorkingOptions"
             :key="value"
-            :label="value || '不填'"
+            :label="value"
             :value="value"
           />
         </ElSelect>
@@ -38,26 +38,26 @@
         <ElCheckbox :id="id" v-model="store.showPhoto" label="展示照片" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="性别">
-        <ElSelect :id="id" v-model="store.gender">
+        <ElSelect :id="id" v-model="store.gender" placeholder="不填">
           <ElOption
             v-for="value in genderOptions"
             :key="value"
-            :label="value || '不填'"
+            :label="value"
             :value="value"
           />
         </ElSelect>
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="婚姻状况">
-        <ElSelect :id="id" v-model="store.maritalStatus">
+        <ElSelect :id="id" v-model="store.maritalStatus" placeholder="不填">
           <ElOption
             v-for="value of maritalStatusOptions"
             :key="value"
-            :label="value || '不填'"
+            :label="value"
             :value="value"
           />
         </ElSelect>
       </EditInputItem>
-      <EditInputItem v-slot="{ id }" label-text="身高/体重">
+      <EditInputItem v-slot="{ id }" label-text="身高体重">
         <EditInput
           :id="id"
           style="width: 60px"
@@ -82,11 +82,11 @@
         />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="政治面貌">
-        <ElSelect :id="id" v-model="store.politicsStatus">
+        <ElSelect :id="id" v-model="store.politicsStatus" placeholder="不填">
           <ElOption
             v-for="value of politicsStatusOptions"
             :key="value"
-            :label="value || '不填'"
+            :label="value"
             :value="value"
           />
         </ElSelect>

@@ -8,18 +8,8 @@
   @include e("element") {
     @include m("plus") {
       .el-input {
-        --el-input-bg-color: #{$input-item-bg-color};
         --el-input-width: 180px;
-        --el-input-border-color: transparent;
         --el-date-editor-width: 100px;
-      }
-      .el-tabs__header {
-        max-width: 1200px;
-        margin: 0 auto 15px;
-      }
-      .el-tabs__content {
-        /* @apply 是 tailwind css 的语法 */
-        @apply h-[21rem] overflow-y-scroll pl-5 overflow-x-hidden;
       }
       .el-checkbox {
         margin-left: 8px;
