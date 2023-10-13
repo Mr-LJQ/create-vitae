@@ -31,3 +31,8 @@ export const yearsOfWorkingOptions = [
 ];
 
 export const propsType = ["moduleName"];
+
+/**
+ * 出生年月定位在 2000 年，因为大部分找工作的人都在 23 岁左右
+ */
+export const defaultBirth = new Date(2000, 6, 1);

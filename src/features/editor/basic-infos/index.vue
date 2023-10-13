@@ -10,6 +10,8 @@
           type="month"
           placeholder="选择年月"
           v-model="store.birth"
+          :default-value="defaultBirth"
+          :disabled-date="notFuture"
         />
         <ElCheckbox
           v-if="store.birth"
@@ -151,6 +153,7 @@ import FileButton from "@/components/buttons/FileButton.vue";
 import { BORDER_B_DASHED, GRID_AUTO_CENTER } from "@/styles";
 import {
   propsType,
+  defaultBirth,
   genderOptions,
   maritalStatusOptions,
   politicsStatusOptions,
@@ -227,5 +230,12 @@ function handleFileChange(event: Event) {
   const file = input.files?.[0];
   if (file == null) return;
   store.picture = file;
+}
+
+/**
+ * 出生日期必定不能够是在未来，因此需要限制用户的选择范围
+ */
+function notFuture(date: Date) {
+  return new Date() < date;
 }
 </script>
