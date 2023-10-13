@@ -1,4 +1,5 @@
 import {
+  h,
   ref,
   watch,
   inject,
@@ -540,7 +541,7 @@ export const TabPanel = defineComponent({
       };
 
       if (lazy && !selected.value && neverSelected) {
-        return null;
+        return h("span", { hidden: true, ...ourProps });
       }
       neverSelected = false;
       return render({
