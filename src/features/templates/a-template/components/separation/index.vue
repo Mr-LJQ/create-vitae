@@ -47,7 +47,7 @@ defineOptions({
   content: "";
   width: 10px;
   height: 10px;
-  background-color: #eee;
+  background-color: #fff;
   transform: rotate(45deg);
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <section class="flex">
-    <div>
-      <img class="w-32" :src="pictureUrl" alt="照片" />
+    <div v-if="store.showPhoto">
+      <img class="w-48" :src="store.pictureUrl" alt="照片" />
     </div>
     <div>
       <dl class="pl-8">
@@ -33,7 +33,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { computed, onUnmounted } from "vue";
+import { computed } from "vue";
 import { omit } from "lodash";
 import { iconMap, customIcon, nameMap, order } from ".";
 import type { KeysType } from ".";
@@ -64,21 +64,6 @@ const heightWeight = computed(() => {
 });
 
 /**
- * 处理照片
- */
-let pictureObjectURL: string | null = null;
-const pictureUrl = computed(() => {
-  if (store.picture) {
-    pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
-    pictureObjectURL = URL.createObjectURL(store.picture);
-    return pictureObjectURL;
-  }
-  return "";
-});
-onUnmounted(() => {
-  pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
-});
-/**
  * 将 object 装换为 entries 格式并排序，以使其按顺序显示
  */
 const infos = computed(() => {
@@ -98,8 +83,10 @@ const infos = computed(() => {
   //order 的顺序决定显示的顺序
   let result: [keyof KeysType, string, string][] = order.map((key) => {
     let name = nameMap[key]; //转换为对应的 name
-    let value = items[key]; //获取值
-    if (!value.trim()) return [key, name, value];
+    //因为 typescript 的类型推断的一些问题，虽然我在下面对于 birth 已经进行了处理，
+    // 但result 依然因为 birth 的值可能为 Date 而报类型错误（实际上其已经被处理为 string）
+    //  因此，此处使用 as string.
+    let value = items[key] as string; //获取值
     switch (
       key //需要特殊处理的项
     ) {
@@ -108,6 +95,8 @@ const infos = computed(() => {
         break;
       }
       case "birth": {
+        //存在空字符串的可能性，因此需要进行排除
+        if (!value) return [key, name, value];
         const { convertToAge } = store;
         const date = new Date(value);
         const birthYear = date.getFullYear();

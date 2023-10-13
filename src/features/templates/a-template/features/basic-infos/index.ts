@@ -23,16 +23,16 @@ export type KeysType = Record<
  * 其顺序决定显示时顺序
  */
 export const order: Array<keyof KeysType> = [
+  "gender",
+  "birth",
+  "politicsStatus",
+  "nation",
+  "yearsOfWorking",
   "phone",
   "email",
-  "gender",
-  "nation",
-  "birth",
+  "nativePlace",
   "heightWeight",
   "maritalStatus",
-  "yearsOfWorking",
-  "nativePlace",
-  "politicsStatus",
 ];
 
 export const iconMap: KeysType = {

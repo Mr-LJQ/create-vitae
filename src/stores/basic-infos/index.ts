@@ -1,13 +1,14 @@
-import { ref } from "vue";
+import { computed, onUnmounted, onMounted, ref } from "vue";
 import { defineStore } from "pinia";
 import type { StoreState } from "pinia";
+import figure from "@/assets/images/figure.svg";
 type AdditionalInfos = { [key in string]: string };
 
 export const useBasicInfosStore = defineStore(
   "BasicInfos",
   () => {
     const name = ref("");
-    const birth = ref("");
+    const birth = ref<Date | string>("");
     const phone = ref("");
     const email = ref("");
     const picture = ref<File>();
@@ -31,12 +32,30 @@ export const useBasicInfosStore = defineStore(
     function hasInfo(key: string) {
       return Object.prototype.hasOwnProperty.call(additionalInfos.value, key);
     }
+    let pictureObjectURL: string | null = null;
+    const pictureUrl = computed(() => {
+      if (picture.value) {
+        pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
+        pictureObjectURL = URL.createObjectURL(picture.value);
+        return pictureObjectURL;
+      }
+      return figure;
+    });
+    onMounted(() => {
+      if (picture.value) {
+        pictureObjectURL = URL.createObjectURL(picture.value);
+      }
+    });
+    onUnmounted(() => {
+      pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
+    });
     return {
       name,
       birth,
       phone,
       email,
       picture,
+      pictureUrl,
       yearsOfWorking,
       gender,
       maritalStatus,
