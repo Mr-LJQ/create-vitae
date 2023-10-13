@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#39394d] pt-8">
+  <div class="bg-[#39394d] pt-16">
     <ElConfigProvider :locale="zhCn">
       <MenuHeader />
       <component :is="ATemplate"></component>

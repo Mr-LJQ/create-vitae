@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="templateEdgeGapStyle"
+    :style="templateStyle"
     class="w-[51.25rem] h-[72.5rem] bg-white mx-auto pt-5 box-border text-[#333]"
   >
     <BasicInfos />
@@ -68,9 +68,9 @@ const componentMap = {
 };
 
 /**
- * 允许用户调整模版的左右间隔
+ * 应用用户的相关配置
  */
-const templateEdgeGapStyle = computed(() => {
+const templateStyle = computed(() => {
   return {
     "padding-left": `${templateEdgeGap.value}px`,
     "padding-right": `${templateEdgeGap.value}px`,

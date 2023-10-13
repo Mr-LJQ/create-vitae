@@ -51,8 +51,10 @@
         class="absolute right-0 -bottom-8 inline-block box-border w-8 h-8 rounded-bl-xl shadow-lg bg-white cursor-pointer"
         @click="toggleDrawer"
       >
-        <ElIcon v-if="!drawerVisible" size="2rem"><ArrowDown /></ElIcon>
-        <ElIcon v-else size="2rem"><ArrowUp /></ElIcon>
+        <ElIcon v-if="!drawerVisible" color="#13ce66" size="2rem"
+          ><ArrowDown
+        /></ElIcon>
+        <ElIcon v-else color="#13ce66" size="2rem"><ArrowUp /></ElIcon>
       </span>
     </header>
   </div>
