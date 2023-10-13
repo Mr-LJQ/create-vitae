@@ -56,4 +56,6 @@ export const useJobIntentionStore = defineStore(
   },
 );
 
-export type State = StoreState<ReturnType<typeof useJobIntentionStore>>;
+export type JobIntentionStoreState = StoreState<
+  ReturnType<typeof useJobIntentionStore>
+>;

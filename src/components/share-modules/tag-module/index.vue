@@ -34,8 +34,7 @@
 import { computed, ref } from "vue";
 import { ElButton, ElNotification, ElTag } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
-import RichTextEditor from "@/components/rich-text-editor/index.vue";
-import EditInput from "@/components/edit-input/index.vue";
+import { RichTextEditor, EditInput } from "@/components";
 import { propsType, emitsType, UPDATE_CONTENT } from ".";
 const props = defineProps(propsType);
 const emit = defineEmits(emitsType);

@@ -41,8 +41,8 @@ import { ref } from "vue";
 import { ElButton } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
 
-import AddButton from "@/components/buttons/AddButton.vue";
-import { useJobIntentionStore } from "@/stores/job-intention";
+import { AddButton } from "@/components";
+import { useJobIntentionStore } from "@/stores";
 import { swap, createDragThrottle } from "@/utils";
 import JobIntentionUnit from "./job-intention-unit/index.vue";
 import {

@@ -66,11 +66,13 @@
 </template>
 <script lang="ts" setup>
 import { computed, watchEffect } from "vue";
-import EditInput from "@/components/edit-input/index.vue";
-import EditInputItem from "@/components/edit-input-item/index.vue";
 import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
-import RichTextEditor from "@/components/rich-text-editor/index.vue";
-import OperateButton from "@/components/buttons/OperateButton.vue";
+import {
+  OperateButton,
+  RichTextEditor,
+  EditInputItem,
+  EditInput,
+} from "@/components";
 import {
   BUTTON_MOVE_CLASS,
   BUTTON_DELETE_CLASS,

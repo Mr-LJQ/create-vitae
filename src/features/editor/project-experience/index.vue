@@ -14,8 +14,8 @@
   />
 </template>
 <script lang="ts" setup>
-import AModule from "@/components/share-modules/a-module/index.vue";
-import { useProjectExperienceStore } from "@/stores/project-experience";
+import { AModule } from "@/components";
+import { useProjectExperienceStore } from "@/stores";
 import {
   firstItem,
   secondItem,

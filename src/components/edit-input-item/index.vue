@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { editItemProps } from ".";
 import { EDIT_INPUT_ITEM_LI, EDIT_INPUT_ITEM_LABEL } from "@/styles";
-import { useId } from "@/hooks/use-id";
+import { useId } from "@/hooks";
 defineProps(editItemProps);
 defineOptions({
   name: "EditInputItem",

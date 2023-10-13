@@ -43,8 +43,7 @@ import {
   TRANSITION_DELETE,
   TRANSITION_LIST_SLIDE,
 } from "@/styles";
-import MoveModule from "@/components/share-modules/move-module/index.vue";
-import AddButton from "@/components/buttons/AddButton.vue";
+import { MoveModule, AddButton } from "@/components";
 import { propsType } from ".";
 const props = defineProps(propsType);
 defineOptions({

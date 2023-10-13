@@ -146,11 +146,10 @@ import {
   ElNotification,
 } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-import { useBasicInfosStore } from "@/stores/basic-infos";
-import EditInputItem from "@/components/edit-input-item/index.vue";
-import EditInput from "@/components/edit-input/index.vue";
-import FileButton from "@/components/buttons/FileButton.vue";
+
+import { useBasicInfosStore } from "@/stores";
 import { BORDER_B_DASHED, GRID_AUTO_CENTER } from "@/styles";
+import { EditInputItem, EditInput, FileButton } from "@/components";
 import {
   propsType,
   defaultBirth,

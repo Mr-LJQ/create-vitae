@@ -51,9 +51,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { ElSelect, ElOption, ElCascader } from "element-plus";
-import EditInputItem from "@/components/edit-input-item/index.vue";
-import { EDIT_INPUT_ITEM_INPUT, GRID_AUTO_CENTER } from "@/styles";
+import { EditInputItem } from "@/components";
 import { chinaCities } from "./china-cities";
+import { EDIT_INPUT_ITEM_INPUT, GRID_AUTO_CENTER } from "@/styles";
 import {
   unitProps,
   unitEmits,

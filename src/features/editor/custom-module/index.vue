@@ -6,8 +6,8 @@
   />
 </template>
 <script lang="ts" setup>
-import RichTextEditor from "@/components/rich-text-editor/index.vue";
-import { useCustomModuleStore } from "@/stores/custom-module";
+import { RichTextEditor } from "@/components";
+import { useCustomModuleStore } from "@/stores";
 import { placeholder } from ".";
 defineOptions({
   name: "CustomModule",

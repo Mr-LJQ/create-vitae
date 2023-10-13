@@ -12,9 +12,8 @@
   </TagModule>
 </template>
 <script lang="ts" setup>
-import { useCertificateStore } from "@/stores/certificate";
-import TagModule from "@/components/share-modules/tag-module/index.vue";
-import ShowCheckedTags from "@/components/show-checked-tags/index.vue";
+import { useCertificateStore } from "@/stores";
+import { TagModule, ShowCheckedTags } from "@/components";
 import { placeholder, propsType, presetTags } from ".";
 defineProps(propsType);
 defineOptions({

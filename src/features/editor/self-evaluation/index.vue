@@ -17,9 +17,9 @@
 import { ref, nextTick } from "vue";
 import { ElButton, ElMessageBox } from "element-plus";
 import { Delta, Quill } from "@vueup/vue-quill";
-import RichTextEditor from "@/components/rich-text-editor/index.vue";
+import { RichTextEditor } from "@/components";
 import { isEmptyDelta } from "@/utils";
-import { useSelfEvaluationStore } from "@/stores/self-evaluation";
+import { useSelfEvaluationStore } from "@/stores";
 import { placeholder, civilities } from ".";
 defineOptions({
   name: "SelfEvaluation",

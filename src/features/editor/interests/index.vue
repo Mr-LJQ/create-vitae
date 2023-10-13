@@ -12,9 +12,8 @@
   </TagModule>
 </template>
 <script lang="ts" setup>
-import TagModule from "@/components/share-modules/tag-module/index.vue";
-import ShowCheckedTags from "@/components/show-checked-tags/index.vue";
-import { useInterestsStore } from "@/stores/interests";
+import { useInterestsStore } from "@/stores";
+import { TagModule, ShowCheckedTags } from "@/components";
 import { propsType, presetTags, placeholder } from ".";
 defineProps(propsType);
 defineOptions({

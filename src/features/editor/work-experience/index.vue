@@ -14,8 +14,8 @@
   />
 </template>
 <script lang="ts" setup>
-import { useWorkExperienceStore } from "@/stores/work-experience";
-import AModule from "@/components/share-modules/a-module/index.vue";
+import { useWorkExperienceStore } from "@/stores";
+import { AModule } from "@/components";
 import {
   firstItem,
   secondItem,

@@ -200,7 +200,7 @@ function toggleShrinkOrSpread() {
  */
 
 const editTabTitle = (name: ModuleEnum) => {
-  ElMessageBox.prompt("请输入新标题", "提示", {
+  ElMessageBox.prompt("请输入新标题", "Tip", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     inputValue: moduleNameMap.value[name],

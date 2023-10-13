@@ -31,9 +31,8 @@
 </template>
 <script lang="ts" setup>
 import { ElSelect, ElOption } from "element-plus";
-import EditInputItem from "@/components/edit-input-item/index.vue";
-import AModule from "@/components/share-modules/a-module/index.vue";
-import { useEducationalBackgroundStore } from "@/stores/educational-background";
+import { EditInputItem, AModule } from "@/components";
+import { useEducationalBackgroundStore } from "@/stores";
 import {
   firstItem,
   secondItem,

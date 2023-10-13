@@ -17,7 +17,7 @@ import { ref, computed, onMounted, unref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { OVERRIDE_QUILL_SNOW } from "@/styles";
-import { useId } from "@/hooks/use-id";
+import { useId } from "@/hooks";
 import {
   toolbar,
   propsType,

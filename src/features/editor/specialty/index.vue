@@ -51,8 +51,8 @@
 <script lang="ts" setup>
 import { ElSelect, ElOption, ElButton } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-import TagModule from "@/components/share-modules/tag-module/index.vue";
-import { useSpecialtyStore } from "@/stores/specialty";
+import { TagModule } from "@/components";
+import { useSpecialtyStore } from "@/stores";
 import {
   placeholder,
   propsType,

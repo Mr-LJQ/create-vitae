@@ -14,8 +14,8 @@
   />
 </template>
 <script lang="ts" setup>
-import AModule from "@/components/share-modules/a-module/index.vue";
-import { useInternshipExperienceStore } from "@/stores/internship-experience";
+import { AModule } from "@/components";
+import { useInternshipExperienceStore } from "@/stores";
 import {
   firstItem,
   secondItem,

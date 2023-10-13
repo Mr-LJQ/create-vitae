@@ -33,6 +33,6 @@ export const useEducationalBackgroundStore = defineStore(
   { persistedState },
 );
 
-export type State = StoreState<
+export type EducationalBackgroundStoreState = StoreState<
   ReturnType<typeof useEducationalBackgroundStore>
 >;
