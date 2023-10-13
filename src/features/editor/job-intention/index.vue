@@ -12,7 +12,7 @@
       :key="item.id"
       class="relative w-full mb-3 cursor-grab"
       :class="$style.bottomLine"
-      v-for="(item, index) of jobIntentions"
+      v-for="(item, index) of store.jobIntentions"
     >
       <JobIntentionUnit
         v-model:pay="item.pay"
@@ -26,7 +26,7 @@
           type="danger"
           :icon="Delete"
           class="absolute top-0 right-2"
-          v-if="jobIntentions.length > 1"
+          v-if="store.jobIntentions.length > 1"
           @click="handleDelete(index)"
         />
       </Transition>
@@ -56,8 +56,8 @@ defineProps(propsType);
 defineOptions({
   name: "JobIntention",
 });
-const { jobIntentions, appendJobIntention, deleteJobIntention } =
-  useJobIntentionStore();
+const store = useJobIntentionStore();
+const { appendJobIntention, deleteJobIntention } = store;
 
 /**
  * 删除与添加应用不同的动画
@@ -84,7 +84,7 @@ function dragenter(index: number) {
   if (currentIndex === index) return;
   dragThrottle(
     () => {
-      swap(index, currentIndex, jobIntentions);
+      swap(index, currentIndex, store.jobIntentions);
       currentIndex = index;
     },
     300,
