@@ -3,7 +3,7 @@
 @include b("border") {
   @include e("b") {
     @include m("dashed") {
-      border-bottom: 1px dashed #ffc69f;
+      border-bottom: 1px dashed #ddd;
     }
   }
 }

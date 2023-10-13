@@ -14,11 +14,15 @@
     v-slot="{ index }"
   >
     <EditInputItem label-text="学历" v-slot="{ id }">
-      <el-select :id="id" v-model="store.dataList[index].third">
+      <el-select
+        :id="id"
+        v-model="store.dataList[index].third"
+        placeholder="不填"
+      >
         <el-option
           v-for="item of degrees"
           :key="item"
-          :label="item || '不填'"
+          :label="item"
           :value="item"
         />
       </el-select>

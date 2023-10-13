@@ -18,7 +18,7 @@
     </div>
     <div>
       <EditInput
-        class="mr-4"
+        class="mr-4 mb-2"
         v-model="custom"
         ref="customElementRef"
         placeholder="请输入自定义名称"
@@ -99,7 +99,7 @@ function handleAddCustom() {
   max-width: 1200px;
   padding-top: 12px;
   margin: 0 auto 10px;
-  border-top: 1px dashed #ffc69f;
+  border-top: 1px dashed #ddd;
 }
 .tag {
   color: #333;

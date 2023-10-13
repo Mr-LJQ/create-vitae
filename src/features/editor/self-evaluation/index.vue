@@ -1,12 +1,12 @@
 <template>
-  <div class="flex max-w-[75rem] mx-auto">
+  <div class="flex flex-col sm:flex-row max-w-[75rem] mx-auto">
     <RichTextEditor
       class="h-80 flex-1"
       :placeholder="placeholder"
       v-model="store.editorContent"
       @ready="(quill) => (quillRef = quill)"
     />
-    <div class="w-32 text-center">
+    <div class="sm:w-32 sm:text-center">
       <el-button class="mt-2" type="primary" round @click="addCivilities"
         >客套话</el-button
       >

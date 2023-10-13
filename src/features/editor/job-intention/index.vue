@@ -10,7 +10,7 @@
       @dragstart="dragstart(index)"
       @dragenter="dragenter(index)"
       :key="item.id"
-      class="relative w-full mb-3 border border-[#ddd] cursor-grab"
+      class="relative w-full mb-3 cursor-grab"
       :class="$style.bottomLine"
       v-for="(item, index) of jobIntentions"
     >
@@ -96,6 +96,6 @@ function dragenter(index: number) {
 
 <style module>
 .bottomLine {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px dashed #ddd;
 }
 </style>

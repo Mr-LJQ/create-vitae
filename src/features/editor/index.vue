@@ -19,10 +19,7 @@
       @change="selectedIndexChange"
       class="relative z-[2] bg-white"
     >
-      <TabList
-        ref="tabListRef"
-        class="relative box-border pl-6 max-w-[75rem] mx-auto"
-      >
+      <TabList ref="tabListRef" class="relative px-6 max-w-[75rem] mx-auto">
         <div class="flex relative" ref="tabListNavRef" :style="tabListNavStyle">
           <TransitionGroup
             :move-class="stopTransition ? void 0 : $style.transition"
@@ -113,11 +110,11 @@
       <TabPanels
         lazy
         :as="ElScrollbar"
-        class="h-[21rem] pt-2"
+        class="h-[21rem] pt-2 px-6"
         :class="OVERRIDE_ELEMENT_PLUS"
       >
-        <TabPanel as="template"><BasicInfo /></TabPanel>
-        <TabPanel :key="name" v-for="name of modulesOrder"
+        <TabPanel class="outline-none" as="template"><BasicInfo /></TabPanel>
+        <TabPanel class="outline-none" :key="name" v-for="name of modulesOrder"
           ><component
             :is="componentMap[name]"
             :module-name="moduleNameMap[name]"
@@ -500,6 +497,7 @@ watch(selectedIndex, (index) => {
   z-index: 1;
   border-bottom-color: #f60;
 }
+
 .selectedLine {
   position: absolute;
   border-bottom: 2px #f60 solid;

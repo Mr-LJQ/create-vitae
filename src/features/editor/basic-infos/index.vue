@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[75rem] mx-auto">
+  <div class="max-w-[75rem] mx-auto pl-12 box-content outline-none">
     <ul class="mb-4" :class="[BORDER_B_DASHED, GRID_AUTO_CENTER]">
       <EditInputItem v-slot="{ id }" label-text="您的姓名">
         <EditInput :id="id" placeholder="请输入您的姓名" v-model="store.name" />
@@ -62,10 +62,11 @@
           :id="id"
           style="width: 60px"
           placeholder="身高"
+          class="mr-1"
           v-model="store.height"
         />cm
         <EditInput
-          class="ml-4"
+          class="ml-4 mr-1"
           placeholder="体重"
           style="width: 60px"
           v-model="store.weight"
@@ -123,9 +124,10 @@
       <EditInput
         v-model="customValueRef"
         ref="customValueElementRef"
+        class="mr-2"
         placeholder="信息内容，例如：张三"
       />
-      <ElButton class="ml-2" @click="addCustomInfo">添加自定义项</ElButton>
+      <ElButton @click="addCustomInfo">添加自定义项</ElButton>
     </div>
   </div>
 </template>

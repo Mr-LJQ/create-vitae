@@ -45,8 +45,11 @@ $delete_color: #ff755d;
     border-radius: math.div($item_height, 2);
     vertical-align: top;
     cursor: pointer;
-    background-color: $move_color;
+    background-color: #409eff;
     color: #fff;
+    &:hover {
+      background-color: #79bbff;
+    }
     input {
       width: 0;
       height: 0;
@@ -54,7 +57,7 @@ $delete_color: #ff755d;
       border: none;
     }
     &:focus-within {
-      outline: 2px solid $move_color;
+      outline: 2px solid #79bbff;
       outline-offset: 1px;
     }
   }

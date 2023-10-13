@@ -17,7 +17,7 @@ function createItem(): S {
     pay: "",
     city: "",
     post: "",
-    hiredate: "不填",
+    hiredate: "",
   };
 }
 

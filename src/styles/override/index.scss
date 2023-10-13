@@ -33,8 +33,9 @@
       border-radius: 10px;
       border: 1px solid #ddd;
       overflow: hidden; //用于避免内部元素覆盖圆角边框
-      background-color: $input-item-bg-color;
-      &:hover,
+      &:hover {
+        border-color: #c0c4cc;
+      }
       &:focus-within {
         //内部元素获取焦点时，改变边框颜色
         border-color: #409eff;

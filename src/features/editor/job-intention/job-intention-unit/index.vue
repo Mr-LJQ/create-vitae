@@ -1,5 +1,8 @@
 <template>
-  <ul class="w-full" :class="GRID_AUTO_CENTER">
+  <ul
+    class="w-full box-content only:translate-x-6 transition-transform duration-300"
+    :class="GRID_AUTO_CENTER"
+  >
     <EditInputItem for-id="post" label-text="求职意向">
       <input
         id="post"
@@ -29,7 +32,12 @@
       />
     </EditInputItem>
     <EditInputItem for-id="hiredate" label-text="入职时间">
-      <el-select id="hiredate" v-model="hiredate" fit-input-width>
+      <el-select
+        id="hiredate"
+        v-model="hiredate"
+        fit-input-width
+        placeholder="不填"
+      >
         <el-option
           v-for="value of hiredates"
           :key="value"
@@ -99,7 +107,7 @@ const hiredate = computed({
 });
 
 const hiredates = [
-  "不填",
+  "",
   "随时到岗",
   "一周内到岗",
   "一月内到岗",

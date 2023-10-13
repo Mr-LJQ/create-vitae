@@ -20,14 +20,11 @@
             :placeholder="secondItem.placeholder"
           />
         </EditInputItem>
+        <slot />
         <EditInputItem :label-text="thirdItem.label" v-slot="{ id }">
           <el-date-picker
             :id="id"
-            style="
-              --el-date-editor-width: 220px;
-              --el-input-bg-color: #f3f4f6;
-              --el-input-border-color: #f3f4f6;
-            "
+            style="--el-date-editor-width: 220px"
             :default-value="defaultTimeValue"
             unlink-panels
             v-model="timeRange"
@@ -39,7 +36,6 @@
           />
           <el-checkbox label="至今" v-model="isHitherto" />
         </EditInputItem>
-        <slot />
       </ul>
       <RichTextEditor
         class="max-h-56"
