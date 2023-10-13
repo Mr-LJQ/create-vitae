@@ -12,7 +12,7 @@ export const useConfigurationStore = defineStore("configuration", () => {
   const language = ref<string>("中文（简）");
   const fontFamily = ref<string>("微软雅黑");
   //---模版颜色---
-  const templateColor = ref<string>("");
+  const templateColor = ref<string>("#284967");
   return {
     lineGap,
     moduleGap,
