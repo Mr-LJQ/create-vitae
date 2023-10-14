@@ -20,6 +20,9 @@
         <li class="px-2">
           <SkinController />
         </li>
+        <li class="px-2">
+          <DownloadController />
+        </li>
         <!--<li class="px-2">
           <MenuButton icon-name="template">更换模版</MenuButton>
         </li>
@@ -29,9 +32,7 @@
         <li class="px-2">
           <MenuButton icon-name="envelope">自荐信</MenuButton>
         </li>
-        <li class="px-2">
-          <MenuButton icon-name="download">下载</MenuButton>
-        </li>
+        
         <li class="px-2">
           <MenuButton icon-name="upload">上传</MenuButton>
         </li> -->
@@ -72,6 +73,7 @@ import "@/assets/icon-font-common/iconfont.css";
 import GapController from "./gap-controller/index.vue";
 import TextController from "./text-controller/index.vue";
 import SkinController from "./skin-controller/index.vue";
+import DownloadController from "./download-controller/index.vue";
 defineOptions({
   name: "MenuHeader",
 });

@@ -1,7 +1,7 @@
 export * from "./tabs";
 export * from "./buttons";
+export * from "./transitions";
 export * from "./share-modules";
-
 import EditInput from "./edit-input/index.vue";
 import EditSwitch from "./edit-switch/index.vue";
 import EditInputItem from "./edit-input-item/index.vue";
