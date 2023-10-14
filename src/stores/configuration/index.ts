@@ -13,10 +13,13 @@ export const useConfigurationStore = defineStore("configuration", () => {
   const fontFamily = ref<string>("微软雅黑");
   //---模版颜色---
   const templateColor = ref<string>("#284967");
+  //---PDF相关说明---
+  const promptPDFInfo = ref(false);
   return {
     lineGap,
     moduleGap,
     templateEdgeGap,
+    promptPDFInfo,
     fontSize,
     language,
     fontFamily,

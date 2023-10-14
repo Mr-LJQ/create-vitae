@@ -50,11 +50,11 @@
               </div>
 
               <div class="flex justify-between items-center mt-4">
-                <ElCheckbox v-model="alreadyUnderstood" label="不再提示" />
+                <ElCheckbox v-model="promptPDFInfo" label="不再提示" />
                 <button
                   type="button"
                   class="rounded-md px-4 py-2 text-sm text-white bg-[#409eff] hover:bg-[#79bbff] outline-none focus-visible:outline-[#409eff]"
-                  @click="openPrinter"
+                  @click="handlePrinter"
                 >
                   唤出打印页面
                 </button>
@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import {
   Dialog,
   DialogPanel,
@@ -77,7 +77,12 @@ import {
   TransitionChild,
 } from "@headlessui/vue";
 import { ElCheckbox } from "element-plus";
-import { propsType, emitsType, UPDATE_MODEL_VALUE } from ".";
+import {
+  propsType,
+  emitsType,
+  UPDATE_MODEL_VALUE,
+  UPDATE_PROMPT_PDF_INFO,
+} from ".";
 const props = defineProps(propsType);
 const emits = defineEmits(emitsType);
 defineOptions({
@@ -96,9 +101,12 @@ function closeModal() {
   isOpen.value = false;
 }
 
-function openPrinter() {
-  return window.print();
-}
-
-const alreadyUnderstood = ref(false);
+const promptPDFInfo = computed({
+  get() {
+    return props.promptPDFInfo;
+  },
+  set(isOpen: boolean) {
+    return emits(UPDATE_PROMPT_PDF_INFO, isOpen);
+  },
+});
 </script>

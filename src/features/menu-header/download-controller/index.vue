@@ -29,7 +29,11 @@
       </PopoverPanel>
     </PopoverTransition>
   </Popover>
-  <ExplainPDF v-model="isOpenExplainPDF" />
+  <ExplainPDF
+    v-model="isOpenExplainPDF"
+    v-model:promptPDFInfo="store.promptPDFInfo"
+    :handle-printer="handlePrinter"
+  />
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
@@ -41,11 +45,13 @@ import {
   Popover,
   PopoverPanel,
 } from "@/components";
+import { useConfigurationStore } from "@/stores";
 import ExplainPDF from "../explain-pdf/index.vue";
 defineOptions({
   name: "DownLoadController",
 });
 
+const store = useConfigurationStore();
 const isOpenExplainPDF = ref(false);
 
 const date = computed(() => [
@@ -66,4 +72,8 @@ const date = computed(() => [
     handleClick: () => {},
   },
 ]);
+
+function handlePrinter() {
+  window.print();
+}
 </script>
