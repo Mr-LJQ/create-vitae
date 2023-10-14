@@ -14,7 +14,7 @@
             <div class="grid gap-x-2 gap-y-1 grid-cols-8 my-2">
               <RadioGroupOption
                 :key="color"
-                class="outline-none m-auto"
+                class="outline-none"
                 v-slot="{ checked }"
                 :value="`#${color}`"
                 v-for="color of colors"
