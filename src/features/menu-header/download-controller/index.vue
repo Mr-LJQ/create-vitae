@@ -30,13 +30,15 @@
     </PopoverTransition>
   </Popover>
   <ExplainPDF
+    v-if="store.promptPDFInfo"
     v-model="isOpenExplainPDF"
-    v-model:promptPDFInfo="store.promptPDFInfo"
+    :toggle-prompt-pdf-info="togglePromptPDFInfo"
     :handle-printer="handlePrinter"
   />
 </template>
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
+import { useEventListener } from "@vueuse/core";
 import jsonIcon from "@/assets/images/json.svg";
 import pdfIcon from "@/assets/images/pdf.svg";
 import {
@@ -54,15 +56,20 @@ defineOptions({
 const store = useConfigurationStore();
 const isOpenExplainPDF = ref(false);
 
-const date = computed(() => [
+function handleClickPDF() {
+  if (store.promptPDFInfo) {
+    isOpenExplainPDF.value = true;
+  } else {
+    handlePrinter();
+  }
+}
+const date = [
   {
     href: "##",
     icon: pdfIcon,
     name: "下载为PDF",
+    handleClick: handleClickPDF,
     description: "将简历保存为PDF格式下载到本地",
-    handleClick: () => {
-      isOpenExplainPDF.value = true;
-    },
   },
   {
     href: "##",
@@ -71,8 +78,23 @@ const date = computed(() => [
     description: "将简历相关数据提取为JSON格式下载到本地",
     handleClick: () => {},
   },
-]);
+];
 
+function togglePromptPDFInfo(value: boolean) {
+  store.promptPDFInfo = value;
+}
+
+/**
+ * 处理打印相关逻辑
+ */
+
+useEventListener(window, "beforeprint", () => {
+  console.log("beforeprint");
+});
+
+useEventListener(window, "afterprint", () => {
+  console.log("afterprint");
+});
 function handlePrinter() {
   window.print();
 }
