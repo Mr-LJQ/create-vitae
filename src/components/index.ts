@@ -1,5 +1,6 @@
 export * from "./tabs";
 export * from "./buttons";
+export * from "./popover";
 export * from "./transitions";
 export * from "./share-modules";
 import EditInput from "./edit-input/index.vue";
