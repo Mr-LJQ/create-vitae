@@ -141,6 +141,6 @@ const cityContainerRef = ref<HTMLElement | null>(null);
 function focusCascader() {
   const liElement = dom(cityContainerRef);
   if (!liElement) return;
-  (liElement.querySelector(".el-cascader") as HTMLElement)?.click();
+  (liElement.querySelector(".el-cascader") as HTMLElement | null)?.click();
 }
 </script>
