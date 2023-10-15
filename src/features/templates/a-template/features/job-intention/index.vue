@@ -1,17 +1,18 @@
 <template>
-  <section class="mt-3">
+  <section>
     <Separation>{{ moduleName }}</Separation>
-    <div
-      v-for="{ id, pay, city, hiredate, post } of store.jobIntentions"
+    <ul
       :key="id"
+      class="flex justify-between text-center whitespace-nowrap"
+      v-for="{ id, pay, city, hiredate, post } of store.jobIntentions"
     >
-      <ul class="flex justify-between text-center mt-3">
-        <li class="flex-1 text-left font-bold">求职意向：{{ post }}</li>
-        <li class="flex-1">{{ city }}</li>
-        <li class="flex-1">{{ pay }}</li>
-        <li class="flex-1 text-end">{{ hiredate }}</li>
-      </ul>
-    </div>
+      <li class="flex-1 text-left font-bold">
+        {{ post && `求职意向：${post}` }}
+      </li>
+      <li class="flex-1">{{ city }}</li>
+      <li class="flex-1">{{ pay }}</li>
+      <li class="flex-1 text-end">{{ hiredate }}</li>
+    </ul>
   </section>
 </template>
 <script lang="ts" setup>

@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-3">
+  <section>
     <Separation>{{ moduleName }}</Separation>
-    <div :key="item.id" class="mt-2" v-for="item of dataList">
+    <div :key="item.id" v-for="item of dataList">
       <ul class="flex justify-between leading-relaxed">
         <li class="flex-1 text-left font-bold">
           {{ convertTimeRange(item) }}
@@ -14,7 +14,7 @@
         v-if="!isEmptyDelta(item.editorContent)"
       />
     </div>
-  </div>
+  </section>
 </template>
 <script lang="ts" setup>
 import Separation from "../separation/index.vue";

@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-3">
+  <section>
     <Separation>{{ moduleName }}</Separation>
     <ReadOnlyRichText
       :content="store.editorContent"
       class="mt-3"
       v-if="!isEmptyDelta(store.editorContent)"
     />
-  </div>
+  </section>
 </template>
 <script lang="ts" setup>
 import Separation from "../../components/separation/index.vue";

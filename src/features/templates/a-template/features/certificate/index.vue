@@ -1,15 +1,14 @@
 <template>
-  <div class="mt-3">
+  <section>
     <Separation>{{ moduleName }}</Separation>
     <ReadOnlyRichText
-      class="mt-3"
       :content="store.content"
       v-if="!isEmptyDelta(store.content)"
     />
-    <div class="flex flex-wrap mt-2">
+    <div class="flex flex-wrap">
       <Tag :key="tag" v-for="tag of store.tags">{{ tag }}</Tag>
     </div>
-  </div>
+  </section>
 </template>
 <script lang="ts" setup>
 import Tag from "../../components/tag/index.vue";

@@ -1,22 +1,21 @@
 <template>
-  <div class="mt-3">
+  <section>
     <Separation>{{ moduleName }}</Separation>
     <ReadOnlyRichText
-      class="mt-3"
       :content="store.content"
       v-if="!isEmptyDelta(store.content)"
     />
-    <ul class="grid grid-cols-3">
-      <li :key="tag" class="mt-1" v-for="[tag, options] of store.tags">
+    <ul class="grid grid-cols-3" v-if="store.tags.size">
+      <li :key="tag" v-for="[tag, options] of store.tags">
         <ElProgress
           class="h-4"
           :percentage="getPercentage(options.proficiency)"
           :format="() => format(options)"
         />
-        <p class="m-0 font-bold">{{ tag }}</p>
+        <p class="font-bold">{{ tag }}</p>
       </li>
     </ul>
-  </div>
+  </section>
 </template>
 <script lang="ts" setup>
 import { ElProgress } from "element-plus";

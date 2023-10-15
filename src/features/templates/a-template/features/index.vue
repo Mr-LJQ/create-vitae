@@ -1,6 +1,5 @@
 <template>
   <div
-    :style="templateStyle"
     class="w-[51.25rem] h-[72.5rem] bg-white mx-auto pt-5 box-border text-[#333]"
   >
     <BasicInfos />
@@ -30,19 +29,13 @@ import Certificate from "./certificate/index.vue";
 import Interests from "./interests/index.vue";
 import Specialty from "./specialty/index.vue";
 
-import {
-  ModuleEnum,
-  useModulesInfosStore,
-  useConfigurationStore,
-} from "@/stores";
+import { ModuleEnum, useModulesInfosStore } from "@/stores";
 defineOptions({
   name: "ATemplate",
 });
 
 const store = useModulesInfosStore();
 const { moduleNameMap, modulesOrder, openedModules } = storeToRefs(store);
-const config = useConfigurationStore();
-const { templateEdgeGap, fontSize, fontFamily } = storeToRefs(config);
 
 /**
  * 过滤掉无需显示的 module
@@ -66,16 +59,4 @@ const componentMap = {
   [ModuleEnum.SelfEvaluation]: SelfEvaluation,
   [ModuleEnum.CustomModule]: CustomModule,
 };
-
-/**
- * 应用用户的相关配置
- */
-const templateStyle = computed(() => {
-  return {
-    "padding-left": `${templateEdgeGap.value}px`,
-    "padding-right": `${templateEdgeGap.value}px`,
-    "font-size": `${fontSize.value}px`,
-    "font-family": `${fontFamily.value}`,
-  };
-});
 </script>

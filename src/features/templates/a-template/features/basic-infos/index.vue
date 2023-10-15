@@ -5,7 +5,7 @@
     </div>
     <div>
       <dl class="pl-8">
-        <dt class="mb-3">
+        <dt>
           <strong class="text-2xl">{{ store.name }}</strong>
         </dt>
         <dd :key="key" :class="$style.dd" v-for="[key, name, value] of infos">
@@ -22,9 +22,7 @@
           v-for="(value, key) of store.additionalInfos"
         >
           <span
-            :class="[
-              `mr-3 align-top icon_font_template_a icon-template-a-${customIcon}`,
-            ]"
+            :class="[`mr-3 icon_font_template_a icon-template-a-${customIcon}`]"
           /><span :class="$style.name">{{ key }}</span
           >：{{ value }}
         </dd>
@@ -126,7 +124,6 @@ const infos = computed(() => {
 .name {
   display: inline-block;
   text-align-last: justify;
-  vertical-align: middle;
   @apply w-14 h-5;
 }
 </style>
