@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="w-[51.25rem] h-[72.5rem] bg-white mx-auto pt-5 box-border text-[#333]"
-  >
+  <div ref="containerRef" class="pt-5 text-[#333]">
     <BasicInfos />
     <component
       :key="name"

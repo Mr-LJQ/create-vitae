@@ -37,8 +37,7 @@
   />
 </template>
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { useEventListener } from "@vueuse/core";
+import { ref } from "vue";
 import jsonIcon from "@/assets/images/json.svg";
 import pdfIcon from "@/assets/images/pdf.svg";
 import {
@@ -47,7 +46,6 @@ import {
   Popover,
   PopoverPanel,
 } from "@/components";
-import { VITAE_TEMPLATE_CONTAINER_ID } from "@/constants";
 import { useConfigurationStore } from "@/stores";
 import ExplainPDF from "../explain-pdf/index.vue";
 defineOptions({
@@ -84,34 +82,6 @@ const date = [
 function togglePromptPDFInfo(value: boolean) {
   store.promptPDFInfo = value;
 }
-
-/**
- * 处理打印相关逻辑
- */
-
-onMounted(() => {
-  let vitaeTemplateContainer: HTMLElement | null = null;
-  let fragment = document.createDocumentFragment();
-  const placeholderCommentNode = document.createComment("");
-  useEventListener(window, "beforeprint", () => {
-    vitaeTemplateContainer = document.getElementById(
-      VITAE_TEMPLATE_CONTAINER_ID,
-    );
-    if (!vitaeTemplateContainer)
-      throw new Error("意料之外的BUG,无法获取代表简历模版的元素");
-    vitaeTemplateContainer.replaceWith(placeholderCommentNode);
-    fragment.append(...document.body.childNodes);
-    document.body.append(vitaeTemplateContainer);
-  });
-
-  useEventListener(window, "afterprint", () => {
-    if (!vitaeTemplateContainer)
-      throw new Error("意料之外的BUG,无法获取代表简历模版的元素");
-    vitaeTemplateContainer.remove();
-    document.body.append(fragment);
-    placeholderCommentNode.replaceWith(vitaeTemplateContainer);
-  });
-});
 
 function handlePrinter() {
   window.print();

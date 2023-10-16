@@ -42,7 +42,7 @@ const contentStyle = computed(() => {
   @apply top-3;
 }
 .contentBox {
-  z-index: 2;
+  z-index: 1;
   position: relative;
   display: inline-block;
   color: #fff;
