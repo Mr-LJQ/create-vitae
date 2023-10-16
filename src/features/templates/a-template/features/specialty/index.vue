@@ -9,6 +9,7 @@
       <li :key="tag" v-for="[tag, options] of store.tags">
         <ElProgress
           class="h-4"
+          :color="config.templateColor"
           :percentage="getPercentage(options.proficiency)"
           :format="() => format(options)"
         />
@@ -19,17 +20,19 @@
 </template>
 <script lang="ts" setup>
 import { ElProgress } from "element-plus";
-import Separation from "../../components/separation/index.vue";
 import { isEmptyDelta } from "@/utils";
-import ReadOnlyRichText from "@/components/read-only-rich-text/index.vue";
-import { useSpecialtyStore } from "@/stores/specialty";
-import { propsType } from ".";
+import { useSpecialtyStore, useConfigurationStore } from "@/stores";
+import { ReadOnlyRichText } from "@/components";
 import type { Proficiency, Presentation } from "@/types";
+import Separation from "../../components/separation/index.vue";
+import { propsType } from ".";
 defineOptions({
   name: "SpecialSkill",
 });
 defineProps(propsType);
 const store = useSpecialtyStore();
+
+const config = useConfigurationStore();
 
 /**
  * 将 文本 映射到相应的 百分比
