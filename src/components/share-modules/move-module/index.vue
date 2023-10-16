@@ -21,9 +21,14 @@
           />
         </EditInputItem>
         <slot />
-        <EditInputItem :label-text="thirdItem.label" v-slot="{ id }">
+        <EditInputItem
+          @click="focusDatePicker"
+          :label-text="thirdItem.label"
+          v-slot="{ id }"
+        >
           <el-date-picker
             :id="id"
+            ref="datePickerRef"
             style="--el-date-editor-width: 220px"
             :default-value="defaultTimeValue"
             unlink-panels
@@ -32,7 +37,7 @@
             range-separator="-"
             :start-placeholder="thirdItem.placeholder"
             :end-placeholder="thirdItem.placeholder2"
-            clearable
+            :editable="false"
           />
           <el-checkbox label="至今" v-model="isHitherto" />
         </EditInputItem>
@@ -65,7 +70,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { computed, watchEffect } from "vue";
+import { computed, watchEffect, ref, type ComponentPublicInstance } from "vue";
 import { ElCheckbox, ElMessageBox, ElDatePicker } from "element-plus";
 import {
   OperateButton,
@@ -170,6 +175,18 @@ watchEffect(() => {
     timeRange.value[1] = new Date();
   }
 });
+
+/**
+ * 因为 ElDatePicker 的 type="monthrange" 无法与 Label 通过 for id 联动，
+ *  为了效果的统一，这里手动模拟该效果
+ */
+const datePickerRef = ref<ComponentPublicInstance<{
+  focus: () => void;
+}> | null>(null);
+function focusDatePicker() {
+  if (!datePickerRef.value) return;
+  datePickerRef.value.focus();
+}
 </script>
 <style module>
 .transition {

@@ -9,9 +9,10 @@
           :id="id"
           type="month"
           placeholder="选择年月"
-          v-model="store.birth"
+          v-model="birth"
           :default-value="defaultBirth"
           :disabled-date="notFuture"
+          :editable="false"
         />
         <ElCheckbox
           v-if="store.birth"
@@ -134,7 +135,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import {
   ElOption,
@@ -220,6 +221,19 @@ function addCustomInfo() {
   customValueRef.value = "";
 }
 
+const birth = computed({
+  get() {
+    /**
+     * 注意，此处的 ! 是为了避免一个类型错误，原因是因为 ElDatePicker 的 v-model 不支持 null类型，
+     *  但实际上，当使用 clearable 功能使，其返回的值就是一个 null 类型，
+     *    因此这应当算是一个 ElDatePicker 的类型BUG.
+     */
+    return store.birth!;
+  },
+  set(value) {
+    return (store.birth = value);
+  },
+});
 /**
  * 图片上传相关逻辑
  */

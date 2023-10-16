@@ -8,7 +8,7 @@ export const useBasicInfosStore = defineStore(
   "BasicInfos",
   () => {
     const name = ref("");
-    const birth = ref<Date | string>("");
+    const birth = ref<Date | null>(null); //值为 null 是可能的，例如：当用户按下 clear 时
     const phone = ref("");
     const email = ref("");
     const picture = ref<File>();

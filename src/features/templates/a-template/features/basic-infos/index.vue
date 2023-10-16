@@ -81,10 +81,8 @@ const infos = computed(() => {
   //order 的顺序决定显示的顺序
   let result: [keyof KeysType, string, string][] = order.map((key) => {
     let name = nameMap[key]; //转换为对应的 name
-    //因为 typescript 的类型推断的一些问题，虽然我在下面对于 birth 已经进行了处理，
-    // 但result 依然因为 birth 的值可能为 Date 而报类型错误（实际上其已经被处理为 string）
-    //  因此，此处使用 as string.
-    let value = items[key] as string; //获取值
+    let value = items[key]; //获取值
+    if (!value) return [key, name, ""];
     switch (
       key //需要特殊处理的项
     ) {
@@ -106,6 +104,12 @@ const infos = computed(() => {
         break;
       }
     }
+    if (!(typeof value === "string"))
+      throw new TypeError(
+        `Unexpected BUG,value is of type:${Object.prototype.toString.call(
+          value,
+        )}, expected type is string.`,
+      );
     return [key, name, value];
   });
   //过滤掉用户没填写的项
