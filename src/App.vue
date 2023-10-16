@@ -15,7 +15,7 @@
           :style="{ top: data.offsetY }"
           class="print:hidden flex justify-between absolute z-[2] inset-x-0 -translate-y-1/2 text-white text-sm leading-6 bg-[#39394d]"
         >
-          <p>分页行:用于判断PDF分页，应该避免该行遮盖任何内容</p>
+          <p>分页行：用于判断PDF分页，应该避免该行遮盖任何内容</p>
           <span>{{ data.index }}/{{ data.pageCount }}</span>
           <button>调整页数</button>
         </div>
@@ -30,7 +30,7 @@ import { ref, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useResizeObserver, useEventListener } from "@vueuse/core";
 
-import { useConfigurationStore } from "@/stores";
+import { useConfigurationStore, useBasicInfosStore } from "@/stores";
 import MenuHeader from "@/features/menu-header/index.vue";
 import EditDrawer from "@/features/editor/index.vue";
 import { ATemplate } from "@/features/templates";
@@ -41,6 +41,7 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
  * 应用用户的相关配置
  */
 const store = useConfigurationStore();
+const basicInfosStore = useBasicInfosStore();
 const { templateEdgeGap, fontSize, fontFamily, lineGap } = storeToRefs(store);
 const templateStyle = computed(() => {
   return {
@@ -96,6 +97,7 @@ onMounted(() => {
   let vitaeTemplateContainer: HTMLElement | null = null;
   let fragment = document.createDocumentFragment();
   const placeholderCommentNode = document.createComment("");
+  let documentTitle = "";
   useEventListener(window, "beforeprint", () => {
     vitaeTemplateContainer = document.getElementById(
       VITAE_TEMPLATE_CONTAINER_ID,
@@ -104,6 +106,9 @@ onMounted(() => {
       throw new Error(
         "Unexpected BUG, unable to obtain elements representing resume templates",
       );
+    documentTitle = document.title;
+    const name = basicInfosStore.name;
+    document.title = name ? `${name}-简历` : documentTitle;
     vitaeTemplateContainer.replaceWith(placeholderCommentNode);
     fragment.append(...document.body.childNodes);
     document.body.append(vitaeTemplateContainer);
@@ -114,6 +119,7 @@ onMounted(() => {
       throw new Error(
         "Unexpected BUG, unable to obtain elements representing resume templates",
       );
+    document.title = documentTitle;
     vitaeTemplateContainer.remove();
     document.body.append(fragment);
     placeholderCommentNode.replaceWith(vitaeTemplateContainer);
