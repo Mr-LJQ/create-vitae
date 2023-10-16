@@ -9,10 +9,11 @@
             :key="title"
             v-for="{ title, name, min, max, step, defaultValue } of options"
           >
-            <label :for="`${PREFIX_ID}_${name}`">{{ title }}：</label>
+            <label :for="`${PREFIX_ID}-${name}`">{{ title }}：</label>
             <ElSlider
-              :id="`${PREFIX_ID}_${name}`"
-              class="w-32"
+              data-focus-visible-none
+              :id="`${PREFIX_ID}-${name}`"
+              class="w-32 focus-visible:outline-none"
               style="--el-slider-button-size: 14px"
               v-model="store[name]"
               :min="min"
@@ -45,5 +46,5 @@ defineOptions({
   name: "GapController",
 });
 const store = useConfigurationStore();
-const PREFIX_ID = "gap_controller";
+const PREFIX_ID = "gap-controller";
 </script>

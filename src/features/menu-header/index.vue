@@ -38,12 +38,16 @@
     </ul>
     <ElDropdown class="bg-[#13d8a7] rounded-full">
       <span
-        class="text-5xl text-white overflow-hidden rounded-full focus:outline outline-2 outline-[#13a783] icon_font_common icon-common-user"
+        class="text-5xl text-white overflow-hidden rounded-full focus-visible:outline-none focus-visible:outline-[#13a783] icon_font_common icon-common-user"
       ></span>
       <template #dropdown>
         <ElDropdownMenu>
-          <ElDropdownItem>其它简历</ElDropdownItem>
-          <ElDropdownItem>清除此简历数据</ElDropdownItem>
+          <ElDropdownItem class="focus-visible:outline-none"
+            >其它简历</ElDropdownItem
+          >
+          <ElDropdownItem class="focus-visible:outline-none"
+            >清除此简历数据</ElDropdownItem
+          >
         </ElDropdownMenu>
       </template>
     </ElDropdown>

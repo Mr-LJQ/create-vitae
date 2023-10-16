@@ -1,20 +1,21 @@
 <template>
   <Popover>
-    <PopoverButton icon-name="skin">皮肤设置</PopoverButton>
+    <PopoverButton icon-name="skin">主题设置</PopoverButton>
     <PopoverTransition>
       <PopoverPanel class="w-96">
         <div class="py-2 px-7">
+          <label for="skin-controller-color-picker">主题颜色：</label>
+          <!--此 id 存在相关 id选择器样式（在下面的style中） -->
+          <ElColorPicker
+            id="skin-controller-color-picker"
+            v-model="store.templateColor"
+          />
           <RadioGroup v-model="store.templateColor">
-            <RadioGroupLabel class="mb-1">
-              皮肤颜色：<ElColorPicker
-                id="skin-controller-color-picker"
-                v-model="store.templateColor"
-              />
-            </RadioGroupLabel>
+            <RadioGroupLabel class="mb-1"> </RadioGroupLabel>
             <div class="grid gap-x-2 gap-y-1 grid-cols-8 my-2">
               <RadioGroupOption
                 :key="color"
-                class="outline-none"
+                class="focus-visible:outline-none focus-visible:opacity-70"
                 v-slot="{ checked }"
                 :value="`#${color}`"
                 v-for="color of colors"
@@ -51,3 +52,8 @@ defineOptions({
 });
 const store = useConfigurationStore();
 </script>
+<style>
+#skin-controller-color-picker {
+  outline: none;
+}
+</style>

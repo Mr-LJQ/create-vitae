@@ -4,7 +4,7 @@
     :class="[$style.shadow, isSpread ? $style.spread : $style.shrink]"
   >
     <button
-      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 focus-visible:outline-[#13ce66] outline-none w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-[transform,top] duration-300"
+      class="absolute left-1/2 -top-9 z-[1] hover:-top-10 focus-visible:outline-[#13ce66] focus-visible:outline-none w-20 h-20 pb-8 -ml-10 border-none rounded-full bg-white cursor-pointer transition-[transform,top] duration-300"
       :class="$style.shadow"
       @click="toggleShrinkOrSpread"
     >
@@ -27,7 +27,7 @@
             <Tab
               ref="tabRef"
               :key="ModuleEnum.BasicInfos"
-              class="shrink-0"
+              class="shrink-0 focus-visible:outline-none"
               :class="[
                 $style.tabLabel,
                 selectedIndex === 0 && !transitionRunning ? 'active' : '',
@@ -45,7 +45,7 @@
               @mouseenter="swapPosition(index)"
               @mousedown="mousedown($event, index)"
               :disabled="!openedModules[name]"
-              class="group shrink-0"
+              class="group shrink-0 focus-visible:outline-none"
               :class="[
                 $style.tabLabel,
                 selectedIndex - 1 === index && !transitionRunning
@@ -110,11 +110,17 @@
       <TabPanels
         lazy
         :as="ElScrollbar"
+        data-focus-visible-none
         class="h-[21rem] pt-2 px-6"
         :class="OVERRIDE_ELEMENT_PLUS"
       >
-        <TabPanel class="outline-none" as="template"><BasicInfo /></TabPanel>
-        <TabPanel class="outline-none" :key="name" v-for="name of modulesOrder"
+        <TabPanel class="focus-visible:outline-none" as="template"
+          ><BasicInfo
+        /></TabPanel>
+        <TabPanel
+          class="focus-visible:outline-none"
+          :key="name"
+          v-for="name of modulesOrder"
           ><component
             :is="componentMap[name]"
             :module-name="moduleNameMap[name]"
@@ -131,7 +137,7 @@ import {
   type ComponentPublicInstance,
   watch,
 } from "vue";
-import { useResizeObserver } from "@vueuse/core";
+import { useResizeObserver, useEventListener } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { ElIcon, ElScrollbar, ElMessageBox } from "element-plus";
 import {
@@ -465,6 +471,15 @@ watch(selectedIndex, (index) => {
   }
   //需要禁用 bottomLine 的过渡效果
   bottomLineRef.value!.style.transition = "none";
+  //过渡结束重置 transitionRunning.value 的值，否则会导致一个UI效果BUG
+  useEventListener(
+    tabListNavRef,
+    "transitionend",
+    () => {
+      transitionRunning.value = false;
+    },
+    { once: true },
+  );
 });
 </script>
 

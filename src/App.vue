@@ -17,7 +17,11 @@
         >
           <p>分页行：用于判断PDF分页，应该避免该行遮盖任何内容</p>
           <span>{{ data.index }}/{{ data.pageCount }}</span>
-          <button>调整页数</button>
+          <button
+            title="通过调整间距及字体大小，用尽可能少的页数囊括简历相关信息"
+          >
+            调整页数
+          </button>
         </div>
       </main>
 

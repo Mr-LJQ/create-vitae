@@ -1,5 +1,10 @@
 <template>
-  <div :id="id" :class="OVERRIDE_QUILL_SNOW" ref="editorRef">
+  <div
+    data-focus-visible-none
+    :id="id"
+    :class="OVERRIDE_QUILL_SNOW"
+    ref="editorRef"
+  >
     <QuillEditor
       theme="snow"
       :toolbar="toolbar"
