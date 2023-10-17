@@ -24,7 +24,12 @@
         <EditInput :id="id" placeholder="输入联系电话" v-model="store.phone" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="联系邮箱">
-        <EditInput :id="id" placeholder="输入联系邮箱" v-model="store.email" />
+        <EditInput
+          @blur="emailInputBlur"
+          :id="id"
+          placeholder="输入联系邮箱"
+          v-model="store.email"
+        />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="工作年限">
         <ElSelect :id="id" v-model="store.yearsOfWorking" placeholder="不填">
@@ -191,8 +196,6 @@ function addCustomInfo() {
       ElNotification.warning({
         title: "提醒",
         message: `内容：${key}:${value} 已经添加，重复添加无效。`,
-        position: "top-left",
-        offset: 100,
       });
       return;
     } else {
@@ -256,4 +259,16 @@ function notFuture(date: Date) {
 /**
  * 对用户输入的邮箱进行验证，如果邮箱格式错误，则弹出一个提示（非强制性的）
  */
+
+const emailRule =
+  /^\s*\w+(?:\.{0,1}[\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\.[a-zA-Z]+\s*$/;
+function emailInputBlur() {
+  if (!store.email.trim()) return;
+  const validated = emailRule.test(store.email);
+  if (validated) return;
+  ElNotification.warning({
+    title: "提醒",
+    message: `邮箱：${store.email.trim()} 可能存在错误。`,
+  });
+}
 </script>

@@ -24,7 +24,7 @@
           <span
             :class="[`mr-3 icon_font_template_a icon-template-a-${customIcon}`]"
           /><span :class="$style.name">{{ key }}</span
-          >：{{ value }}
+          >：{{ value.trim() }}
         </dd>
       </dl>
     </div>
@@ -47,7 +47,9 @@ const store = useBasicInfosStore();
 const heightWeight = computed(() => {
   let value = "";
   let name = "";
-  const { height, weight } = store;
+  let { height, weight } = store;
+  height = height.trim();
+  weight = weight.trim();
   if (height && weight) {
     name = "身高体重";
     value = height + "cm/" + weight + "kg";
@@ -110,7 +112,7 @@ const infos = computed(() => {
           value,
         )}, expected type is string.`,
       );
-    return [key, name, value];
+    return [key, name, value.trim()];
   });
   //过滤掉用户没填写的项
   return result.filter((entry) => {
