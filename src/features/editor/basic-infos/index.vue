@@ -21,7 +21,12 @@
         />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="联系电话">
-        <EditInput :id="id" placeholder="输入联系电话" v-model="store.phone" />
+        <EditInput
+          @blur="phoneInputBlur"
+          :id="id"
+          placeholder="输入联系电话"
+          v-model="store.phone"
+        />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="联系邮箱">
         <EditInput
@@ -268,7 +273,22 @@ function emailInputBlur() {
   if (validated) return;
   ElNotification.warning({
     title: "提醒",
-    message: `邮箱：${store.email.trim()} 可能存在错误。`,
+    message: `邮箱：${store.email.trim()} 可能存在错误，请再次检查（如确认无误可忽略该信息）。`,
+  });
+}
+
+/**
+ * 对用户输入的手机号进行验证，如果格式错误，则弹出一个提示（非强制性）
+ */
+const phoneRule = /^1[3-9]\d{9}$/;
+function phoneInputBlur() {
+  const phone = store.phone.trim();
+  if (!phone) return;
+  const validated = phoneRule.test(phone);
+  if (validated) return;
+  ElNotification.warning({
+    title: "提醒",
+    message: `电话：${phone} 可能存在错误，请再次检查（如确认无误可忽略该信息）。`,
   });
 }
 </script>
