@@ -210,6 +210,7 @@ const editTabTitle = (name: ModuleEnum) => {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     inputValue: moduleNameMap.value[name],
+    lockScroll: false, //避免锁定滚动条，因为锁定滚动条会导致布局发生变化，性能与体验都不好
   })
     .then(({ value }) => {
       moduleNameMap.value[name] = value;
