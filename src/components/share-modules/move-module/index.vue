@@ -1,10 +1,6 @@
 <template>
-  <section class="flex flex-row relative">
-    <div
-      class="flex-1"
-      :class="$style.transition"
-      :style="{ maxWidth: showDeleteButton ? 'calc(100% - 128px)' : '100%' }"
-    >
+  <section class="flex flex-col sm:flex-row">
+    <div class="flex-1 transition-all duration-500">
       <ul class="flex flex-wrap justify-between">
         <EditInputItem :label-text="firstItem.label" v-slot="{ id }">
           <EditInput
@@ -48,8 +44,18 @@
         v-model="content"
       />
     </div>
-    <Transition :name="TRANSITION_BUTTONS_SLIDE">
-      <div class="w-32 text-center right" v-if="showDeleteButton">
+    <Transition
+      enter-active-class="transition duration-500 ease-out"
+      enter-from-class="max-sm:translate-y-5 opacity-0 sm:translate-x-32"
+      enter-to-class="max-sm:translate-y-0 opacity-100 sm:translate-x-0"
+      leave-active-class="transition duration-500 ease-in"
+      leave-from-class="max-sm:translate-y-0 opacity-100 sm:translate-x-0"
+      leave-to-class="max-sm:translate-y-5 opacity-0 sm:translate-x-32"
+    >
+      <div
+        class="flex max-sm:justify-center flex-wrap sm:flex-col sm:w-32 items-end"
+        v-if="showDeleteButton"
+      >
         <OperateButton
           v-if="showMoveUpButton"
           :class="BUTTON_MOVE_CLASS"
@@ -78,11 +84,7 @@ import {
   EditInputItem,
   EditInput,
 } from "@/components";
-import {
-  BUTTON_MOVE_CLASS,
-  BUTTON_DELETE_CLASS,
-  TRANSITION_BUTTONS_SLIDE,
-} from "@/styles";
+import { BUTTON_MOVE_CLASS, BUTTON_DELETE_CLASS } from "@/styles";
 import {
   propsType,
   emitsType,
@@ -188,8 +190,3 @@ function focusDatePicker() {
   datePickerRef.value.focus();
 }
 </script>
-<style module>
-.transition {
-  transition: all 0.5s ease;
-}
-</style>
