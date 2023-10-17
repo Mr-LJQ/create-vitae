@@ -10,7 +10,7 @@ export const useConfigurationStore = defineStore("configuration", () => {
   //---字体语言---
   const fontSize = ref<number>(14);
   const language = ref<string>("中文（简）");
-  const fontFamily = ref<string>("微软雅黑");
+  const fontFamily = ref<string>("楷书");
   //---模版颜色---
   const templateColor = ref<string>("#284967");
   //---PDF相关说明---

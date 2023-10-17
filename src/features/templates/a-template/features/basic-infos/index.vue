@@ -4,7 +4,7 @@
       <img class="w-48" :src="store.pictureUrl" alt="照片" />
     </div>
     <div>
-      <dl class="pl-8">
+      <dl class="pl-8 whitespace-nowrap">
         <dt>
           <strong class="text-2xl">{{ store.name }}</strong>
         </dt>
@@ -128,6 +128,6 @@ const infos = computed(() => {
 .name {
   display: inline-block;
   text-align-last: justify;
-  @apply w-14 h-5;
+  @apply w-16 h-5;
 }
 </style>
