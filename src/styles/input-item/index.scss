@@ -1,31 +1,21 @@
 @use "../mixins/mixins.scss" as *;
-@use "../var/var.scss" as *;
 
 @include b("edit-input-item") {
   @include e(li) {
-    min-width: 295px;
-    margin-bottom: 15px;
+    @apply min-w-[18.5rem] mb-4;
   }
   @include e(label) {
     display: inline-block;
-    box-sizing: border-box;
     vertical-align: top;
-    min-width: 65px;
-    line-height: $item_height;
     text-align: left;
-    padding-right: 10px;
+    @apply pr-3 leading-8 min-w-[4rem];
   }
   @include e(input) {
-    box-sizing: border-box;
-    padding: 0 10px;
     outline: none;
-    width: 180px;
     background-color: white;
     border: 1px solid #dcdfe6;
-    border-radius: 3px;
-    height: $item_height;
-    line-height: $item_height;
     color: #606266;
+    @apply h-8 leading-8 rounded w-[11.25rem] px-2;
     &:hover {
       border-color: #c0c4cc;
     }
@@ -33,10 +23,10 @@
       border-color: #409eff;
     }
     &.w60 {
-      width: 60px;
+      @apply w-[3.75rem];
     }
     &.ml20 {
-      margin-left: 20px;
+      @apply mt-5;
     }
   }
 }

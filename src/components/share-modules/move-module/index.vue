@@ -25,7 +25,7 @@
           <el-date-picker
             :id="id"
             ref="datePickerRef"
-            style="--el-date-editor-width: 220px"
+            style="--el-date-editor-width: 13.75rem"
             :default-value="defaultTimeValue"
             unlink-panels
             v-model="timeRange"

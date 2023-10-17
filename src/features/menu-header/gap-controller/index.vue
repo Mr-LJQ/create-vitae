@@ -14,7 +14,7 @@
               data-focus-visible-none
               :id="`${PREFIX_ID}-${name}`"
               class="w-32 focus-visible:outline-none"
-              style="--el-slider-button-size: 14px"
+              style="--el-slider-button-size: 1rem"
               v-model="store[name]"
               :min="min"
               :max="max"

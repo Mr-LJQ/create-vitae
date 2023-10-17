@@ -72,11 +72,11 @@ const { addTag, deleteTag, hasTag } = store;
 .proficiency :deep(.el-input) {
   --el-input-bg-color: #fff;
   --el-input-border-color: #eee;
-  --el-input-width: 80px;
+  --el-input-width: 5rem;
 }
 .presentation :deep(.el-input) {
   --el-input-bg-color: #fff;
   --el-input-border-color: #eee;
-  --el-input-width: 100px;
+  --el-input-width: 6.25rem;
 }
 </style>

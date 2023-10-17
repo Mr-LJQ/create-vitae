@@ -252,4 +252,8 @@ function handleFileChange(event: Event) {
 function notFuture(date: Date) {
   return new Date() < date;
 }
+
+/**
+ * 对用户输入的邮箱进行验证，如果邮箱格式错误，则弹出一个提示（非强制性的）
+ */
 </script>

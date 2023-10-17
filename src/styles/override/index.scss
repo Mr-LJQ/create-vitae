@@ -1,5 +1,4 @@
 @use "../mixins/mixins.scss" as *;
-@use "../var/var.scss" as *;
 
 /*
   覆盖 element-plus 默认样式
@@ -8,11 +7,11 @@
   @include e("element") {
     @include m("plus") {
       .el-input {
-        --el-input-width: 180px;
-        --el-date-editor-width: 100px;
+        --el-input-width: 11.25rem;
+        --el-date-editor-width: 6.25rem;
       }
       .el-checkbox {
-        margin-left: 8px;
+        margin-left: 0.5rem;
         vertical-align: middle;
       }
     }
@@ -26,13 +25,11 @@
 @include b("override") {
   @include e("quill") {
     @include m("snow") {
-      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      margin-bottom: 10px;
-      border-radius: 10px;
       border: 1px solid #ddd;
       overflow: hidden; //用于避免内部元素覆盖圆角边框
+      @apply mb-3 rounded-xl;
       &:hover {
         border-color: #c0c4cc;
       }
@@ -52,7 +49,7 @@
       }
       .ql-editor {
         border-top: 1px solid #ddd; //为toolbar 与 editor 之间添加上边界，以更好的对它们进行区分
-        min-height: 130px;
+        @apply min-h-[8rem];
         &.ql-blank::before {
           font-style: normal; //默认样式的 placeholder 部分是倾斜的，覆盖它，使其不再倾斜
         }
@@ -66,13 +63,13 @@
         &.ql-toolbar {
           border: none;
           background-color: #f8f8f8;
-          padding: 4px 8px;
+          @apply py-1 px-2;
           &:after {
             color: #999;
-            padding: 0 9px;
             display: inline-block;
             vertical-align: middle;
             content: "功能提示：使用工具栏之前，需要先选中输入框文字";
+            @apply px-2; /* 为了使其换行后，与上一行对齐 */
           }
         }
         .ql-picker.ql-size {
