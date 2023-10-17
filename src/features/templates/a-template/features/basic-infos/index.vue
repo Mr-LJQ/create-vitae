@@ -1,7 +1,7 @@
 <template>
   <section class="flex">
-    <div v-if="store.showPhoto">
-      <img class="w-48" :src="store.pictureUrl" alt="照片" />
+    <div class="w-32 shrink-0" v-if="store.showPhoto">
+      <img :src="store.pictureUrl" alt="照片" />
     </div>
     <div>
       <dl class="pl-8 whitespace-nowrap">

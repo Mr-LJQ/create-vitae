@@ -47,7 +47,7 @@
         </ElSelect>
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="照片设置">
-        <FileButton @change="handleFileChange" accept="image/*" />
+        <FileButton @change="handleFileChange" />
         <ElCheckbox :id="id" v-model="store.showPhoto" label="展示照片" />
       </EditInputItem>
       <EditInputItem v-slot="{ id }" label-text="性别">
@@ -157,7 +157,6 @@ import {
   ElNotification,
 } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-
 import { useBasicInfosStore } from "@/stores";
 import { BORDER_B_DASHED, GRID_AUTO_CENTER } from "@/styles";
 import { EditInputItem, EditInput, FileButton } from "@/components";
@@ -179,7 +178,6 @@ const { additionalInfos } = storeToRefs(store);
 /**
  * 自定义项相关逻辑
  */
-
 const customKeyRef = ref("");
 const customValueRef = ref("");
 const customKeyElementRef = ref<HTMLInputElement | null>(null);
@@ -247,11 +245,8 @@ const birth = computed({
  * 图片上传相关逻辑
  */
 
-function handleFileChange(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-  if (file == null) return;
-  store.picture = file;
+function handleFileChange(data: Blob) {
+  store.picture = data;
 }
 
 /**

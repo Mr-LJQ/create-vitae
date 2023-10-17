@@ -21,7 +21,8 @@
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.6",
     "pinia-plugin-persistedstate-2": "^2.0.14",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-cropper": "^1.1.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",

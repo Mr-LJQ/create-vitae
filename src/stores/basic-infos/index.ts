@@ -1,4 +1,4 @@
-import { computed, onUnmounted, onMounted, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 import { defineStore } from "pinia";
 import type { StoreState } from "pinia";
 import figure from "@/assets/images/figure.svg";
@@ -11,7 +11,7 @@ export const useBasicInfosStore = defineStore(
     const birth = ref<Date | null>(null); //值为 null 是可能的，例如：当用户按下 clear 时
     const phone = ref("");
     const email = ref("");
-    const picture = ref<File>();
+    const picture = ref<Blob>();
     const yearsOfWorking = ref("");
     const gender = ref("");
     const maritalStatus = ref("");
@@ -40,11 +40,6 @@ export const useBasicInfosStore = defineStore(
         return pictureObjectURL;
       }
       return figure;
-    });
-    onMounted(() => {
-      if (picture.value) {
-        pictureObjectURL = URL.createObjectURL(picture.value);
-      }
     });
     onUnmounted(() => {
       pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);

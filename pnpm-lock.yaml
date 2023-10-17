@@ -38,6 +38,9 @@ dependencies:
   vue:
     specifier: ^3.3.4
     version: registry.npmmirror.com/vue@3.3.4
+  vue-cropper:
+    specifier: ^1.1.1
+    version: registry.npmmirror.com/vue-cropper@1.1.1
 
 devDependencies:
   "@commitlint/cli":
@@ -7619,6 +7622,17 @@ packages:
       - supports-color
       - terser
     dev: true
+
+  registry.npmmirror.com/vue-cropper@1.1.1:
+    resolution:
+      {
+        integrity: sha512-WsqKMpaBf9Osi1LQlE/5AKdD0nHWOy1asLXocaG8NomOWO07jiZi968+/PbMmnD0QbPJOumDQaGuGa13qys85A==,
+        registry: https://registry.npm.taobao.org/,
+        tarball: https://registry.npmmirror.com/vue-cropper/-/vue-cropper-1.1.1.tgz,
+      }
+    name: vue-cropper
+    version: 1.1.1
+    dev: false
 
   registry.npmmirror.com/vue-demi@0.14.6(vue@3.3.4):
     resolution:

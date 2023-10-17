@@ -1,9 +1,9 @@
 @font-face {
   font-family: "icon_font_common"; /* Project id 4265679 */
   src:
-    url("iconfont.woff2?t=1695537183238") format("woff2"),
-    url("iconfont.woff?t=1695537183238") format("woff"),
-    url("iconfont.ttf?t=1695537183238") format("truetype");
+    url("iconfont.woff2?t=1697554355582") format("woff2"),
+    url("iconfont.woff?t=1697554355582") format("woff"),
+    url("iconfont.ttf?t=1697554355582") format("truetype");
 }
 
 .icon_font_common {
@@ -12,6 +12,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-common-dextrorotation:before {
+  content: "\e720";
+}
+
+.icon-common-levorotation:before {
+  content: "\e722";
+}
+
+.icon-common-json:before {
+  content: "\e618";
+}
+
+.icon-common-pdf:before {
+  content: "\e619";
 }
 
 .icon-common-download:before {
