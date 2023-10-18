@@ -5,10 +5,16 @@ import type { StoreState } from "pinia";
 
 const { createAModuleData, persistedState } = new AModuleStoreHandler("");
 
+export const educationalBackgroundDefault = {
+  get dataList() {
+    return [createAModuleData()];
+  },
+};
+
 export const useEducationalBackgroundStore = defineStore(
   "educational-background",
   () => {
-    const dataList = ref([createAModuleData()]);
+    const dataList = ref(educationalBackgroundDefault.dataList);
 
     function moveUpItem(index: number) {
       moveOneStep(index, -1, unref(dataList));
@@ -23,11 +29,11 @@ export const useEducationalBackgroundStore = defineStore(
       unref(dataList).push(createAModuleData());
     }
     return {
+      dataList,
       deleteItem,
       addNewItem,
       moveUpItem,
       moveDownItem,
-      dataList,
     };
   },
   { persistedState },

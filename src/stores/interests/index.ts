@@ -3,11 +3,20 @@ import { defineStore } from "pinia";
 import { serialize } from "@/utils";
 import { Delta } from "@vueup/vue-quill";
 
+export const interestsStoreDefault = {
+  get content() {
+    return new Delta();
+  },
+  get tags() {
+    return new Set() as Set<string>;
+  },
+};
+
 export const useInterestsStore = defineStore(
   "interests",
   () => {
-    const content = ref(new Delta());
-    const tags = ref<Set<string>>(new Set());
+    const content = ref(interestsStoreDefault.content);
+    const tags = ref<Set<string>>(interestsStoreDefault.tags);
     function addTag(tag: string) {
       return tags.value.add(tag);
     }

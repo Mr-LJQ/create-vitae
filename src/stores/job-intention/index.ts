@@ -21,10 +21,16 @@ function createItem(): S {
   };
 }
 
+export const jobIntentionDefault = {
+  get jobIntentions() {
+    return [createItem()];
+  },
+};
+
 export const useJobIntentionStore = defineStore(
   "job-intention",
   () => {
-    const jobIntentions = ref([createItem()]);
+    const jobIntentions = ref(jobIntentionDefault.jobIntentions);
     const appendJobIntention = () => {
       jobIntentions.value.push(createItem());
     };

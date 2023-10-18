@@ -4,10 +4,16 @@ import { moveOneStep, AModuleStoreHandler } from "@/utils";
 
 const { createAModuleData, persistedState } = new AModuleStoreHandler();
 
+export const campusExperienceDefault = {
+  get dataList() {
+    return [createAModuleData()];
+  },
+};
+
 export const useCampusExperienceStore = defineStore(
   "campus-experience",
   () => {
-    const dataList = ref([createAModuleData()]);
+    const dataList = ref(campusExperienceDefault.dataList);
 
     function moveUpItem(index: number) {
       moveOneStep(index, -1, unref(dataList));

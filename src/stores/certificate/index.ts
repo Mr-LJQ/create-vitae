@@ -2,12 +2,19 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { serialize } from "@/utils";
 import { Delta } from "@vueup/vue-quill";
-
+export const certificateDefault = {
+  get content() {
+    return new Delta();
+  },
+  get tags() {
+    return new Set() as Set<string>;
+  },
+};
 export const useCertificateStore = defineStore(
   "certificate",
   () => {
-    const content = ref(new Delta());
-    const tags = ref<Set<string>>(new Set());
+    const content = ref(certificateDefault.content);
+    const tags = ref<Set<string>>(certificateDefault.tags);
     function addTag(tag: string) {
       return tags.value.add(tag);
     }

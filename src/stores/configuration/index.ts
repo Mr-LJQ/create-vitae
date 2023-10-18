@@ -2,17 +2,26 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { StoreState } from "pinia";
 
+export const configurationDefault = {
+  lineGap: 0.7,
+  moduleGap: 20,
+  templateEdgeGap: 30,
+  showPDFExplain: true,
+  fontSize: 14,
+  fontFamily: "楷书",
+  templateColor: "#284967",
+};
+
 export const useConfigurationStore = defineStore("configuration", () => {
   //---间距---
-  const moduleGap = ref(20);
-  const lineGap = ref(0.7);
-  const templateEdgeGap = ref(30);
+  const moduleGap = ref(configurationDefault.moduleGap);
+  const lineGap = ref(configurationDefault.lineGap);
+  const templateEdgeGap = ref(configurationDefault.templateEdgeGap);
   //---字体语言---
-  const fontSize = ref<number>(14);
-  const language = ref<string>("中文（简）");
-  const fontFamily = ref<string>("楷书");
+  const fontSize = ref<number>(configurationDefault.fontSize);
+  const fontFamily = ref<string>(configurationDefault.fontFamily);
   //---模版颜色---
-  const templateColor = ref<string>("#284967");
+  const templateColor = ref<string>(configurationDefault.templateColor);
   //---PDF相关说明---
   const showPDFExplain = ref(true);
   return {
@@ -21,7 +30,6 @@ export const useConfigurationStore = defineStore("configuration", () => {
     templateEdgeGap,
     showPDFExplain,
     fontSize,
-    language,
     fontFamily,
     templateColor,
   };
@@ -36,5 +44,5 @@ export type GapControllerType = Pick<
 >;
 export type TextControllerType = Pick<
   ConfigurationStateType,
-  "fontSize" | "fontFamily" | "language"
+  "fontSize" | "fontFamily"
 >;

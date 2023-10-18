@@ -2,10 +2,16 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { Delta } from "@vueup/vue-quill";
 
+export const customModuleDefault = {
+  get editorContent() {
+    return new Delta();
+  },
+};
+
 export const useCustomModuleStore = defineStore(
   "custom-module",
   () => {
-    const editorContent = ref(new Delta());
+    const editorContent = ref(customModuleDefault.editorContent);
     return {
       editorContent,
     };

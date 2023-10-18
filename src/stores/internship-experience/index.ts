@@ -3,10 +3,16 @@ import { defineStore } from "pinia";
 import { moveOneStep, AModuleStoreHandler } from "@/utils";
 const { createAModuleData, persistedState } = new AModuleStoreHandler();
 
+export const internshipExperienceDefault = {
+  get dataList() {
+    return [createAModuleData()];
+  },
+};
+
 export const useInternshipExperienceStore = defineStore(
   "internship-experience",
   () => {
-    const dataList = ref([createAModuleData()]);
+    const dataList = ref(internshipExperienceDefault.dataList);
 
     function moveUpItem(index: number) {
       moveOneStep(index, -1, dataList.value);

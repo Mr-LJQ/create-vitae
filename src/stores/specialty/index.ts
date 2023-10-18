@@ -3,10 +3,26 @@ import { defineStore } from "pinia";
 import { Delta } from "@vueup/vue-quill";
 import { serialize } from "@/utils";
 import type { Proficiency, Presentation } from "@/types";
+
+export const specialtyDefault = {
+  get content() {
+    return new Delta();
+  },
+  get tags() {
+    return new Map() as Map<
+      string,
+      {
+        proficiency: Proficiency[number];
+        presentation: Presentation[number];
+      }
+    >;
+  },
+};
+
 export const useSpecialtyStore = defineStore(
   "specialty",
   () => {
-    const content = ref(new Delta());
+    const content = ref(specialtyDefault.content);
     const tags = ref<
       Map<
         string,
@@ -15,7 +31,7 @@ export const useSpecialtyStore = defineStore(
           presentation: Presentation[number];
         }
       >
-    >(new Map());
+    >(specialtyDefault.tags);
     function addTag(tag: string) {
       return tags.value.set(tag, {
         proficiency: "一般",

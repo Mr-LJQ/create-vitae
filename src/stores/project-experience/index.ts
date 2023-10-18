@@ -4,10 +4,16 @@ import { moveOneStep, AModuleStoreHandler } from "@/utils";
 
 const { createAModuleData, persistedState } = new AModuleStoreHandler();
 
+export const projectExperienceDefault = {
+  get dataList() {
+    return [createAModuleData()];
+  },
+};
+
 export const useProjectExperienceStore = defineStore(
   "project-experience",
   () => {
-    const dataList = ref([createAModuleData()]);
+    const dataList = ref(projectExperienceDefault.dataList);
 
     function moveUpItem(index: number) {
       moveOneStep(index, -1, dataList.value);

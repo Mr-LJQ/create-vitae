@@ -26,11 +26,6 @@ export const options: OptionType[] = [
     ],
   },
   {
-    title: "语言",
-    name: "language",
-    options: ["中文（简）"],
-  },
-  {
     title: "字体大小",
     name: "fontSize",
     options: [12, 13, 14, 15, 16],

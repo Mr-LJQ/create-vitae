@@ -1,6 +1,6 @@
 <template>
   <Popover>
-    <PopoverButton icon-name="font">字体语言</PopoverButton>
+    <PopoverButton icon-name="font">字体</PopoverButton>
     <PopoverTransition>
       <PopoverPanel class="w-64">
         <div class="pt-5 px-7">

@@ -1,28 +1,50 @@
 import { computed, onUnmounted, ref } from "vue";
-import { defineStore } from "pinia";
-import type { StoreState } from "pinia";
+import { defineStore, type StoreState } from "pinia";
 import figure from "@/assets/images/figure.svg";
 type AdditionalInfos = { [key in string]: string };
+
+export const basicInfosDefault = {
+  name: "",
+  birth: null,
+  phone: "",
+  email: "",
+  picture: void 0,
+  yearsOfWorking: "",
+  gender: "",
+  maritalStatus: "",
+  height: "",
+  weight: "",
+  nation: "",
+  nativePlace: "",
+  politicsStatus: "",
+  convertToAge: true,
+  showPhoto: true,
+  get additionalInfos() {
+    return {};
+  },
+};
 
 export const useBasicInfosStore = defineStore(
   "BasicInfos",
   () => {
-    const name = ref("");
-    const birth = ref<Date | null>(null); //值为 null 是可能的，例如：当用户按下 clear 时
-    const phone = ref("");
-    const email = ref("");
+    const name = ref(basicInfosDefault.name);
+    const birth = ref<Date | null>(basicInfosDefault.birth); //值为 null 是可能的，例如：当用户按下 clear 时
+    const phone = ref(basicInfosDefault.phone);
+    const email = ref(basicInfosDefault.email);
     const picture = ref<Blob>();
-    const yearsOfWorking = ref("");
-    const gender = ref("");
-    const maritalStatus = ref("");
-    const height = ref("");
-    const weight = ref("");
-    const nation = ref("");
-    const nativePlace = ref("");
-    const politicsStatus = ref("");
-    const convertToAge = ref(false);
-    const showPhoto = ref(false);
-    const additionalInfos = ref<AdditionalInfos>({});
+    const yearsOfWorking = ref(basicInfosDefault.yearsOfWorking);
+    const gender = ref(basicInfosDefault.gender);
+    const maritalStatus = ref(basicInfosDefault.maritalStatus);
+    const height = ref(basicInfosDefault.height);
+    const weight = ref(basicInfosDefault.weight);
+    const nation = ref(basicInfosDefault.nation);
+    const nativePlace = ref(basicInfosDefault.nativePlace);
+    const politicsStatus = ref(basicInfosDefault.politicsStatus);
+    const convertToAge = ref(basicInfosDefault.convertToAge);
+    const showPhoto = ref(basicInfosDefault.showPhoto);
+    const additionalInfos = ref<AdditionalInfos>(
+      basicInfosDefault.additionalInfos,
+    );
     function addInfo(key: string, value: string) {
       additionalInfos.value[key] = value;
     }
