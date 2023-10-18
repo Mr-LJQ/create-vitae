@@ -30,10 +30,10 @@
     </PopoverTransition>
   </Popover>
   <ExplainPDF
-    v-if="store.promptPDFInfo"
+    v-if="store.showPDFExplain"
     v-model="isOpenExplainPDF"
-    :toggle-prompt-pdf-info="togglePromptPDFInfo"
-    :handle-printer="handlePrinter"
+    :openPrintPage="openPrintPage"
+    @whetherShowPDFExplain="whetherShowPDFExplain"
   />
 </template>
 <script lang="ts" setup>
@@ -56,10 +56,10 @@ const store = useConfigurationStore();
 const isOpenExplainPDF = ref(false);
 
 function handleClickPDF() {
-  if (store.promptPDFInfo) {
+  if (store.showPDFExplain) {
     isOpenExplainPDF.value = true;
   } else {
-    handlePrinter();
+    openPrintPage();
   }
 }
 const date = [
@@ -79,11 +79,11 @@ const date = [
   },
 ];
 
-function togglePromptPDFInfo(value: boolean) {
-  store.promptPDFInfo = value;
+function whetherShowPDFExplain(value: boolean) {
+  store.showPDFExplain = value;
 }
 
-function handlePrinter() {
+function openPrintPage() {
   window.print();
 }
 </script>

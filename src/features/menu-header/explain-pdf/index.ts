@@ -5,16 +5,13 @@ export const propsType = {
     type: Boolean,
     required: true,
   },
-  handlePrinter: {
-    type: Function as PropType<(payload: MouseEvent) => void>,
-    required: true,
-  },
-  togglePromptPdfInfo: {
-    type: Function as PropType<(payload: boolean) => void>,
+  openPrintPage: {
+    type: Function as PropType<() => void>,
     required: true,
   },
 } as const;
 
 export const emitsType = {
   [UPDATE_MODEL_VALUE]: (isOpen: boolean) => typeof isOpen === "boolean",
+  whetherShowPDFExplain: (value: boolean) => typeof value === "boolean",
 };

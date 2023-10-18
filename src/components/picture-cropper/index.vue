@@ -1,10 +1,11 @@
 <template>
   <ElDialog
-    v-model="isOpen"
     width="29rem"
+    v-model="isOpen"
     destroy-on-close
     :lock-scroll="false"
     :append-to-body="true"
+    data-focus-visible-none
   >
     <template #header>
       <h3>修剪图片</h3>

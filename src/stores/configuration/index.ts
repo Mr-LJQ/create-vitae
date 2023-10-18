@@ -14,12 +14,12 @@ export const useConfigurationStore = defineStore("configuration", () => {
   //---模版颜色---
   const templateColor = ref<string>("#284967");
   //---PDF相关说明---
-  const promptPDFInfo = ref(true);
+  const showPDFExplain = ref(true);
   return {
     lineGap,
     moduleGap,
     templateEdgeGap,
-    promptPDFInfo,
+    showPDFExplain,
     fontSize,
     language,
     fontFamily,
