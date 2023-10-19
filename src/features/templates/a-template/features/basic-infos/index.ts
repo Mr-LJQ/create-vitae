@@ -39,11 +39,11 @@ export const iconMap: KeysType = {
   birth: "age",
   phone: "phone",
   email: "email",
-  yearsOfWorking: "working_years",
+  yearsOfWorking: "working-years",
   maritalStatus: "matrimony",
   gender: "gender",
   nation: "nation",
-  nativePlace: "native_place",
+  nativePlace: "native-place",
   politicsStatus: "politics",
   heightWeight: "measurements",
 };

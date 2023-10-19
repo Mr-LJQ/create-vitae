@@ -11,7 +11,7 @@
         <dd :key="key" :class="$style.dd" v-for="[key, name, value] of infos">
           <span
             :class="[
-              `mr-3 align-top icon_font_template_a icon-template-a-${iconMap[key]}`,
+              `mr-3 align-top icon-font-template-a icon-template-a-${iconMap[key]}`,
             ]"
           /><span :class="$style.name">{{ name }}</span
           >：{{ value }}
@@ -22,7 +22,7 @@
           v-for="(value, key) of store.additionalInfos"
         >
           <span
-            :class="[`mr-3 icon_font_template_a icon-template-a-${customIcon}`]"
+            :class="[`mr-3 icon-font-template-a icon-template-a-${customIcon}`]"
           /><span :class="$style.name">{{ key }}</span
           >：{{ value.trim() }}
         </dd>

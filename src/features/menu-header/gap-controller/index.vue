@@ -1,6 +1,6 @@
 <template>
   <Popover>
-    <PopoverButton icon-name="line_padding">设置间距</PopoverButton>
+    <PopoverButton icon-name="line-padding">设置间距</PopoverButton>
     <PopoverTransition>
       <PopoverPanel class="w-96">
         <div class="p-3">

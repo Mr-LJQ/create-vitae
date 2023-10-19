@@ -1,17 +1,25 @@
 @font-face {
-  font-family: "icon_font_common"; /* Project id 4265679 */
+  font-family: "icon-font-common"; /* Project id 4265679 */
   src:
-    url("iconfont.woff2?t=1697554355582") format("woff2"),
-    url("iconfont.woff?t=1697554355582") format("woff"),
-    url("iconfont.ttf?t=1697554355582") format("truetype");
+    url("iconfont.woff2?t=1697721048879") format("woff2"),
+    url("iconfont.woff?t=1697721048879") format("woff"),
+    url("iconfont.ttf?t=1697721048879") format("truetype");
 }
 
-.icon_font_common {
-  font-family: "icon_font_common" !important;
+.icon-font-common {
+  font-family: "icon-font-common" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-common-template:before {
+  content: "\e60e";
+}
+
+.icon-common-cover:before {
+  content: "\ea9e";
 }
 
 .icon-common-dextrorotation:before {
@@ -22,28 +30,12 @@
   content: "\e722";
 }
 
-.icon-common-json:before {
-  content: "\e618";
-}
-
-.icon-common-pdf:before {
-  content: "\e619";
-}
-
 .icon-common-download:before {
   content: "\e613";
 }
 
-.icon-common-upload:before {
-  content: "\e650";
-}
-
 .icon-common-envelope:before {
   content: "\e69e";
-}
-
-.icon-common-cover:before {
-  content: "\e62c";
 }
 
 .icon-common-user:before {
@@ -58,11 +50,7 @@
   content: "\e654";
 }
 
-.icon-common-template:before {
-  content: "\e60d";
-}
-
-.icon-common-line_padding:before {
+.icon-common-line-padding:before {
   content: "\e622";
 }
 

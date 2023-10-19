@@ -1,20 +1,20 @@
 @font-face {
-  font-family: "icon_font_template_a"; /* Project id 4244010 */
+  font-family: "icon-font-template-a"; /* Project id 4244010 */
   src:
-    url("iconfont.woff2?t=1695474422706") format("woff2"),
-    url("iconfont.woff?t=1695474422706") format("woff"),
-    url("iconfont.ttf?t=1695474422706") format("truetype");
+    url("iconfont.woff2?t=1697720996378") format("woff2"),
+    url("iconfont.woff?t=1697720996378") format("woff"),
+    url("iconfont.ttf?t=1697720996378") format("truetype");
 }
 
-.icon_font_template_a {
-  font-family: "icon_font_template_a" !important;
+.icon-font-template-a {
+  font-family: "icon-font-template-a" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-template-a-native_place:before {
+.icon-template-a-native-place:before {
   content: "\e681";
 }
 
@@ -46,7 +46,7 @@
   content: "\e64a";
 }
 
-.icon-template-a-working_years:before {
+.icon-template-a-working-years:before {
   content: "\e60b";
 }
 

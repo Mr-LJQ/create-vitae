@@ -38,7 +38,7 @@
     </ul>
     <ElDropdown class="bg-[#13d8a7] rounded-full">
       <span
-        class="text-5xl text-white overflow-hidden rounded-full focus-visible:outline-none focus-visible:outline-[#13a783] icon_font_common icon-common-user"
+        class="text-5xl text-white overflow-hidden rounded-full focus-visible:outline-none focus-visible:outline-[#13a783] icon-font-common icon-common-user"
       ></span>
       <template #dropdown>
         <ElDropdownMenu>
