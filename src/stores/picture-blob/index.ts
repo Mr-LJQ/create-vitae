@@ -36,7 +36,9 @@ export const usePictureBlobStore = defineStore(
          *    意味着不单单此处会出现问题，整个项目都会因为低版本浏览器而出现各种问题，
          *      因此，此处不对该问题进行处理。(该问题是：localStorage 不支持对 Blob 数据的直接缓存)
          */
-        return state;
+        return {
+          picture: state.picture,
+        };
       },
       deserialize(data) {
         return data;

@@ -111,8 +111,7 @@ export async function uploadJSON(file: File) {
     const { readStorageValue } = item.$persistedState;
     const id = item.$id;
     if (id === "picture-blob") {
-      const parsedData = JSON.parse(data[id]);
-      const blob = JSONToBlob(parsedData);
+      const blob = transformJSONToBlob(data[id]);
       return item.$patch((state) => {
         state.picture = blob;
       });
@@ -152,7 +151,7 @@ export async function transformBlobToJSON(blob: Blob | null) {
   return jsonData;
 }
 
-export function JSONToBlob(jsonData: string | null) {
+export function transformJSONToBlob(jsonData: string | null) {
   if (jsonData == null) return null;
   const parsedData = JSON.parse(jsonData) as JSONData;
   const base64Data = parsedData.blobData;
