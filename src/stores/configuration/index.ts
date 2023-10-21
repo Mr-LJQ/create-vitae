@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import type { StoreState } from "pinia";
 
 export const configurationDefault = {
   lineGap: 0.7,
@@ -35,9 +34,10 @@ export const useConfigurationStore = defineStore("configuration", () => {
   };
 });
 
-type ConfigurationStateType = StoreState<
-  ReturnType<typeof useConfigurationStore>
->;
+type ConfigurationStateType = ReturnType<
+  typeof useConfigurationStore
+>["$state"];
+
 export type GapControllerType = Pick<
   ConfigurationStateType,
   "lineGap" | "moduleGap" | "templateEdgeGap"

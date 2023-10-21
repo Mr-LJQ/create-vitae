@@ -1,6 +1,5 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import type { StoreState } from "pinia";
 
 interface S {
   id: number;
@@ -62,6 +61,6 @@ export const useJobIntentionStore = defineStore(
   },
 );
 
-export type JobIntentionStoreState = StoreState<
-  ReturnType<typeof useJobIntentionStore>
->;
+export type JobIntentionStoreState = ReturnType<
+  typeof useJobIntentionStore
+>["$state"];

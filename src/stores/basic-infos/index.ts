@@ -23,7 +23,7 @@ export const basicInfosDefault = {
 };
 
 export const useBasicInfosStore = defineStore(
-  "BasicInfos",
+  "basic-infos",
   () => {
     const name = ref(basicInfosDefault.name);
     const birth = ref<Date | null>(basicInfosDefault.birth); //值为 null 是可能的，例如：当用户按下 clear 时
@@ -75,8 +75,8 @@ export const useBasicInfosStore = defineStore(
   },
   {
     persistedState: {
-      deserialize(data) {
-        const state = JSON.parse(data);
+      deserialize(jsonData) {
+        const state = JSON.parse(jsonData);
         if (state.birth) {
           state.birth = new Date(state.birth);
         }

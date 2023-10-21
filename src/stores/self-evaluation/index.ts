@@ -18,10 +18,10 @@ export const useSelfEvaluationStore = defineStore(
   },
   {
     persistedState: {
-      deserialize(state) {
-        const _state = JSON.parse(state);
-        _state.editorContent = new Delta(_state.editorContent);
-        return _state;
+      deserialize(jsonData) {
+        const state = JSON.parse(jsonData);
+        state.editorContent = new Delta(state.editorContent);
+        return state;
       },
     },
   },

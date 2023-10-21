@@ -1,7 +1,6 @@
 import { ref, unref } from "vue";
 import { defineStore } from "pinia";
 import { moveOneStep, AModuleStoreHandler } from "@/utils";
-import type { StoreState } from "pinia";
 
 const { createAModuleData, persistedState } = new AModuleStoreHandler("");
 
@@ -39,6 +38,6 @@ export const useEducationalBackgroundStore = defineStore(
   { persistedState },
 );
 
-export type EducationalBackgroundStoreState = StoreState<
-  ReturnType<typeof useEducationalBackgroundStore>
->;
+export type EducationalBackgroundStoreState = ReturnType<
+  typeof useEducationalBackgroundStore
+>["$state"];

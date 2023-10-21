@@ -142,7 +142,7 @@ export function createPersistedStatePlugin<S extends StateTree = StateTree>(
       }
     }
 
-    function writeStorageValue(state: S) {
+    function writeStorageValue(state: StateTree) {
       return serialize(state);
     }
 

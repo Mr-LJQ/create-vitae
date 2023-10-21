@@ -100,7 +100,7 @@ declare module "pinia" {
        * 这是用于解析缓存到本地的数据的方法
        */
       readStorageValue: (value: unknown) => any;
-      writeStorageValue: (state: S) => any;
+      writeStorageValue: (state: StateTree) => any;
     };
   }
 }

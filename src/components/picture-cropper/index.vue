@@ -23,13 +23,13 @@
         <div class="mt-2 flex justify-between">
           <PrimaryButton @click="dextrorotation">
             <span
-              :class="`icon_font_common icon-common-dextrorotation`"
+              :class="`icon-font-common icon-common-dextrorotation`"
               class="block"
             ></span>
           </PrimaryButton>
           <PrimaryButton @click="levorotation">
             <span
-              :class="`icon_font_common icon-common-levorotation`"
+              :class="`icon-font-common icon-common-levorotation`"
               class="block"
             ></span>
           </PrimaryButton>

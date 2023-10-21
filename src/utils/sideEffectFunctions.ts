@@ -81,16 +81,16 @@ export class AModuleStoreHandler<S extends { dataList: AModuleData[] }> {
       return value;
     });
   };
-  deserialize = (state: string) => {
-    const _state = JSON.parse(state) as S;
-    _state.dataList.forEach((data) => {
+  deserialize = (jsonData: string) => {
+    const state = JSON.parse(jsonData) as S;
+    state.dataList.forEach((data) => {
       data.id = this.id++; //重新添加上 Id
       data.editorContent = new Delta(data.editorContent);
       data.timeRange =
         data.timeRange &&
         (data.timeRange.map((date) => new Date(date)) as [Date, Date]);
     });
-    return _state;
+    return state;
   };
 }
 

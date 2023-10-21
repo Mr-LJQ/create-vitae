@@ -37,11 +37,11 @@ export const useInterestsStore = defineStore(
   {
     persistedState: {
       serialize,
-      deserialize(state: string) {
-        const _state = JSON.parse(state);
-        _state.content = new Delta(_state.content);
-        _state.tags = new Set(_state.tags);
-        return _state;
+      deserialize(jsonData: string) {
+        const state = JSON.parse(jsonData);
+        state.content = new Delta(state.content);
+        state.tags = new Set(state.tags);
+        return state;
       },
     },
   },

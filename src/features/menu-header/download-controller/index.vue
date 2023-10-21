@@ -25,6 +25,13 @@
               </p>
             </div>
           </a>
+          <input
+            hidden
+            type="file"
+            ref="fileInputRef"
+            accept="application/json"
+            @change="handleUploadJSON"
+          />
         </div>
       </PopoverPanel>
     </PopoverTransition>
@@ -40,6 +47,7 @@
 import { ref } from "vue";
 import jsonIcon from "@/assets/images/json.svg";
 import pdfIcon from "@/assets/images/pdf.svg";
+import uploadIcon from "@/assets/images/upload.svg";
 import {
   PopoverButton,
   PopoverTransition,
@@ -47,6 +55,7 @@ import {
   PopoverPanel,
 } from "@/components";
 import { useConfigurationStore } from "@/stores";
+import { downloadJSON, uploadJSON } from "./utils";
 import ExplainPDF from "../explain-pdf/index.vue";
 defineOptions({
   name: "DownLoadController",
@@ -62,6 +71,8 @@ function handleClickPDF() {
     openPrintPage();
   }
 }
+
+const fileInputRef = ref<HTMLInputElement | null>(null);
 const date = [
   {
     href: "##",
@@ -75,9 +86,25 @@ const date = [
     icon: jsonIcon,
     name: "下载为JSON",
     description: "将简历相关数据提取为JSON格式下载到本地",
-    handleClick: () => {},
+    handleClick: downloadJSON,
+  },
+  {
+    href: "##",
+    icon: uploadIcon,
+    name: "加载本地JSON数据",
+    handleClick: () => {
+      fileInputRef.value?.click();
+    },
+    description: "加载本地简历数据到网页进行展示",
   },
 ];
+
+function handleUploadJSON(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+  if (file == null) return;
+  uploadJSON(file);
+}
 
 function whetherShowPDFExplain(value: boolean) {
   store.showPDFExplain = value;
