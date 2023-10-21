@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import localforage from "localforage";
-import { createPersistedStatePlugin } from "pinia-plugin-persistedstate-2";
+import { createPersistedStatePlugin } from "@/utils";
 
 import App from "./App.vue";
 
