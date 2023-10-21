@@ -12,3 +12,4 @@ export * from "./self-evaluation";
 export * from "./specialty";
 export * from "./work-experience";
 export * from "./certificate";
+export * from "./picture-blob";

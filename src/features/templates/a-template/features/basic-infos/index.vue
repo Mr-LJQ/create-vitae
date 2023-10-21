@@ -1,7 +1,7 @@
 <template>
   <section class="flex">
     <div class="w-32 shrink-0" v-if="store.showPhoto">
-      <img :src="store.pictureUrl" alt="照片" />
+      <img :src="pictureBlobStore.pictureUrl" alt="照片" />
     </div>
     <div>
       <dl class="pl-8 whitespace-nowrap">
@@ -35,12 +35,12 @@ import { computed } from "vue";
 import { omit } from "lodash";
 import { iconMap, customIcon, nameMap, order } from ".";
 import type { KeysType } from ".";
-import { useBasicInfosStore } from "@/stores/basic-infos";
+import { useBasicInfosStore, usePictureBlobStore } from "@/stores";
 defineOptions({
   name: "BasicInfos",
 });
 const store = useBasicInfosStore();
-
+const pictureBlobStore = usePictureBlobStore();
 /**
  * 处理身高与体重
  */
@@ -72,7 +72,6 @@ const infos = computed(() => {
     //此处应当使用 omit 的写法，以让以后添加的 额外 basic-info ref 能够自然的呈现
     ...omit(store.$state, [
       "name",
-      "picture",
       "weight",
       "height",
       "showPhoto",

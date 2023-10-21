@@ -157,7 +157,7 @@ import {
   ElNotification,
 } from "element-plus";
 import { Delete } from "@element-plus/icons-vue";
-import { useBasicInfosStore } from "@/stores";
+import { useBasicInfosStore, usePictureBlobStore } from "@/stores";
 import { BORDER_B_DASHED, GRID_AUTO_CENTER } from "@/styles";
 import { EditInputItem, EditInput, FileButton } from "@/components";
 import {
@@ -173,6 +173,7 @@ defineOptions({
 });
 defineProps(propsType);
 const store = useBasicInfosStore();
+const pictureBlobStore = usePictureBlobStore();
 const { addInfo, deleteInfo, hasInfo } = store;
 const { additionalInfos } = storeToRefs(store);
 /**
@@ -246,7 +247,7 @@ const birth = computed({
  */
 
 function handleFileChange(data: Blob) {
-  store.picture = data;
+  pictureBlobStore.picture = data;
 }
 
 /**

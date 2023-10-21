@@ -1,4 +1,4 @@
-import type { State as BasicInfoState } from "@/stores/basic-infos";
+import type { BasicInfoState } from "@/stores";
 
 /**
  * 通过 key 值映射到相应的图标类名上
@@ -9,7 +9,6 @@ export type KeysType = Record<
       BasicInfoState,
       | "name"
       | "additionalInfos"
-      | "picture"
       | "convertToAge"
       | "showPhoto"
       | "height"

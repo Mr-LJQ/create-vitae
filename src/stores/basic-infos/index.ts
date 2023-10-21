@@ -1,24 +1,22 @@
-import { computed, onUnmounted, ref } from "vue";
-import { defineStore, type StoreState } from "pinia";
-import figure from "@/assets/images/figure.svg";
+import { ref } from "vue";
+import { defineStore } from "pinia";
 type AdditionalInfos = { [key in string]: string };
 
 export const basicInfosDefault = {
   name: "",
-  birth: null,
   phone: "",
   email: "",
-  picture: void 0,
-  yearsOfWorking: "",
   gender: "",
-  maritalStatus: "",
   height: "",
   weight: "",
   nation: "",
-  nativePlace: "",
-  politicsStatus: "",
-  convertToAge: true,
+  birth: null,
   showPhoto: true,
+  nativePlace: "",
+  maritalStatus: "",
+  politicsStatus: "",
+  yearsOfWorking: "",
+  convertToAge: true,
   get additionalInfos() {
     return {};
   },
@@ -31,7 +29,6 @@ export const useBasicInfosStore = defineStore(
     const birth = ref<Date | null>(basicInfosDefault.birth); //值为 null 是可能的，例如：当用户按下 clear 时
     const phone = ref(basicInfosDefault.phone);
     const email = ref(basicInfosDefault.email);
-    const picture = ref<Blob>();
     const yearsOfWorking = ref(basicInfosDefault.yearsOfWorking);
     const gender = ref(basicInfosDefault.gender);
     const maritalStatus = ref(basicInfosDefault.maritalStatus);
@@ -54,25 +51,12 @@ export const useBasicInfosStore = defineStore(
     function hasInfo(key: string) {
       return Object.prototype.hasOwnProperty.call(additionalInfos.value, key);
     }
-    let pictureObjectURL: string | null = null;
-    const pictureUrl = computed(() => {
-      if (picture.value) {
-        pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
-        pictureObjectURL = URL.createObjectURL(picture.value);
-        return pictureObjectURL;
-      }
-      return figure;
-    });
-    onUnmounted(() => {
-      pictureObjectURL && URL.revokeObjectURL(pictureObjectURL);
-    });
+
     return {
       name,
       birth,
       phone,
       email,
-      picture,
-      pictureUrl,
       yearsOfWorking,
       gender,
       maritalStatus,
@@ -91,21 +75,15 @@ export const useBasicInfosStore = defineStore(
   },
   {
     persistedState: {
-      serialize(state) {
-        const _state = JSON.stringify(state);
-        const pictureFile = state.picture;
-        return {
-          _state,
-          pictureFile,
-        };
-      },
       deserialize(data) {
-        const state = JSON.parse(data._state);
-        state.picture = data.pictureFile;
+        const state = JSON.parse(data);
+        if (state.birth) {
+          state.birth = new Date(state.birth);
+        }
         return state;
       },
     },
   },
 );
 
-export type State = StoreState<ReturnType<typeof useBasicInfosStore>>;
+export type BasicInfoState = ReturnType<typeof useBasicInfosStore>["$state"];
