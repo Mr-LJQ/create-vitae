@@ -1,6 +1,6 @@
 <template>
   <Popover>
-    <PopoverButton icon-name="download">下载</PopoverButton>
+    <PopoverButton icon-name="download">文件管理</PopoverButton>
     <PopoverTransition>
       <PopoverPanel class="w-96">
         <div class="relative grid gap-8 p-7">
