@@ -1,5 +1,5 @@
 import type { PropType } from "vue";
-import { Delta, Quill } from "@vueup/vue-quill";
+import { Delta } from "@vueup/vue-quill";
 
 export const UPDATE_MODEL_VALUE = "update:modelValue";
 export const READY = "ready";
@@ -12,7 +12,11 @@ export const propsType = {
 } as const;
 
 export const emitsType = {
-  [READY]: (payload: Quill) => payload instanceof Quill,
+  [READY]: (payload: {
+    blur: () => void;
+    getLength: () => number;
+    setSelection: (a: number) => void;
+  }) => Object(payload) === payload,
   [UPDATE_MODEL_VALUE]: null,
 };
 

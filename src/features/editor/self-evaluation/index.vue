@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { ref, nextTick } from "vue";
 import { ElButton, ElMessageBox } from "element-plus";
-import { Delta, Quill } from "@vueup/vue-quill";
+import { Delta } from "@vueup/vue-quill";
 import { RichTextEditor } from "@/components";
 import { isEmptyDelta } from "@/utils";
 import { useSelfEvaluationStore } from "@/stores";
@@ -30,7 +30,11 @@ const store = useSelfEvaluationStore();
  * 添加 “客套话” 到 editor 中的逻辑
  */
 
-const quillRef = ref<Quill | null>(null);
+const quillRef = ref<{
+  blur: () => void;
+  getLength: () => number;
+  setSelection: (a: number) => void;
+} | null>(null);
 /**
  * 修改 quill 后，光标位置并没有位于文本最后，而是位于文本开始，
  *  该函数的作用就是调整光标位置到正确的地方
